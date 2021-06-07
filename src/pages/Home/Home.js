@@ -16,6 +16,17 @@ function Home() {
         <CourseCard />
         <CourseCard />
       </div>
+      <div className="home__scroll">
+        <CourseCard />
+        <CourseCard />
+        <CourseCard />
+        <CourseCard />
+        <CourseCard />
+        <CourseCard />
+        <CourseCard />
+        <CourseCard />
+        <CourseCard />
+      </div>
     </div>
   );
 }
