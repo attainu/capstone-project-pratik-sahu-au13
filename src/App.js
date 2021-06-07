@@ -1,9 +1,9 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import LeftContainer from "./containers/LeftContainer";
-import MainContainer from "./containers/MainContainer";
 import RightContainer from "./containers/RightContainer";
 import Home from "./pages/Home/Home";
 import "./App.scss";
+import Dashboard from "./pages/Dashboard/Dashboard";
 
 function App() {
   return (
@@ -12,6 +12,7 @@ function App() {
         <LeftContainer />
         <Switch>
           <Route exact path="/" component={Home} />
+          <Route path="/dashboard" component={Dashboard} />
         </Switch>
         <RightContainer />
       </Router>

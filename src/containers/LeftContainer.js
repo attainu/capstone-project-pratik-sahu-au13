@@ -2,8 +2,6 @@ import React from "react";
 import home from "../assets/images/home.png";
 import menu from "../assets/images/menu.png";
 import c from "../assets/images/c.png";
-import prev from "../assets/images/prev.png";
-import next from "../assets/images/next.png";
 import profile from "../assets/images/profile.png";
 import logout from "../assets/images/logout.png";
 import "./styles.scss";
