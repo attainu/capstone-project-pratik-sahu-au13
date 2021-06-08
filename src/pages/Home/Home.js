@@ -7,7 +7,7 @@ function Home() {
     <div className="home">
       <div
         style={{
-          margin: "1rem 0 0 0",
+          margin: "0 0 0 0",
           borderBottom: "1px solid black",
           display: "inline-block",
         }}
