@@ -9,7 +9,6 @@ import "./Dashboard.scss";
 
 function Dashboard() {
   const { user } = useContext(AuthContext);
-  console.log(user);
 
   return (
     <div className="dashboard">
@@ -17,11 +16,11 @@ function Dashboard() {
         <div className="dashboard__welcome-greet">
           <img
             className="dashboard__welcome-greet--userpic"
-            src={user.displayPic}
+            src={user.user.photoURL}
             alt="user-pic"
           />
           <div className="dashboard__welcome-greet--username">
-            Welcome Phoebe
+            Welcome {user.user.displayName}
           </div>
         </div>
         <img
