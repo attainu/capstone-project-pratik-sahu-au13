@@ -4,6 +4,8 @@
   margin-right: 1rem;
   padding: 2rem;
   border-radius: 1rem;
+  overflow: hidden;
+  overflow-y: scroll;
   background-color: white;
 
   &__scroll {
