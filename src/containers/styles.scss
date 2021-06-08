@@ -39,7 +39,18 @@
   width: 25%;
   min-width: 20rem;
   height: 100%;
+  padding: 1rem;
   border-radius: 1rem;
   // box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
   background-color: var(--grey-dark);
+
+  &__btn {
+    margin: 1rem;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--white);
+    text-decoration: none;
+    color: var(--white);
+  }
 }

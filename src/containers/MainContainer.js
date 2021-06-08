@@ -1,17 +1,22 @@
-import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import React, { useContext } from "react";
+import { Switch, Route, Redirect } from "react-router-dom";
+import { AuthContext } from "../contexts/AuthContext";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import Home from "../pages/Home/Home";
 
 function MainContainer() {
+  const { user } = useContext(AuthContext);
+
   return (
     <div className="mainContainer">
-      <Router>
-        <Switch>
-          <Route exact path="/" component={Home} />
+      <Switch>
+        <Route exact path="/" component={Home} />
+        {user ? (
           <Route path="/dashboard" component={Dashboard} />
-        </Switch>
-      </Router>
+        ) : (
+          <Redirect to="/" />
+        )}
+      </Switch>
     </div>
   );
 }
