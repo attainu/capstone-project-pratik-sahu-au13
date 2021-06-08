@@ -30,7 +30,8 @@
   margin-right: 1rem;
   border-radius: 1rem;
   overflow: hidden;
-  background-color: #e5e7eb;
+  overflow-y: scroll;
+  background-color: var(--white);
 }
 
 .rightContainer {

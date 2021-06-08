@@ -5,6 +5,16 @@
   overflow: hidden;
   overflow-y: scroll;
 
+  ::-webkit-scrollbar {
+    height: 6px;
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 166, 0, 0.8);
+    border-radius: 0.5rem;
+  }
+
   &__scroll {
     width: 100%;
     height: auto;
