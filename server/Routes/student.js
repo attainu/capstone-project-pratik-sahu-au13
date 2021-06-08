@@ -11,7 +11,7 @@ Router.post('/signup', async (req, res) => {
     try {
         const studentData = req.body;
         
-        const student = await Student.findOne({ email: req.body.email });
+        let student = await Student.findOne({ email: req.body.email });
         if (student) {
             return res.send({ message: "This email is already registered, try sign in", error: "Email already in use" });
         };

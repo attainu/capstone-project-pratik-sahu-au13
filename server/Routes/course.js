@@ -3,7 +3,7 @@ const Router = express.Router();
 const auth = require('../Auth/auth');
 require('dotenv').config();
 const path = require('path')
-const bcrypt = require('bcryptjs');
+// const bcrypt = require('bcryptjs');
 const Course = require('../Model/course');
 const multer = require('multer');
 
@@ -76,6 +76,18 @@ Router.post('/add-course', auth, thumbnail.single("thumbnail"), async (req, res)
     }
 
 });
+
+Router.get('/all-courses', async(req, res) => {
+    try {
+        const courseData = await Course.find();
+        res.send({message: "Fetched successfully", data: courseData});
+
+    } catch (error) {
+
+        console.log("Error: ", error);
+        res.status(400).send({message: "Error while fetching", error:error.message});
+    }
+})
 
 
 
