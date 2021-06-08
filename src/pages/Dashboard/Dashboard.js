@@ -3,6 +3,7 @@ import prev from "../../assets/images/prev.png";
 import next from "../../assets/images/next.png";
 import CourseCardDB from "../../components/CourseCardDB/CourseCardDB";
 import "./Dashboard.scss";
+import Search from "../../components/Search/Search";
 
 function Dashboard() {
   return (
@@ -15,10 +16,13 @@ function Dashboard() {
       </div>
       <div className="dashboard__courseList">
         <div className="dashboard__courseList-category">
-          <span>All Courses</span>
-          <span>Most Popular</span>
-          <span>Top Rated</span>
-          <span>Newest</span>
+          <div>
+            <span>All Courses</span>
+            <span>Most Popular</span>
+            <span>Top Rated</span>
+            <span>Newest</span>
+          </div>
+          <Search />
         </div>
         <div className="dashboard__courseList-scroll">
           <CourseCardDB />

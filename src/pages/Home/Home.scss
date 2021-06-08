@@ -15,6 +15,13 @@
     border-radius: 0.5rem;
   }
 
+  &__brand {
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
   &__scroll {
     width: 100%;
     height: auto;
