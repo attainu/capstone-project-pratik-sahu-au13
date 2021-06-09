@@ -3,8 +3,9 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import Home from "../pages/Home/Home";
-
+import './styles.scss';
 function MainContainer() {
+  
   const { user } = useContext(AuthContext);
 
   return (
