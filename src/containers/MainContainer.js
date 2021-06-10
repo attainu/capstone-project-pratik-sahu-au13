@@ -18,4 +18,4 @@ function MainContainer() {
   );
 }
 
-export default MainContainer;
+export { MainContainer };

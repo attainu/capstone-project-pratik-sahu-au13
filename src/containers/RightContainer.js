@@ -30,4 +30,4 @@ function RightContainer() {
   );
 }
 
-export default RightContainer;
+export { RightContainer };
