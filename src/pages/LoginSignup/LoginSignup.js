@@ -3,6 +3,7 @@ import { Redirect, useHistory } from "react-router";
 import { AuthContext } from "../../contexts/AuthContext";
 import GoogleLogin from "react-google-login";
 import "./LoginSignup.scss";
+import GooglePassword from "../../Googleusercreds/googleuserpassword"; //put this file in .gitignore
 
 function LoginSignup() {
   const [formData, setFormData] = useState({
@@ -11,7 +12,10 @@ function LoginSignup() {
     email: "",
     password: "",
     confirm_password: "",
+
   });
+
+  const [isTutor, setIsTutor] = useState(false);
   const [LoginMessage, setLoginMessage] = useState("");
   const [SignupMessage, setSignupMessage] = useState("");
 
@@ -27,23 +31,64 @@ function LoginSignup() {
     const token = res?.tokenId;
 
     try {
-      dispatch({
-        type: "VERIFY_USER",
-        payload: result,
-      });
       console.log(
         "Result from google : ",
         result,
         "TOKEN from google: ",
         token
       );
-      history.push("/dashboard");
+
+      const {givenName, familyName, email} = result;
+      const formdata = {
+        firstName: givenName,
+        lastName:familyName,
+        email,
+        password: GooglePassword
+      }
+      console.log("Password for Google users", formdata.password)
+      const resp = await fetch("http://localhost:5233/tut/login", {
+        method: "POST",
+        mode: "cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formdata),
+      });
+
+      const data = await resp.json();
+      console.log(data)
+      if (data.error === "Email not registered") {
+        console.log("Google: Email not registered")
+        const resp2 = await fetch("http://localhost:5233/tut/signup", {
+          method: "POST",
+          mode: "cors",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formdata)
+        })
+        
+        const signupData = await resp2.json();
+        if (signupData.message === "Tutor registered successfully") {
+          dispatch({
+            type: "VERIFY_USER",
+            payload: signupData,
+          });
+        } else {
+              setLoginMessage("Error while fetching user data")
+        }
+
+      } else {
+          dispatch({
+            type: "VERIFY_USER",
+            payload: data,
+          });
+        history.push("/dashboard");
+        } 
     } catch (error) {
+      setLoginMessage("Error in login")
       console.log(error);
     }
   };
 
   const googleError = () => {
+    setLoginMessage("Issue with Google login");
     console.log("Google Sign In was unsuccessful. Try again later");
   };
 
@@ -63,6 +108,11 @@ function LoginSignup() {
     e.preventDefault();
     const formdata = formData;
     console.log("Form data: ", formdata);
+
+    // if (isTutor) {============
+// ==========================Write logic here
+    // }
+
     fetch("http://localhost:5233/tut/login", {
       method: "POST",
       mode: "cors",
@@ -212,7 +262,7 @@ function LoginSignup() {
 
             <div className="form__actions">
               <label htmlFor="checkboxInput" className="remeber_me">
-                <input type="checkbox" id="checkboxInput" />
+                <input type="checkbox" id="checkboxInput" name="isTutor" value={isTutor} onChange={(e)=>setIsTutor(!isTutor)} />
                 <span className="checkmark"></span>
                 <span> Remember Me</span>
               </label>
