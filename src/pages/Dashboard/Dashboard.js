@@ -16,11 +16,11 @@ function Dashboard() {
         <div className="dashboard__welcome-greet">
           <img
             className="dashboard__welcome-greet--userpic"
-            src={user.user.photoURL}
+            src={user.user.imageUrl}
             alt="user-pic"
           />
           <div className="dashboard__welcome-greet--username">
-            Welcome {user.user.displayName}
+            Welcome {user.user.name}
           </div>
         </div>
         <img
