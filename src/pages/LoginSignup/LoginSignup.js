@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { useHistory } from "react-router";
+import { Redirect, useHistory } from "react-router";
 import { AuthContext } from "../../contexts/AuthContext";
 import GoogleLogin from "react-google-login";
 import "./LoginSignup.scss";
@@ -15,9 +15,11 @@ function LoginSignup() {
   const [LoginMessage, setLoginMessage] = useState("");
   const [SignupMessage, setSignupMessage] = useState("");
 
-  const { dispatch } = useContext(AuthContext);
-
   const history = useHistory();
+  const { user, dispatch } = useContext(AuthContext);
+  //   if (user) {
+  //     history.push("/dashboard");
+  //   }
 
   const googleSuccess = async (res) => {
     console.log("Logged in with Google o Auth...");
@@ -74,7 +76,7 @@ function LoginSignup() {
           setLoginMessage(data.error);
           return;
         }
-        console.log("Data pushed successfully, user logged in", data);
+        // console.log("Data pushed successfully, user logged in", data);
         dispatch({
           type: "VERIFY_USER",
           payload: {
@@ -159,7 +161,7 @@ function LoginSignup() {
     }
   }
 
-  return (
+  return !user ? (
     <div>
       <div className="wrapper__area" id="wrapper_Area">
         <div className="forms__area">
@@ -375,6 +377,8 @@ function LoginSignup() {
         </div>
       </div>
     </div>
+  ) : (
+    <Redirect to="/dashboard" />
   );
 }
 

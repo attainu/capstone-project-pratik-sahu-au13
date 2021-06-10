@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { Redirect } from "react-router";
 import prev from "../../assets/images/prev.png";
 import next from "../../assets/images/next.png";
 import bell from "../../assets/images/bell.png";
@@ -10,7 +11,7 @@ import "./Dashboard.scss";
 function Dashboard() {
   const { user } = useContext(AuthContext);
 
-  return (
+  return user ? (
     <div className="dashboard">
       <div className="dashboard__welcome">
         <div className="dashboard__welcome-greet">
@@ -54,6 +55,8 @@ function Dashboard() {
         </div>
       </div>
     </div>
+  ) : (
+    <Redirect to="/check-user" />
   );
 }
 
