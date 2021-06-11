@@ -17,9 +17,6 @@ function LoginSignup() {
 
   const history = useHistory();
   const { user, dispatch } = useContext(AuthContext);
-  //   if (user) {
-  //     history.push("/dashboard");
-  //   }
 
   const googleSuccess = async (res) => {
     console.log("Logged in with Google o Auth...");
@@ -49,14 +46,7 @@ function LoginSignup() {
 
   function handleInputChange(e) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    // console.log(formData);
-    // console.log(input)
   }
-
-  //   console.log(
-  //     "OAUTH CLient ID ==> ",
-  //     process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID
-  //   );
 
   // ----------- Function for Sign In ------- /
   function handleLoginSubmit(e) {
