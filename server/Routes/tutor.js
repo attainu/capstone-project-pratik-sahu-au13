@@ -26,7 +26,7 @@ Router.post('/signup', async (req, res) => {
 
         await tutor.save();
 
-        res.send({ message: "Tutor registered successfully", data: tutor });
+        res.send({ message: "Tutor registered successfully", tutorInfo: tutor });
 
     } catch (error) {
 

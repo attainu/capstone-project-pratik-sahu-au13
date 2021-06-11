@@ -24,8 +24,18 @@ const StudentSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    profileImg: {
+        type: String,
+        default: null
+    },
     enrolledCourses: {
         type: [mongoose.Schema.Types.ObjectId],
+        ref: "course",
+        default: null
+    },
+    yourReviews: {
+        type: [mongoose.Schema.Types.ObjectId],
+        ref: "review",
         default: null
     }
 

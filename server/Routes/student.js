@@ -25,7 +25,7 @@ Router.post('/signup', async (req, res) => {
 
         await student.save();
 
-        res.send({message: "Student registered successfully", data: student});
+        res.send({ message: "Student registered successfully", studentInfo  : student});
 
     } catch (error) {
 
@@ -67,5 +67,7 @@ Router.post('/login', async (req, res) => {
         res.send({ message:"Error during Login", error:error.message});
     }
 });
+
+
 
 module.exports = Router;

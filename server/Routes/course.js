@@ -2,11 +2,11 @@ const express = require("express");
 const Router = express.Router();
 const auth = require("../Auth/auth");
 require("dotenv").config();
-const path = require("path")
-// const bcrypt = require("bcryptjs");
+const path = require("path");
 const Course = require("../Model/course");
 const Video = require("../Model/video");
 const Tutor = require("../Model/tutor");
+const Student = require("../Model/student");
 const multer = require("multer");
 const bufferConversion = require("../Utils/bufferConversion");
 const { imageUpload, videoUpload } = require("../Utils/multer");
@@ -74,7 +74,11 @@ Router.post("/add-course", auth, imageUpload.single("thumbnail"), async (req, re
 
 Router.get("/all-courses", async(req, res) => {
     try {
-        const courseData = await Course.find();
+        const courseData = await Course.find()
+        .populate("videos", ["videoLink", "title", "videoLength"])
+        .populate("reviews", ["reviewBody", "rating"])   // chaining populate to get multiple fields populated
+            .exec();
+
         res.send({message: "Fetched successfully", data: courseData});
 
     } catch (error) {
@@ -96,7 +100,7 @@ Router.post("/upload-video/:courseId", auth, videoUpload.single("videoLink"), as
 
         const uploadedVideo = await cloudinary.uploader.upload(convertedBuffer, { resource_type: "video", upload_preset: "cloudversity-dev", });
 
-        // console.log("Uploaded video object: ", uploadedVideo)
+        console.log("Uploaded video object: ", uploadedVideo)
         video.courseId = req.params.courseId;
         video.authorId = req.user.id;
 
@@ -105,7 +109,7 @@ Router.post("/upload-video/:courseId", auth, videoUpload.single("videoLink"), as
         } else {
             videoLength = uploadedVideo.duration
         };
-        // console.log("Video Length : ", videoLength);
+        console.log("Video Length : ", videoLength);
 
         video.videoLength = videoLength;
         video.videoLink = uploadedVideo.secure_url;
@@ -125,6 +129,45 @@ Router.post("/upload-video/:courseId", auth, videoUpload.single("videoLink"), as
         res.status(500).send({message: "Couldn't upload the video", error: error.message});
 
     }
+});
+
+Router.get("/course/:courseId", async (req, res) => {
+    try {
+        
+        const requestedCourse = await Course.findById({_id: req.params.courseId})
+        .populate("reviews", ["reviewBody", "rating"])
+        .populate("videos", ["videoLink", "title"])
+        .populate("authorName", ["firstName", "lastName"])
+        .exec();
+
+        res.status(200).send({requestedCourse});
+
+    } catch (error) {
+        console.log("Error occurred while fetching the course...", error);
+        res.status(500).send({ message: "Couldn't fetch the course", error: error.message });
+    }
+});
+
+Router.post("/enroll/:courseId", auth, async (req, res) => {
+
+    try {
+        
+        const course = await Course.findById({_id: req.params.courseId});
+        const student = await Student.findById({_id: req.user.id});
+
+        course.enrolledStudents.push(req.user.id);
+        student.enrolledCourses.push(req.params.courseId);
+
+        await course.save();
+        await student.save();
+
+        res.status(200).send({message:"New course enrolled successfully", enrolledCourses: student.enrolledCourses});
+
+    } catch (error) {
+        console.log("Error occurred while enrolling...", error);
+        res.status(500).send({ message: "Couldn't enroll to the course", error: error.message });
+    }
+
 });
 
 
