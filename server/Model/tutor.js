@@ -1,34 +1,36 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const TutorSchema = mongoose.Schema({
+const TutorSchema = mongoose.Schema(
+  {
     firstName: {
-        type: String,
-        required: true,
-        trim: true
+      type: String,
+      required: true,
+      trim: true,
     },
     lastName: {
-        type: String,
-        trim: true
+      type: String,
+      trim: true,
     },
     email: {
-        type: String,
-        required: true,
-        trim: true
+      type: String,
+      required: true,
+      trim: true,
     },
     role: {
-        type: String,
-        required: true,
-        default: 'tutor'
+      type: String,
+      required: true,
+      default: "tutor",
     },
     password: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     createdCourses: {
-        type: [mongoose.Schema.Types.ObjectId],
-        default: null
-    }
+      type: [mongoose.Schema.Types.ObjectId],
+      default: null,
+    },
+  },
+  { timestamps: true }
+);
 
-}, { timestamps: true });
-
-module.exports = mongoose.model('tutor', TutorSchema);
+module.exports = mongoose.model("tutor", TutorSchema);
