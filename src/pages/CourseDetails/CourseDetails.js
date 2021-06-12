@@ -1,7 +1,7 @@
 import React from "react";
 import "./CourseDetails.scss";
 
-function CourseDetails() {
+export function CourseDetails() {
   return (
     <div className="details">
       <div className="details__title">
@@ -83,5 +83,3 @@ function CourseDetails() {
     </div>
   );
 }
-
-export default CourseDetails;

@@ -4,7 +4,7 @@ import { AuthContext } from "../../contexts/AuthContext";
 import GoogleLogin from "react-google-login";
 import "./LoginSignup.scss";
 
-function LoginSignup() {
+export function LoginSignup() {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -371,5 +371,3 @@ function LoginSignup() {
     <Redirect to="/dashboard" />
   );
 }
-
-export default LoginSignup;

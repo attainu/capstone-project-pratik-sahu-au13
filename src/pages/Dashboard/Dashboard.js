@@ -1,15 +1,14 @@
 import React, { useContext } from "react";
 import { Redirect } from "react-router";
-import prev from "../../assets/images/prev.png";
-import next from "../../assets/images/next.png";
-import bell from "../../assets/images/bell.png";
-import CourseCardDB from "../../components/CourseCardDB/CourseCardDB";
-import Search from "../../components/Search/Search";
+import images from "../../assets/images";
+import { CourseCardDB, Search } from "../../components";
 import { AuthContext } from "../../contexts/AuthContext";
 import "./Dashboard.scss";
 
-function Dashboard() {
+export function Dashboard() {
   const { user } = useContext(AuthContext);
+
+  const { prev, next, bell } = images;
 
   return user ? (
     <div className="dashboard">
@@ -26,14 +25,22 @@ function Dashboard() {
         </div>
         <img
           className="dashboard__welcome-notification"
-          src={bell}
-          alt="notification"
+          src={bell.src}
+          alt={bell.alt}
         />
       </div>
       <div className="dashboard__watching">
         <CourseCardDB />
-        <img className="dashboard__watching-icon1" src={prev} alt="previous" />
-        <img className="dashboard__watching-icon2" src={next} alt="next" />
+        <img
+          className="dashboard__watching-icon1"
+          src={prev.src}
+          alt={prev.alt}
+        />
+        <img
+          className="dashboard__watching-icon2"
+          src={next.src}
+          alt={next.alt}
+        />
       </div>
       <div className="dashboard__courseList">
         <div className="dashboard__courseList-category">
@@ -56,8 +63,6 @@ function Dashboard() {
       </div>
     </div>
   ) : (
-    <Redirect to="/check-user" />
+    <Redirect to="/auth" />
   );
 }
-
-export default Dashboard;

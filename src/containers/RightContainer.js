@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function RightContainer() {
+export function RightContainer() {
   return (
     <div className="rightContainer">
-      <Link className="rightContainer__btn" to="/check-user">
+      <Link className="rightContainer__btn" to="/auth">
         Login / Signup
       </Link>
       <Link className="rightContainer__btn" to="/">
@@ -16,5 +16,3 @@ function RightContainer() {
     </div>
   );
 }
-
-export { RightContainer };

@@ -1,7 +1,7 @@
 import React from "react";
 import "./CourseCard.scss";
 
-function CourseCard() {
+export function CourseCard() {
   return (
     <div className="course">
       <img
@@ -25,5 +25,3 @@ function CourseCard() {
     </div>
   );
 }
-
-export default CourseCard;

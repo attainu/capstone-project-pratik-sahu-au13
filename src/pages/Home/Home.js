@@ -1,9 +1,8 @@
 import React from "react";
-import CourseCard from "../../components/CourseCard/CourseCard";
-import Search from "../../components/Search/Search";
+import { Search, CourseCard } from "../../components";
 import "./Home.scss";
 
-function Home() {
+export function Home() {
   return (
     <div className="home">
       <div className="home__brand">
@@ -53,5 +52,3 @@ function Home() {
     </div>
   );
 }
-
-export default Home;
