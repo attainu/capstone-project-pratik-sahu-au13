@@ -24,7 +24,7 @@ function LoginSignup() {
   const [func, setFunc] = useState({});
   const history = useHistory();
   const { user, dispatch } = useContext(AuthContext);
- console.log("User from Auth context (Login Page): ", user);
+  console.log("User from Auth context (Login Page): ", user);
   useEffect(() => {
     if (isTutor) {
 
@@ -33,10 +33,10 @@ function LoginSignup() {
     } else {
       setFunc({ login: api.student_signIn, signup: api.student_signUp });
     }
-    
+
   }, [isTutor, user]);
 
-  
+
 
   const googleSuccess = async (res) => {
     console.log("Logged in with Google o Auth...");
@@ -62,14 +62,14 @@ function LoginSignup() {
 
       const { data } = await func.login(formdata);    // removed fetch call and using axios from api folder
       console.log("Data from Tut Login(LoginSignup.js line: 60) ==> ", data);
-      if (data.error === "Email not registered") {
+      if (data?.error === "Email not registered") {
 
         const { data } = await func.signup(formdata);
 
         if (data.message === "Tutor registered successfully" || data.message === "Student registered successfully") {
 
-          const {message, ...payload} = data;
-          dispatch({type: AUTH, payload });
+          const { message, ...payload } = data;
+          dispatch({ type: AUTH, payload });
         } else {
           setLoginMessage(data.error)
         }
@@ -81,7 +81,7 @@ function LoginSignup() {
       }
     } catch (error) {
       setLoginMessage("Google Login wasn't sucessful");
-      console.log("Error during google login: ",error);
+      console.log("Error during google login: ", error);
     }
   };
 
@@ -99,37 +99,17 @@ function LoginSignup() {
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     const formdata = formData;
-    console.log("Form data: ", formdata);
-
-    if (isTutor) {
-      const { data } = await api.tutor_signIn(formdata);
-      if (data.error) {
-        console.log("Login failed...", data);
-        setLoginMessage(data.error);
-        return;
-      }
-        const {message, ...payload} = data;
-        dispatch({
-          type: AUTH,
-          payload
-        });
-        history.push("/dashboard");
-
-    } else {
-      const { data } = await api.student_signIn(formdata);
-      if (data.error) {
-        console.log("Login failed...", data);
-        setLoginMessage(data.error);
-        return;
-      }
-      const { message, ...payload } = data;
-      dispatch({
-        type: AUTH,
-        payload
-      });
-      history.push("/dashboard");
+    // console.log("Form data: ", formdata);
+    const { data } = await func.login(formdata);
+    if (data.error) {
+      console.log("Login failed...", data);
+      setLoginMessage(data.error);
+      return;
     }
-    } 
+    const { message, ...payload } = data;
+    dispatch({ type: AUTH, payload });
+    history.push("/dashboard");
+  }
 
   // ----------- Function for Sign Up ------- /
 
@@ -144,31 +124,29 @@ function LoginSignup() {
 
     try {
 
-      const { data } = await api.tutor_signUp(formdata);
+      const { data } = await func.signup(formdata);
       if (data.error) {
         console.log("Signup failed...", data);
         setSignupMessage(data.error);
         return;
       }
       console.log("Data pushed successfully, user signed up", data);
+      const { message, ...payload } = data;
       dispatch({
         type: AUTH,
-        payload: {
-          name: `${data.data.firstName} ${data.data.lastName}`,
-          imageUrl: `https://ui-avatars.com/api/?name=${data.data.firstName}`,
-        },
+        payload
       });
       setSignupMessage("Successfully Signed up! CLick on Login button");
 
-      setTimeout(()=>{
+      setTimeout(() => {
         history.push("/dashboard");
       }, 1000);  // Redirect user to dashboard after 1s
 
     } catch (error) {
-        console.log("Error in login", error);
-        setSignupMessage("Unknown error occurred...");
-      }
+      console.log("Error in login", error);
+      setSignupMessage("Unknown error occurred...");
     }
+  }
 
   const showHidePassword = (e) => {
     // console.log("show hide icon's parent's parent: ",e.target.parentElement.parentElement)
@@ -247,7 +225,7 @@ function LoginSignup() {
 
             <div className="form__actions">
               <label htmlFor="checkboxInput" className="remeber_me">
-                <input type="checkbox" id="checkboxInput" name="isTutor" value={isTutor} onChange={(e)=>setIsTutor(!isTutor)} />
+                <input type="checkbox" id="checkboxInput" name="isTutor" value={isTutor} onChange={(e) => setIsTutor(!isTutor)} />
                 <span className="checkmark"></span>
                 <span> Remember Me</span>
               </label>
