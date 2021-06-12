@@ -23,7 +23,7 @@ export function MainContainer() {
     <div className="mainContainer">
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route path="/details" component={CourseDetails} />
+        <Route path="/details/:id" component={CourseDetails} />
         <Route path="/auth">
           <LoginSignup selectedUserType={selectedUserType} />
         </Route>

@@ -1,13 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./CourseDetails.scss";
 
-export function CourseDetails() {
+export function CourseDetails({ match }) {
+  const [courseDetails, setCourseDetails] = useState(null);
+  const id = match.params.id;
+
+  useEffect(() => {
+    fetch(`http://localhost:5233/tut/course/${id}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setCourseDetails(data.data);
+      })
+      .catch((err) => console.log(err.message));
+  }, [id]);
+
   return (
     <div className="details">
       <div className="details__title">
         <div>
-          <h2>Course Name here</h2>
-          <small>Author Name here</small>
+          <h2>{courseDetails?.courseName}</h2>
+          <small>{`${courseDetails?.authorName.firstName} ${courseDetails?.authorName.lastName}`}</small>
         </div>
       </div>
       <div className="details__content">
@@ -37,16 +49,7 @@ export function CourseDetails() {
               About
             </h4>
             <p style={{ margin: ".5rem", fontSize: "1.4rem" }}>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book. It has
-              survived not only five centuries, but also the leap into
-              electronic typesetting, remaining essentially unchanged. It was
-              popularised in the 1960s with the release of Letraset sheets
-              containing Lorem Ipsum passages, and more recently with desktop
-              publishing software like Aldus PageMaker including versions of
-              Lorem Ipsum.
+              {courseDetails?.description}
             </p>
           </div>
         </div>
