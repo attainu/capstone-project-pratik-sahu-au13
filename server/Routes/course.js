@@ -34,9 +34,10 @@ const imageFilter = function (req, file, cb) {
 
 let thumbnail = multer({ storage: storage, limits: { fileSize: 1 * 1024 * 1024 }, fileFilter: imageFilter });
 
-//------------ COURSE AND VIDEO ROUTES BELOW ------------ //
- 
-Router.post("/add-course", auth, imageUpload.single("thumbnail"), async (req, res)=> {   
+//-------------- COURSE AND VIDEO ROUTES BELOW ---------------- //
+
+ // ------------------- POST: Add a New Course ------------------//
+Router.post("/addcourse", auth, imageUpload.single("thumbnail"), async (req, res)=> {   
 
     try {
 
@@ -72,7 +73,8 @@ Router.post("/add-course", auth, imageUpload.single("thumbnail"), async (req, re
 
 });
 
-Router.get("/all-courses", async(req, res) => {
+// ------------------- GET: get All Courses ------------------//
+Router.get("/allcourses", async(req, res) => {
     try {
         const courseData = await Course.find()
         .populate("videos", ["videoLink", "title", "videoLength"])
@@ -88,7 +90,8 @@ Router.get("/all-courses", async(req, res) => {
     }
 });
 
-Router.post("/upload-video/:courseId", auth, videoUpload.single("videoLink"), async (req, res) => {
+// ------------------- POST: Upload Videos ---------------//
+Router.post("/uploadvideo/:courseId", auth, videoUpload.single("videoLink"), async (req, res) => {
 
     try{
         // console.log("Course Id: ", req.params.courseId, "User: ", req.user)
@@ -97,6 +100,8 @@ Router.post("/upload-video/:courseId", auth, videoUpload.single("videoLink"), as
         });
 
         const convertedBuffer = await bufferConversion(req.file.originalname, req.file.buffer);
+        // console.log("req.file.buffer: ",req.file.buffer);
+        // console.log("convertedBuffer: ", convertedBuffer);  Don't ever uncomment this :-P
 
         const uploadedVideo = await cloudinary.uploader.upload(convertedBuffer, { resource_type: "video", upload_preset: "cloudversity-dev", });
 
@@ -113,6 +118,7 @@ Router.post("/upload-video/:courseId", auth, videoUpload.single("videoLink"), as
 
         video.videoLength = videoLength;
         video.videoLink = uploadedVideo.secure_url;
+        video.publicId = uploadedVideo.public_id;   // NEW: added public Id to video Schema
 
         await video.save();
 
@@ -131,6 +137,7 @@ Router.post("/upload-video/:courseId", auth, videoUpload.single("videoLink"), as
     }
 });
 
+// ------------------- GET: get Course by courseId -----------------//
 Router.get("/course/:courseId", async (req, res) => {
     try {
         
@@ -148,6 +155,7 @@ Router.get("/course/:courseId", async (req, res) => {
     }
 });
 
+// ------------------- POST: Enroll to Course ---------------//
 Router.post("/enroll/:courseId", auth, async (req, res) => {
 
     try {
@@ -170,6 +178,49 @@ Router.post("/enroll/:courseId", auth, async (req, res) => {
 
 });
 
+// ------------------- PATCH: Course details Update ---------------//
+Router.patch('/updatecourse/:courseId', auth, async (req, res) => {
 
+    try {
+
+        const updatedDetails = {
+            ...req.body
+        }
+        const updatedCourse = await Course.findOneAndUpdate({_id: req.params.courseId}, {
+            $set: updatedDetails
+        });
+
+        res.status(200).send({ message: "Course details updated successfully!", updatedDetails})
+
+
+    } catch (error) {
+        console.log("Error occurred while updating...", error);
+        res.status(500).send({ message: "Couldn't update the course", error: error.message });
+    }
+});
+
+
+// ------------------- PATCH: Course Thumbnail Update ---------------//
+Router.patch("/updatethumbnail/:courseId", auth, imageUpload.single('thumbnail'), async(req, res) => {
+
+    try {
+
+        const convertedBuffer = await bufferConversion(req.file.originalname, req.file.buffer);
+
+        const uploadedImage = await cloudinary.uploader.upload(convertedBuffer, { resource_type: "image", upload_preset: "cloudversity-dev", });
+        
+        const thumbnailUpdate = await Course.findOneAndUpdate({_id:req.params.courseId}, {
+            $set: {
+                thumbnail : uploadedImage.secure_url
+            }
+        });
+
+        res.status(200).send({ message: "thumbnail updated", thumbnail: uploadedImage.secure_url});
+
+    } catch (error) {
+        console.log("Error occurred while updating thumbnail...", error);
+        res.status(500).send({ message: "Couldn't update the thumbnail", error: error.message });
+    }
+});
 
 module.exports = Router;

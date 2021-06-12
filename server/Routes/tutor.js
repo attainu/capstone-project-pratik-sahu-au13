@@ -24,9 +24,11 @@ Router.post('/signup', async (req, res) => {
         const hashedPassword = await bcrypt.hash(tutorData.password, 10);
         tutor.password = hashedPassword;
 
+        const token = await jwt.sign({ id: tutor._id, email: tutor.email }, process.env.JWT_SECRET, { expiresIn: "6h" });
+
         await tutor.save();
 
-        res.send({ message: "Tutor registered successfully", tutorInfo: tutor });
+        res.send({ message: "Tutor registered successfully", data: tutor, token });
 
     } catch (error) {
 
@@ -46,24 +48,24 @@ Router.post('/login', async (req, res) => {
         console.log("Tutor obj from tutor Login: ", tutor);
 
         if (!tutor) {
-            return res.status(404).send({ message: "This email is not registered with us, please signup first!", error: "Email not registered" });
+            return res.send({ message: "This email is not registered with us, please signup first!", error: "Email not registered" });
         }
 
         // --- Validatig password using bcryptjs --- /
         const isValidPassword = await bcrypt.compare(req.body.password, tutor.password);
 
         if (!isValidPassword) {
-            return res.status(400).send({ message: "Invalid Password", error: "Invalid Password" });
+            return res.send({ message: "Invalid Password", error: "Invalid Password" });
         }
 
         // --- Generating token and saving it in cookie --- /
-        const token = await jwt.sign({ id: tutor._id, email: tutor.email }, process.env.JWT_SECRET);
+        const token = await jwt.sign({ id: tutor._id, email: tutor.email }, process.env.JWT_SECRET, {expiresIn:"6h"});
         res.cookie('token', token, { httpOnly: true, maxAge: 1000000 });
 
         // console.log("Token from Teacher Login Route ==> ", token);
         // console.log("Cookie from Teacher Login Route ==> ", req.cookies);
 
-        res.status(200).send({ message: "Tutor successfully logged in", tutorInfo: tutor, token })
+        res.status(200).send({ message: "Tutor successfully logged in", data: tutor, token })
 
     } catch (error) {
 
