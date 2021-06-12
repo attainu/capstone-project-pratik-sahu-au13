@@ -1,4 +1,3 @@
-/* Main Css Reset */
 :root {
   --white-color: rgb(255, 255, 255);
   --balck-color: rgb(0, 0, 0);
@@ -14,19 +13,20 @@
   --input-border-color: rgb(152, 169, 192);
   --paragraph-color: rgb(231, 231, 231);
 }
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: "Poppins", Arial, sans-serif;
-}
-body {
-  height: 100vh;
-  background-color: var(--body-BG-color);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+// * {
+//   box-sizing: border-box;
+//   margin: 0;
+//   padding: 0;
+//   font-family: "Poppins", Arial, sans-serif;
+// }
+
+// body {
+//   height: 100vh;
+//   background-color: var(--body-BG-color);
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+// }
 /* End Css Reset */
 
 /* Wrapper Area */
