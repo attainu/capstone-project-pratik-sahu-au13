@@ -68,3 +68,13 @@
 Dependencies to install: axios, jwt-decode
 
 ## Features and modifications (12th and 13th June)
+
+- Added progress tracker and API endpoints file in front-end-dev branch
+- Added favoriteCourse property to student Shchema
+- Add likedBy property to course Schema
+- Made Route for profile update
+- Made route for changing DP
+- Made a profile Schema
+- Added profileInfo property to both student and tutor Schema
+- Tested both the endpoints - Working fine!
+- Pushed all the latest backend contents to the deployed server
