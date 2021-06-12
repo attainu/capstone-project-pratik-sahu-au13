@@ -11,6 +11,8 @@ const images = {
   profile: { id: 7, src: `${url}/profile.png`, alt: "profile-icon" },
   star: { id: 8, src: `${url}/star.png`, alt: "star-icon" },
   web_dev: { id: 9, src: `${url}/web_dev.jpg`, alt: "course-icon" },
+  student: { id: 8, src: `${url}/student.jpg`, alt: "student-icon" },
+  tutor: { id: 8, src: `${url}/tutor.jpg`, alt: "tutor-icon" },
 };
 
 export default images;

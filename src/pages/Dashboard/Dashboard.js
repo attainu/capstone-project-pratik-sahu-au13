@@ -63,6 +63,6 @@ export function Dashboard() {
       </div>
     </div>
   ) : (
-    <Redirect to="/auth" />
+    <Redirect to="/usertype" />
   );
 }

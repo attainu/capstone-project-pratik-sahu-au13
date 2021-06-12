@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import images from "../../assets/images";
 import "./CourseCardDB.scss";
 
@@ -23,7 +24,10 @@ export function CourseCardDB() {
         <img className="coursedb__rating-icon" src={star.src} alt={star.alt} />
         <p>4.9</p>
       </div>
-      <button className="coursedb__viewBtn">View Course</button>
+      {/* <button className="coursedb__viewBtn">View Course</button> */}
+      <Link to="details">
+        <button className="coursedb__viewBtn">View Course</button>
+      </Link>
     </div>
   );
 }
