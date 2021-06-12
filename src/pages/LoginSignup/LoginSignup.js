@@ -4,7 +4,7 @@ import { AuthContext } from "../../contexts/AuthContext";
 import GoogleLogin from "react-google-login";
 import "./LoginSignup.scss";
 
-export function LoginSignup() {
+export function LoginSignup({ selectedUserType }) {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -53,7 +53,7 @@ export function LoginSignup() {
     e.preventDefault();
     const formdata = formData;
     console.log("Form data: ", formdata);
-    fetch("http://localhost:5233/tut/login", {
+    fetch(`http://localhost:5233/${selectedUserType}/login`, {
       method: "POST",
       mode: "cors",
       headers: { "Content-Type": "application/json" },
@@ -92,7 +92,7 @@ export function LoginSignup() {
       return;
     }
 
-    fetch("http://localhost:5233/tut/signup", {
+    fetch(`http://localhost:5233/${selectedUserType}/signup`, {
       method: "POST",
       mode: "cors",
       headers: { "Content-Type": "application/json" },

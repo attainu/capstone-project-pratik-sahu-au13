@@ -1,16 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { Redirect } from "react-router";
 import images from "../../assets/images";
+import { AuthContext } from "../../contexts/AuthContext";
 import "./UserType.scss";
 
-export function UserType() {
+export function UserType({ tutorSelected, studentSelected }) {
+  const { user } = useContext(AuthContext);
   const { student, tutor } = images;
 
-  return (
+  return !user ? (
     <div className="type">
       <div className="type__tutor">
         <img className="type__tutor-img" src={tutor.src} alt={tutor.alt} />
-        <Link to="/auth" className="type__tutor-name">
+        <Link onClick={tutorSelected} to="/auth" className="type__tutor-name">
           LogIn/SignUp as <strong>Tutor</strong>
         </Link>
       </div>
@@ -20,10 +23,16 @@ export function UserType() {
           src={student.src}
           alt={student.alt}
         />
-        <Link to="/auth" className="type__student-name">
+        <Link
+          onClick={studentSelected}
+          to="/auth"
+          className="type__student-name"
+        >
           LogIn/SignUp as <strong>Student</strong>
         </Link>
       </div>
     </div>
+  ) : (
+    <Redirect to="/dashboard" />
   );
 }
