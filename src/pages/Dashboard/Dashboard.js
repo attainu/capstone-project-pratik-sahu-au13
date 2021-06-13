@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Redirect } from "react-router";
 import images from "../../assets/images";
 import { CourseCardDB, Search } from "../../components";
-import { AuthContext } from "../../contexts/AuthContext";
+import { AuthContext } from "../../stateHandling/contexts/AuthContext";
 import "./Dashboard.scss";
 
 export function Dashboard() {

@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Redirect, useHistory } from "react-router";
-import { AuthContext } from "../../contexts/AuthContext";
+import { AuthContext } from "../../stateHandling/contexts/AuthContext";
 import GoogleLogin from "react-google-login";
 import "./LoginSignup.scss";
 
