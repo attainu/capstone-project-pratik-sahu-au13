@@ -12,23 +12,6 @@ export function Dashboard() {
 
   return user ? (
     <div className="dashboard">
-      <div className="dashboard__welcome">
-        <div className="dashboard__welcome-greet">
-          <img
-            className="dashboard__welcome-greet--userpic"
-            src={user.user.imageUrl}
-            alt="user-pic"
-          />
-          <div className="dashboard__welcome-greet--username">
-            Welcome {user.user.name}
-          </div>
-        </div>
-        <img
-          className="dashboard__welcome-notification"
-          src={bell.src}
-          alt={bell.alt}
-        />
-      </div>
       <div className="dashboard__watching">
         <CourseCardDB />
         <img
