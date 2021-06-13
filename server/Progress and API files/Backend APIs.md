@@ -23,12 +23,14 @@
 **To Enroll to a course** ==> POST: "/enroll/:courseId"
 **To Update a course** ==> PATCH: "/updatecourse/:courseId"
 **To update thumbnail** ==> PATCH: "/updatethumbnail/:courseId"
+**To delete a video** ==> DELETE: "/deletevideo/:videoId"
 
 ## Reviews
 
 **To add a review** ==> POST: "/addreview/:courseId"
-**To update a review** ==> PATCH: "/updatereview/:courseId"
-**To delete a review** ==> PATCH: "/deletereview/:courseId"
+**To update a review** ==> PATCH: "/editreview/:reviewId"
+**To delete a review** ==> DELETE: "/deletereview/:reviewId"
+**To fetch all review of a course** ==> GET: "/allreviews/:courseId"
 
 ## Profile
 
