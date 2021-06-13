@@ -3,7 +3,7 @@ import AuthContextProvider from "./stateHandling/contexts/AuthContext";
 import { StateContext } from "./stateHandling/contexts/StateContext";
 import { BrowserRouter } from "react-router-dom";
 import { useContext, useEffect } from "react";
-import { getCourses } from "./stateHandling/utils/dataFromServer";
+import { getCourses } from "./stateHandling/utils/serverRequests";
 import "./App.scss";
 
 function App() {

@@ -3,6 +3,10 @@ import { Redirect, useHistory } from "react-router";
 import { AuthContext } from "../../stateHandling/contexts/AuthContext";
 import GoogleLogin from "react-google-login";
 import "./LoginSignup.scss";
+import {
+  userLogin,
+  userSignup,
+} from "../../stateHandling/utils/serverRequests";
 
 export function LoginSignup({ selectedUserType }) {
   const [formData, setFormData] = useState({
@@ -52,33 +56,34 @@ export function LoginSignup({ selectedUserType }) {
   function handleLoginSubmit(e) {
     e.preventDefault();
     const formdata = formData;
-    console.log("Form data: ", formdata);
-    fetch(`http://localhost:5233/${selectedUserType}/login`, {
-      method: "POST",
-      mode: "cors",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formdata),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.error) {
-          console.log("Login failed...", data);
-          setLoginMessage(data.error);
-          return;
-        }
-        // console.log("Data pushed successfully, user logged in", data);
-        dispatch({
-          type: "VERIFY_USER",
-          payload: {
-            name: `${data.tutorInfo.firstName} ${data.tutorInfo.lastName}`,
-            imageUrl: `https://ui-avatars.com/api/?name=${data.tutorInfo.firstName}`,
-          },
-        });
-        history.push("/dashboard");
-      })
-      .catch((err) => {
-        console.log("Error in login", err);
-      });
+    userLogin(formdata, selectedUserType, dispatch);
+    // console.log("Form data: ", formdata);
+    // fetch(`http://localhost:5233/${selectedUserType}/login`, {
+    //   method: "POST",
+    //   mode: "cors",
+    //   headers: { "Content-Type": "application/json" },
+    //   body: JSON.stringify(formdata),
+    // })
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     if (data.error) {
+    //       console.log("Login failed...", data);
+    //       setLoginMessage(data.error);
+    //       return;
+    //     }
+    //     // console.log("Data pushed successfully, user logged in", data);
+    //     dispatch({
+    //       type: "VERIFY_USER",
+    //       payload: {
+    //         name: `${data.tutorInfo.firstName} ${data.tutorInfo.lastName}`,
+    //         imageUrl: `https://ui-avatars.com/api/?name=${data.tutorInfo.firstName}`,
+    //       },
+    //     });
+    //     history.push("/dashboard");
+    //   })
+    //   .catch((err) => {
+    //     console.log("Error in login", err);
+    //   });
   }
 
   // ----------- Function for Sign Up ------- /
@@ -92,34 +97,36 @@ export function LoginSignup({ selectedUserType }) {
       return;
     }
 
-    fetch(`http://localhost:5233/${selectedUserType}/signup`, {
-      method: "POST",
-      mode: "cors",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formdata),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.error) {
-          console.log("Signup failed...", data);
-          setSignupMessage(data.error);
-          return;
-        }
-        console.log("Data pushed successfully, user signed up", data);
-        dispatch({
-          type: "VERIFY_USER",
-          payload: {
-            name: `${data.data.firstName} ${data.data.lastName}`,
-            imageUrl: `https://ui-avatars.com/api/?name=${data.data.firstName}`,
-          },
-        });
-        setSignupMessage("Successfully Signed up! CLick on Login button");
-        history.push("/dashboard");
-      })
-      .catch((err) => {
-        console.log("Error in login", err);
-        setSignupMessage("Unknown error occurred...");
-      });
+    userSignup(formdata, selectedUserType, dispatch);
+
+    // fetch(`http://localhost:5233/${selectedUserType}/signup`, {
+    //   method: "POST",
+    //   mode: "cors",
+    //   headers: { "Content-Type": "application/json" },
+    //   body: JSON.stringify(formdata),
+    // })
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     if (data.error) {
+    //       console.log("Signup failed...", data);
+    //       setSignupMessage(data.error);
+    //       return;
+    //     }
+    //     console.log("Data pushed successfully, user signed up", data);
+    //     dispatch({
+    //       type: "VERIFY_USER",
+    //       payload: {
+    //         name: `${data.data.firstName} ${data.data.lastName}`,
+    //         imageUrl: `https://ui-avatars.com/api/?name=${data.data.firstName}`,
+    //       },
+    //     });
+    //     setSignupMessage("Successfully Signed up! CLick on Login button");
+    //     history.push("/dashboard");
+    //   })
+    //   .catch((err) => {
+    //     console.log("Error in login", err);
+    //     setSignupMessage("Unknown error occurred...");
+    //   });
   }
 
   function showHidePassword(e) {
