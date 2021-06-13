@@ -1,13 +1,14 @@
-import { LeftContainer, MainContainer, RightContainer } from "./containers";
-import AuthContextProvider from "./stateHandling/contexts/AuthContext";
-import { StateContext } from "./stateHandling/contexts/StateContext";
-import { BrowserRouter } from "react-router-dom";
 import { useContext, useEffect } from "react";
+import { BrowserRouter } from "react-router-dom";
+import { LeftContainer, MainContainer, RightContainer } from "./containers";
+import { AuthContext } from "./stateHandling/contexts/AuthContext";
+import { StateContext } from "./stateHandling/contexts/StateContext";
 import { getCourses } from "./stateHandling/utils/serverRequests";
 import "./App.scss";
 
 function App() {
   const { dispatch } = useContext(StateContext);
+  const { user } = useContext(AuthContext);
 
   useEffect(() => {
     getCourses(dispatch);
@@ -15,13 +16,11 @@ function App() {
 
   return (
     <div className="app">
-      <AuthContextProvider>
-        <BrowserRouter>
-          <LeftContainer />
-          <MainContainer />
-          <RightContainer />
-        </BrowserRouter>
-      </AuthContextProvider>
+      <BrowserRouter>
+        <LeftContainer />
+        <MainContainer />
+        {user && <RightContainer />}
+      </BrowserRouter>
     </div>
   );
 }
