@@ -69,16 +69,6 @@ Dependencies to install: axios, jwt-decode
 
 ## Features and modifications (12th and 13th June)
 
-- Added progress tracker and API endpoints file in front-end-dev branch
-- Added favoriteCourse property to student Shchema
-- Add likedBy property to course Schema
-- Made Route for profile update
-- Made route for changing DP
-- Made a profile Schema
-- Added profileInfo property to both student and tutor Schema
-
-## Features and modifications (13th June)
-
 - Added patch and delete routes for editing and deleting a review
 - Added route to get all the reviews for a particular course
 - Added a route to delete a video (Cloudinary delete is implemeted as well)

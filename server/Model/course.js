@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Review = require("./review");
 
 const courseSchema = new mongoose.Schema ({
     courseName: {
@@ -36,7 +37,7 @@ const courseSchema = new mongoose.Schema ({
     },
     total_subscriptions: {
         type: Number,
-        defualt: 0
+        default: 0
     },
     course_duration: {
         type: Number,
@@ -63,6 +64,20 @@ const courseSchema = new mongoose.Schema ({
         default: null
     }
 
+});
+
+courseSchema.pre('validate', async function (next) {
+    this.total_subscriptions = this.enrolledStudents.length
+
+    const reviews = await Review.find();
+    
+    // ---- Function to calculate the average rating --- //
+    Average_rating = reviews.reduce((sum, review) => {
+        return sum + review.rating;
+    }, 0)/reviews.length
+    this.rating = Average_rating.toFixed(2);
+
+    next(); 
 });
 
 module.exports = mongoose.model("course", courseSchema);
