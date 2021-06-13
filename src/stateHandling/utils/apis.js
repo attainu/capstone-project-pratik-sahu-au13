@@ -1,4 +1,4 @@
-const base_url = "https://cloudversity-api-server.herokuapp.com";
+const base_url = "https://cloudversity-api-server.herokuapp.com/";
 
 export const courseApis = {
   GET: {

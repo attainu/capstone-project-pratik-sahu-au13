@@ -9,6 +9,7 @@ import {
 } from "../pages";
 import { Welcome } from "../components";
 import { AuthContext } from "../stateHandling/contexts/AuthContext";
+import { NewCourse } from "../pages/NewCourse/NewCourse";
 
 export function MainContainer() {
   const [selectedUserType, setSelectedUserType] = useState("tut");
@@ -38,6 +39,7 @@ export function MainContainer() {
           />
         </Route>
         <Route path="/dashboard" component={Dashboard} />
+        <Route path="/newcourse" component={NewCourse} />
       </Switch>
     </div>
   );
