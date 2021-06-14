@@ -6,8 +6,10 @@ import {
 } from "../actionTypes";
 import { base_url, courseApis, userApis } from "./apis";
 
+// https://cloudversity-api-server.herokuapp.com/course/60c3641a5638ef407098a96d
+
 const API = axios.create({
-  baseURL: "http://localhost:5233/",
+  baseURL: base_url,
 });
 
 // API.interceptors.request.use((req) => {
@@ -54,6 +56,15 @@ export const getCourses = async (dispatch) => {
   } catch (err) {
     console.log(err);
   }
+};
+
+export const getCourseById = async (id) => {
+  try {
+    const {
+      data: { requestedCourse },
+    } = await API.get(`/course/${id}`);
+    return requestedCourse;
+  } catch (err) {}
 };
 
 export const userLogin = async (formData, selectedUserType, dispatch) => {
