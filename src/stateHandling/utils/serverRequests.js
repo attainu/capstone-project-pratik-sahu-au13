@@ -115,7 +115,7 @@ export const addCourse = async (formData, file, token) => {
       const data = await axios({
         method: "POST",
         crossorigin: false,
-        url: `http://localhost:5233/addcourse`,
+        url: `https://cloudversity-api-server.herokuapp.com/addcourse`,
         data: { ...formData, thumbnail:reader.result },
         headers: {
           Authorization: `Bearer ${token}`,
