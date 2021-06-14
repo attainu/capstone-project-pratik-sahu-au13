@@ -26,9 +26,12 @@ export function NewCourse() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(user);
+    // console.log(user);
+    // const token = user.user.token;
+    // console.log(token);
+    // addCourse(formData, file, token);
+    
     const token = user.user.token;
-    console.log(token);
     addCourse(formData, file, token);
   };
 
@@ -45,7 +48,7 @@ export function NewCourse() {
       <div className="newCourse__header">
         <h3>Add New Course</h3>
       </div>
-      <form encType="multipart/form-data" onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <div>
           <div className="newCourse__label">Course Title</div>
           <input

@@ -106,16 +106,27 @@ export const addCourse = async (formData, file, token) => {
     formData.course_duration = parseInt(formData.course_duration);
     formData.discount = parseInt(formData.discount);
     console.log(formData);
-    // console.log(token);
-    const data = await axios({
-      method: "POST",
-      crossorigin: false,
-      url: `http://localhost:5233/addcourse`,
-      data: formData,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    console.log(data);
+    console.log("File inside addCourse call :",file);
+
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = async () => {
+
+      const data = await axios({
+        method: "POST",
+        crossorigin: false,
+        url: `http://localhost:5233/addcourse`,
+        data: { ...formData, thumbnail:reader.result },
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log(data);
+    };
+    reader.onerror = () => {
+      console.error("Couldn't process the image");
+
+    };
+
   } catch (err) {}
 };
