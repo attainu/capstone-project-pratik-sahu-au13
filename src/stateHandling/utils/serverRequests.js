@@ -4,18 +4,49 @@ import {
   studentActionType,
   tutorActionType,
 } from "../actionTypes";
-import { courseApis } from "./apis";
+import { base_url, courseApis, userApis } from "./apis";
+
+const API = axios.create({
+  baseURL: "http://localhost:5233/",
+});
+
+// API.interceptors.request.use((req) => {
+//   // if (localStorage.getItem("profile")) {
+//   req.headers.Authorization = `Bearer ${token}`;
+//   return req;
+// });
+
+// export const addCourse = async (formData, file, token) => {
+//   try {
+//     formData.thumbnail = file;
+//     console.log(token);
+//     formData.price = parseInt(formData.price);
+//     formData.course_duration = parseInt(formData.course_duration);
+//     formData.discount = parseInt(formData.discount);
+//     console.log(formData);
+//     const data = await API.post(
+//       `/addcourse`,
+//       { ...formData },
+//       {
+//         headers: { Authorization: `Bearer ${token}` },
+//       }
+//     );
+//     console.log(data);
+//   } catch (err) {
+//     console.log(err.message);
+//   }
+// };
+
+// export const getCourses = () => API.get(courseApis.GET.allCourses);
 
 export const getCourses = async (dispatch) => {
   try {
     const {
       data: { data },
       status,
-    } = await axios({ method: "GET", url: courseApis.GET.allCourses });
-    // console.log(status);
+    } = await API.get(courseApis.GET.allCourses);
 
     if (status === 200) {
-      //   console.log(data);
       dispatch({ type: courseActionType.allCourses, payload: data });
     } else {
       throw new Error("No Response");
@@ -27,15 +58,16 @@ export const getCourses = async (dispatch) => {
 
 export const userLogin = async (formData, selectedUserType, dispatch) => {
   try {
+    const url =
+      selectedUserType === "tut"
+        ? userApis.POST.tutorLogin
+        : userApis.POST.studentLogin;
     const {
-      data: { data, message, token },
-    } = await axios({
-      method: "POST",
-      // url: userApis.POST.studentLogin,
-      url: `http://localhost:5233/${selectedUserType}/login`,
-      data: formData,
-    });
-    console.log(data, message, token);
+      data: { data, token },
+    } = await API.post(url, formData);
+    data.token = token;
+    console.log(data.token);
+
     if (data) {
       if (selectedUserType === "tut") {
         dispatch({ type: tutorActionType.verifyTutor, payload: data });
@@ -53,7 +85,7 @@ export const userSignup = async (formData, selectedUserType, dispatch) => {
     } = await axios({
       method: "POST",
       // url: userApis.POST.studentSignup,
-      url: `http://localhost:5233/${selectedUserType}/signup`,
+      url: `https://cloudversity-api-server.herokuapp.com/${selectedUserType}/signup`,
       data: formData,
     });
     console.log(data, message);
@@ -64,5 +96,26 @@ export const userSignup = async (formData, selectedUserType, dispatch) => {
         dispatch({ type: studentActionType.verifyStudent, payload: data });
       }
     }
+  } catch (err) {}
+};
+
+export const addCourse = async (formData, file, token) => {
+  try {
+    formData.thumbnail = file;
+    formData.price = parseInt(formData.price);
+    formData.course_duration = parseInt(formData.course_duration);
+    formData.discount = parseInt(formData.discount);
+    console.log(formData);
+    // console.log(token);
+    const data = await axios({
+      method: "POST",
+      crossorigin: false,
+      url: `http://localhost:5233/addcourse`,
+      data: formData,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    console.log(data);
   } catch (err) {}
 };
