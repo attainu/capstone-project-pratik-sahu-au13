@@ -42,6 +42,7 @@ Router.post("/addcourse", auth, imageUpload.single("thumbnail"), async (req, res
     try {
 
         console.log("User details provided during AUTH: ", req.user);
+        // res.header("Access-Control-Allow-Origin", "true");
 
         const course_data = new Course({
             ...req.body
@@ -68,7 +69,7 @@ Router.post("/addcourse", auth, imageUpload.single("thumbnail"), async (req, res
     } catch (error) {
         console.log("Error while creating course: ", error);
 
-        res.status(400).send({ message: "Couldn't create the course", error: error.message });
+        res.status.send({ message: "Couldn't create the course", error: error.message });
     }
 
 });
