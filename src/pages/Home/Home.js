@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { Search, CourseCard } from "../../components";
-import { Link } from "react-router-dom";
 import { StateContext } from "../../stateHandling/contexts/StateContext";
 import "./Home.scss";
 
@@ -28,15 +27,7 @@ export function Home() {
         {courses.length ? (
           courses.map((course) => {
             const id = course._id;
-            return (
-              <Link
-                style={{ color: "inherit", textDecoration: "none" }}
-                key={id}
-                to={`/details/${id}`}
-              >
-                <CourseCard key={id} course={course} />
-              </Link>
-            );
+            return <CourseCard key={id} course={course} />;
           })
         ) : (
           <div>No courses found</div>
