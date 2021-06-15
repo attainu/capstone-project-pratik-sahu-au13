@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { Search, CourseCard } from "../../components";
+import { AuthContext } from "../../stateHandling/contexts/AuthContext";
 import { StateContext } from "../../stateHandling/contexts/StateContext";
 import "./Home.scss";
 
@@ -7,6 +8,9 @@ export function Home() {
   const {
     state: { courses },
   } = useContext(StateContext);
+
+  const { user } = useContext(AuthContext);
+  console.log(user);
 
   return (
     <div className="home">
@@ -27,7 +31,11 @@ export function Home() {
         {courses.length ? (
           courses.map((course) => {
             const id = course._id;
-            return <CourseCard key={id} course={course} />;
+            return user ? (
+              <CourseCard user={user} key={id} course={course} />
+            ) : (
+              <CourseCard key={id} course={course} />
+            );
           })
         ) : (
           <div>No courses found</div>

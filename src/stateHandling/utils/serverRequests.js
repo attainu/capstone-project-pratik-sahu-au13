@@ -84,6 +84,7 @@ export const userLogin = async (formData, selectedUserType, dispatch) => {
         dispatch({ type: tutorActionType.verifyTutor, payload: data });
       } else {
         dispatch({ type: studentActionType.verifyStudent, payload: data });
+        dispatch({ type: courseActionType.wishList, payload: data.wishList });
       }
     }
   } catch (err) {}
@@ -129,4 +130,32 @@ export const addCourse = async (formData, file, token) => {
     });
     console.log(data);
   } catch (err) {}
+};
+
+export const addToWishList = async (id, token) => {
+  try {
+    await axios({
+      method: "POST",
+      url: `${base_url}/stu/addtowishlist/${id}`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  } catch (err) {
+    console.log(err.message);
+  }
+};
+
+export const removeFromWishList = async (id, token) => {
+  try {
+    await axios({
+      method: "DELETE",
+      url: `${base_url}/stu/removefromwishlist/${id}`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  } catch (err) {
+    console.log(err.message);
+  }
 };
