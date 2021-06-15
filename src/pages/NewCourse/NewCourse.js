@@ -32,6 +32,7 @@ export function NewCourse() {
     // addCourse(formData, file, token);
     
     const token = user.user.token;
+    console.log(formData);
     addCourse(formData, file, token);
   };
 
@@ -58,6 +59,7 @@ export function NewCourse() {
             value={formData.courseName}
             onChange={handleChange}
             placeholder="Title of your course..."
+            required
           />
         </div>
         <div className="newCourse__form_group">
@@ -69,12 +71,13 @@ export function NewCourse() {
             value={formData.price}
             onChange={handleChange}
             placeholder="How much would it cost?"
+            required
           />
         </div>
         <div className="newCourse__form_group">
           <div className="newCourse__label ">Thumbnail 
             <div className="newCourse__file_upload">
-              <input name="thumbnail" onChange={handleFileChange} type="file" />
+              <input name="thumbnail" onChange={handleFileChange} type="file" required/>
               <i className='bx bxs-cloud-upload '></i>
             </div>
           </div>
@@ -89,6 +92,7 @@ export function NewCourse() {
             value={formData.description}
             onChange={handleChange}
             placeholder="Tell us about the course..."
+            required
           > </textarea>
         </div>
         <div className="newCourse__form_group">
@@ -100,6 +104,7 @@ export function NewCourse() {
             value={formData.category}
             onChange={handleChange}
             placeholder="eg. Web development, Animations, Android development, etc..."
+            required
           /> 
         </div>
         <div className="newCourse__form_group">
@@ -108,13 +113,14 @@ export function NewCourse() {
             className="newCourse__input"
             type="text"
             name="level"
-            value={formData.level}
             onChange={handleChange}
             placeholder="Give level..."
+            required
           >
-            <option value="">Beginner</option>
-            <option value="">Intermediate</option>
-            <option value="">Advanced</option>
+            <option value="" selected disabled>Difficulty?</option>
+            <option value="Beginner" >Beginner</option>
+            <option value="Intermediate">Intermediate</option>
+            <option value="Advanced">Advanced</option>
           </select>
         </div>
         <button type="submit"> Add Course </button> 
