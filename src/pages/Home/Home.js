@@ -51,7 +51,43 @@ export function Home() {
       >
         Popular
       </div>
-      <div className="home__scroll"></div>
+      <div className="home__scroll">
+        {courses.length ? (
+          courses.map((course) => {
+            const id = course._id;
+            if (course.reviews.length > 2){
+              console.log("YES")
+              return <CourseCard user={user} key={id} course={course} />;
+            }
+            
+          })
+        ) : (
+          <div>No courses found</div>
+        )}
+      </div>
+      <div
+        style={{
+          margin: "1rem 0 0 0",
+          borderBottom: "1px solid black",
+          display: "inline-block",
+        }}
+      >
+        Highest Rated
+      </div>
+      <div className="home__scroll">
+        {courses.length ? (
+          courses.map((course) => {
+            const id = course._id;
+            if (course.rating > 4) {
+              console.log("YES")
+              return <CourseCard user={user} key={id} course={course} />;
+            }
+
+          })
+        ) : (
+          <div>No courses found</div>
+        )}
+      </div>
     </div>
   );
 }
