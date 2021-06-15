@@ -4,7 +4,9 @@ import { ReactComponent as Heart } from "../../assets/icons/heart.svg";
 import { ReactComponent as HeartFill } from "../../assets/icons/heartFill.svg";
 import "./CourseCard.scss";
 import {
+  addToCart,
   addToWishList,
+  removeFromCart,
   removeFromWishList,
 } from "../../stateHandling/utils/serverRequests";
 
@@ -18,9 +20,19 @@ export function CourseCard({ course, user }) {
     description,
   } = course;
 
+  console.log(user);
+
   const [fav, setFav] = useState(
     user
-      ? user.user.wishlist.filter((item) => item === _id).length
+      ? user.user.wishlist.filter((item) => item._id === _id).length
+        ? true
+        : false
+      : false
+  );
+
+  const [cart, setCart] = useState(
+    user
+      ? user.user.cart.filter((item) => item._id === _id).length
         ? true
         : false
       : false
@@ -35,6 +47,16 @@ export function CourseCard({ course, user }) {
       setFav(false);
     } else {
       setFav(false);
+    }
+  };
+
+  const handleCart = () => {
+    if (user && !cart) {
+      addToCart(_id, user.user.token);
+      setCart(true);
+    } else if (user) {
+      removeFromCart(_id, user.user.token);
+      setCart(false);
     }
   };
 
@@ -67,7 +89,9 @@ export function CourseCard({ course, user }) {
           </div>
         </Link>
         <div className="course__hover-btns">
-          <button>Add to Cart</button>
+          <button onClick={handleCart}>
+            {cart ? "Remove from Cart" : "Add to Cart"}
+          </button>
           {fav ? (
             <HeartFill
               onClick={handleFavorites}

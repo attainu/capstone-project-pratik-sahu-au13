@@ -84,7 +84,6 @@ export const userLogin = async (formData, selectedUserType, dispatch) => {
         dispatch({ type: tutorActionType.verifyTutor, payload: data });
       } else {
         dispatch({ type: studentActionType.verifyStudent, payload: data });
-        dispatch({ type: courseActionType.wishList, payload: data.wishList });
       }
     }
   } catch (err) {}
@@ -118,17 +117,25 @@ export const addCourse = async (formData, file, token) => {
     formData.course_duration = parseInt(formData.course_duration);
     formData.discount = parseInt(formData.discount);
     console.log(formData);
-    // console.log(token);
-    const data = await axios({
-      method: "POST",
-      crossorigin: false,
-      url: `http://localhost:5233/addcourse`,
-      data: formData,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    console.log(data);
+    console.log("File inside addCourse call :", file);
+
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = async () => {
+      const data = await axios({
+        method: "POST",
+        crossorigin: false,
+        url: `https://cloudversity-api-server.herokuapp.com/addcourse`,
+        data: { ...formData, thumbnail: reader.result },
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log(data);
+    };
+    reader.onerror = () => {
+      console.error("Couldn't process the image");
+    };
   } catch (err) {}
 };
 
@@ -158,4 +165,30 @@ export const removeFromWishList = async (id, token) => {
   } catch (err) {
     console.log(err.message);
   }
+};
+
+export const addToCart = async (id, token) => {
+  try {
+    const data = await axios({
+      method: "POST",
+      url: `${base_url}/stu/addtocart/${id}`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    console.log(data);
+  } catch (err) {}
+};
+
+export const removeFromCart = async (id, token) => {
+  try {
+    const data = await axios({
+      method: "PATCH",
+      url: `${base_url}/stu/removefromcart/${id}`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    console.log(data);
+  } catch (err) {}
 };
