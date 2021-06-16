@@ -5,7 +5,10 @@ export const stateReducer = (state, action) => {
     case courseActionType.allCourses:
       return { ...state, courses: action.payload };
 
-    case courseActionType.wishList:
+    case courseActionType.addToWishList:
+      return { ...state, wishListItems: action.payload };
+
+    case courseActionType.removeFromWishList:
       return { ...state, wishListItems: action.payload };
 
     default:

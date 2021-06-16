@@ -139,28 +139,38 @@ export const addCourse = async (formData, file, token) => {
   } catch (err) {}
 };
 
-export const addToWishList = async (id, token) => {
+export const addToWishList = async (id, user, dispatch) => {
   try {
-    await axios({
+    const data = await axios({
       method: "POST",
       url: `${base_url}/stu/addtowishlist/${id}`,
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${user.user.token}`,
       },
+    });
+    console.log(data);
+    dispatch({
+      type: courseActionType.addToWishList,
+      payload: data.data.wishListed._id,
     });
   } catch (err) {
     console.log(err.message);
   }
 };
 
-export const removeFromWishList = async (id, token) => {
+export const removeFromWishList = async (id, user, dispatch) => {
   try {
-    await axios({
+    const data = await axios({
       method: "DELETE",
       url: `${base_url}/stu/removefromwishlist/${id}`,
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${user.user.token}`,
       },
+    });
+    console.log(data);
+    dispatch({
+      type: courseActionType.removeFromWishList,
+      payload: user.user.wishlist,
     });
   } catch (err) {
     console.log(err.message);
@@ -190,5 +200,28 @@ export const removeFromCart = async (id, token) => {
       },
     });
     console.log(data);
+  } catch (err) {}
+};
+
+export const fetchWishList = (user, dispatch) => {
+  dispatch({ type: courseActionType.wishList, payload: user.user.wishlist });
+};
+
+export const uploadVideo = async (id, token, data) => {
+  try {
+    console.log(data);
+    const reader = new FileReader();
+    reader.readAsDataURL(data.file);
+    reader.onloadend = async () => {
+      const datas = await axios({
+        method: "POST",
+        url: `${base_url}/uploadvideo/${id}`,
+        data: { ...data, file: reader.result },
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log(datas);
+    };
   } catch (err) {}
 };

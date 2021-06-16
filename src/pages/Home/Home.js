@@ -3,6 +3,7 @@ import { Search, CourseCard } from "../../components";
 import { courseActionType } from "../../stateHandling/actionTypes";
 import { AuthContext } from "../../stateHandling/contexts/AuthContext";
 import { StateContext } from "../../stateHandling/contexts/StateContext";
+import { fetchWishList } from "../../stateHandling/utils/serverRequests";
 import "./Home.scss";
 
 export function Home() {
@@ -11,11 +12,14 @@ export function Home() {
   } = useContext(StateContext);
 
   const { user } = useContext(AuthContext);
+  const { dispatch } = useContext(StateContext);
   console.log(user);
 
   // useEffect(() => {
-  //   dispatch({ type: courseActionType.wishList, payload:  });
-  // }, []);
+  //   if (user) {
+  //     fetchWishList(user, dispatch);
+  //   }
+  // }, [dispatch, user]);
 
   return (
     <div className="home">

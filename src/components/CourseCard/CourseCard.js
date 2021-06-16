@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { ReactComponent as Heart } from "../../assets/icons/heart.svg";
 import { ReactComponent as HeartFill } from "../../assets/icons/heartFill.svg";
@@ -9,6 +9,7 @@ import {
   removeFromCart,
   removeFromWishList,
 } from "../../stateHandling/utils/serverRequests";
+import { StateContext } from "../../stateHandling/contexts/StateContext";
 
 export function CourseCard({ course, user }) {
   const {
@@ -20,11 +21,11 @@ export function CourseCard({ course, user }) {
     description,
   } = course;
 
-  console.log(user);
+  const { dispatch } = useContext(StateContext);
 
   const [fav, setFav] = useState(
     user
-      ? user.user.wishlist.filter((item) => item._id === _id).length
+      ? user.user.wishlist?.filter((item) => item._id === _id).length
         ? true
         : false
       : false
@@ -32,7 +33,7 @@ export function CourseCard({ course, user }) {
 
   const [cart, setCart] = useState(
     user
-      ? user.user.cart.filter((item) => item._id === _id).length
+      ? user.user.cart?.filter((item) => item._id === _id).length
         ? true
         : false
       : false
@@ -40,10 +41,10 @@ export function CourseCard({ course, user }) {
 
   const handleFavorites = () => {
     if (user && fav === false) {
-      addToWishList(_id, user.user.token);
+      addToWishList(_id, user, dispatch);
       setFav(true);
     } else if (user) {
-      removeFromWishList(_id, user.user.token);
+      removeFromWishList(_id, user, dispatch);
       setFav(false);
     } else {
       setFav(false);

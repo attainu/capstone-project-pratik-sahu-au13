@@ -1,6 +1,6 @@
 export const courseActionType = {
   allCourses: "FETCH_COURSES",
-  wishList: "FETCH_WISHLIST",
+  addToWishList: "FETCH_WISHLIST",
   cart: "FETCH_CART",
 };
 

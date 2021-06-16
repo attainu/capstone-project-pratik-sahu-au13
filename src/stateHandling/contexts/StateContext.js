@@ -11,6 +11,7 @@ function StateContextProvider({ children }) {
   };
 
   const [state, dispatch] = useReducer(stateReducer, initialState);
+  console.log(state);
 
   return (
     <StateContext.Provider value={{ state, dispatch }}>
