@@ -2,44 +2,37 @@ import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../stateHandling/contexts/AuthContext";
 import {
   getCourseById,
-  deleteVideo
+  uploadVideo,
 } from "../../stateHandling/utils/serverRequests";
 import "./CourseDetails.scss";
-import VideoUploadModal from "../../components/VideoUploadModal";
 
 export function CourseDetails({ match }) {
   const [courseDetails, setCourseDetails] = useState(null);
-  const [publicId, setPublicId] = useState(null);
-  const [showModal, setShowModal] = useState(false);
+  const [publicid, setPublicid] = useState(null);
+  const [file, setFile] = useState(null);
+  const [videoTitle, setVideoTitle] = useState("");
   const id = match.params.id;
 
   const { user } = useContext(AuthContext);
 
   useEffect(() => {
-    getCourseById(id).then((data) => {
-      setCourseDetails(data);
-      setPublicId(data?.videos[0].publicId);
-    });
-    
+    // fetch(`http://localhost:5233/tut/course/${id}`)
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     setCourseDetails(data.data);
+    //   })
+    //   .catch((err) => console.log(err.message));
+    getCourseById(id).then((data) => setCourseDetails(data));
   }, [id]);
 
-  const modalToggle = () => {
-    setShowModal(!showModal);
+  const handleVideoSubmit = (e) => {
+    e.preventDefault();
+    const data = { title: videoTitle, file: file };
+    uploadVideo(id, user?.user.token, data);
   };
 
-  const deleteSelectecVideo = async(videoId) => {
-    // call the function for deleteing video
-    const res = await deleteVideo(videoId, user?.user.token);
-    // do something after successful response
-    if (!res){
-      return alert("Couldn't delete the video")
-    }
-    return alert("Video deleted sucessfully")
-  }
-
-
   return (
-    <div className={showModal ? "blur-bg" : "details" }>
+    <div className="details">
       <div className="details__title">
         <div>
           <h2>{courseDetails?.courseName}</h2>
@@ -57,8 +50,8 @@ export function CourseDetails({ match }) {
               }}
               title="demo"
               src={
-                publicId
-                  ? `https://player.cloudinary.com/embed/?cloud_name=cloudversity&public_id=tutor%20resources/${publicId}&fluid=true&controls=true&source_types%5B0%5D=mp4`
+                publicid
+                  ? `https://player.cloudinary.com/embed/?cloud_name=cloudversity&public_id=tutor%20resources/${publicid}&fluid=true&controls=true&source_types%5B0%5D=mp4`
                   : null
               }
               allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
@@ -81,17 +74,18 @@ export function CourseDetails({ match }) {
             </p>
           </div>
         </div>
-
         <div className="details__content-right">
-          {showModal && <div className="details__content-right--uploadvideo">
-            <VideoUploadModal id={id} user={user} modalToggle={modalToggle} />
-          </div>}
-
-          <div className="details__content-right--uploadbtn" onClick={modalToggle}>
-            Add a new Video
-            <i class='bx bx-video-recording' ></i>
-          </div>
-
+          <form onSubmit={handleVideoSubmit}>
+            <input
+              type="text"
+              name="title"
+              value={videoTitle}
+              onChange={(e) => setVideoTitle(e.target.value)}
+              placeholder="Enter title"
+            />
+            <input type="file" name="videoLink" onChange={(e) => setFile(e.target.files[0])} />
+            <button type="submit">Add video </button>
+          </form>
           <div className="details__content-right--videos">
             <h4>Contents</h4>
             {courseDetails &&
@@ -99,15 +93,10 @@ export function CourseDetails({ match }) {
                 <div
                   key={video._id}
                   className="video"
-                  onClick={() => setPublicId(video.publicId)}
+                  onClick={() => setPublicid(video.publicId)}
                 >
-                  <small>{video.title.substring(0, 30 )}</small>
-                  <div className="details__content-right--videos-r">
-                    <small>{(video.videoLength.toFixed(2)).toString()}</small>
-                    {
-                      user && <i class='bx bx-trash' onClick={() => deleteSelectecVideo(video._id)}></i>
-                    }
-                  </div>
+                  <small>{video.title}</small>
+                  <small>05:10</small>
                 </div>
               ))}
           </div>

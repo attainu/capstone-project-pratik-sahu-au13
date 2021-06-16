@@ -73,39 +73,6 @@
         & .active {
           background-color: orangered;
         }
-
-        &-r {
-          display: flex;
-          align-items: center;
-
-          i {
-            margin-left: 1rem;
-            color: rgba(194, 17, 17, 0.815);
-          }
-        }
-      }
-
-      &--uploadbtn {
-        padding: 10px 15px;
-        border-radius: 5px;
-        background-color: #4b5563;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-bottom: 1rem;
-        color: white;
-        transition: 0.25s;
-        cursor: pointer;
-
-        i {
-          margin-left: 1rem;
-          font-size: 2rem;
-        }
-
-        &:hover {
-          background-color: cornflowerblue;
-          color: white;
-        }
       }
     }
   }

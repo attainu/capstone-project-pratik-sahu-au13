@@ -234,7 +234,7 @@ export const uploadVideo = async (id, token, data) => {
       const datas = await axios({
         method: "POST",
         url: `${base_url}/uploadvideo/${id}`,
-        data: { ...data, file: reader.result },
+        data: { ...data, videoLink: reader.result },
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -242,4 +242,28 @@ export const uploadVideo = async (id, token, data) => {
       console.log(datas);
     };
   } catch (err) {}
+};
+
+// -----------------Newly added---------------- // 
+
+export const deleteVideo = async (videoId, token) => {
+  try {
+
+
+      const data = await axios({
+        method: "DELETE",
+        url: `${base_url}/deletevideo/${videoId}`,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      console.log(data);
+      return data;
+ 
+  } catch (err) { 
+    console.log("Error Occured: ", err);
+    return null;
+
+  };
 };
