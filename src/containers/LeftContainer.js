@@ -23,7 +23,7 @@ export function LeftContainer() {
           />
         </Link>
       </div>
-      <Link to="/newcourse">
+      <Link to="/tutor">
         <img
           className="leftContainer__icon"
           src={logout.src}
