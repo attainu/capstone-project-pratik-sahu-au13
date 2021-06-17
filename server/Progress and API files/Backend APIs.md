@@ -14,6 +14,7 @@
 **Add to cart** ==> POST: "/addtocart/:courseId"
 **Remove from cart** ==> PATCH: "/removefromcart/:courseId"
 **Latest viewed course** ==> POST: "/latestcourse/:courseId"
+**To apply discount** ==> PATCH: "/applydiscount/:courseId"
 
 ## Tutor
 

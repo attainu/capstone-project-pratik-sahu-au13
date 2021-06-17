@@ -117,3 +117,10 @@ Dependencies to install: axios, jwt-decode
 - Added Add video button in courseDetails page \*\*
 - Made a new components named VideoUploadModal \*\*
 - Added a delete icon
+
+## Features and modifications (17th June):
+
+- Added totalEarnings section in tutorSchema
+- Added logic to update the total earnings of tutor(in enrollCourse )
+- Added logic to apply discount before updating the tutor earnings
+- Added logic to remove the delete videos from course's videos list
