@@ -87,10 +87,10 @@ export function CourseDetails({ match }) {
             <VideoUploadModal id={id} user={user} modalToggle={modalToggle} />
           </div>}
 
-          <div className="details__content-right--uploadbtn" onClick={modalToggle}>
+          {user && <div className="details__content-right--uploadbtn" onClick={modalToggle}>
             Add a new Video
             <i class='bx bx-video-recording' ></i>
-          </div>
+          </div>}
 
           <div className="details__content-right--videos">
             <h4>Contents</h4>
