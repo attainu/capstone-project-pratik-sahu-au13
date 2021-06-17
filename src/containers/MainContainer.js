@@ -41,7 +41,6 @@ export function MainContainer() {
         </Route>
         <Route path="/dashboard" component={Dashboard} />
         <Route path="/newcourse" component={NewCourse} />
-        <Route path="/tutor" component={TutorDashboard} />
       </Switch>
     </div>
   );
