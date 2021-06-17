@@ -11,14 +11,19 @@ export function CourseDetails({ match }) {
   const [courseDetails, setCourseDetails] = useState(null);
   const [publicId, setPublicId] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [videoTitle, setVideoTitle] = useState("")
   const id = match.params.id;
-
   const { user } = useContext(AuthContext);
 
   useEffect(() => {
     getCourseById(id).then((data) => {
       setCourseDetails(data);
-      setPublicId(data?.videos[0].publicId);
+      if (data.videos.length) {
+        setPublicId(data.videos[0].publicId);
+        setVideoTitle(data.videos[0].title);
+      }
+      
+      
     });
     
   }, [id]);
@@ -43,12 +48,13 @@ export function CourseDetails({ match }) {
       <div className="details__title">
         <div>
           <h2>{courseDetails?.courseName}</h2>
-          <small>{`${courseDetails?.authorName.firstName} ${courseDetails?.authorName.lastName}`}</small>
+          <small>by {`${courseDetails?.authorName.firstName} ${courseDetails?.authorName.lastName}`}</small>
+          <h3>{videoTitle}</h3>
         </div>
       </div>
       <div className="details__content">
         <div className="details__content-left">
-          <div className="details__content-left--video">
+          {publicId && <div className="details__content-left--video">
             <iframe
               className="iframe"
               style={{
@@ -65,7 +71,7 @@ export function CourseDetails({ match }) {
               allowFullScreen
               frameBorder="0"
             ></iframe>
-          </div>
+          </div>}
           <div className="details__content-left--info">
             <h4
               style={{
@@ -80,6 +86,19 @@ export function CourseDetails({ match }) {
               {courseDetails?.description}
             </p>
           </div>
+          <div className="details__content-left--reviews">
+            <h2>Reviews</h2>
+            {
+              courseDetails?.reviews && courseDetails.reviews.map((review) => {
+                return <>
+                <div className="review" key={review._id}>
+                  <h4>{review.reviewerName}</h4>
+                    <p>{review.reviewBody}</p>
+                </div>
+                </>
+              })
+            }
+          </div>
         </div>
 
         <div className="details__content-right">
@@ -89,7 +108,7 @@ export function CourseDetails({ match }) {
 
           {user && <div className="details__content-right--uploadbtn" onClick={modalToggle}>
             Add a new Video
-            <i class='bx bx-video-recording' ></i>
+            <i className='bx bx-video-recording' ></i>
           </div>}
 
           <div className="details__content-right--videos">
@@ -99,13 +118,13 @@ export function CourseDetails({ match }) {
                 <div
                   key={video._id}
                   className="video"
-                  onClick={() => setPublicId(video.publicId)}
+                  onClick={() => { setVideoTitle(video.title); setPublicId(video.publicId)}}
                 >
                   <small>{video.title.substring(0, 30 )}</small>
                   <div className="details__content-right--videos-r">
-                    <small>{(video.videoLength.toFixed(2)).toString()}</small>
+                    <small>{video.videoLength ? (video.videoLength.toFixed(2)).toString(): null}</small>
                     {
-                      user && <i class='bx bx-trash' onClick={() => deleteSelectecVideo(video._id)}></i>
+                      user && <i className='bx bx-trash' onClick={() => deleteSelectecVideo(video._id)}></i>
                     }
                   </div>
                 </div>
