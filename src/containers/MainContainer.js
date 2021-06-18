@@ -6,7 +6,6 @@ import {
   LoginSignup,
   Dashboard,
   UserType,
-  TutorDashboard,
 } from "../pages";
 import { Welcome } from "../components";
 import { AuthContext } from "../stateHandling/contexts/AuthContext";

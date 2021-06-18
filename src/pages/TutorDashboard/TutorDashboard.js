@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { TutorCard } from "../../components/TutorCard/TutorCard";
 import "./TutorDashboard.scss";
 
@@ -14,7 +15,6 @@ export function TutorDashboard({ user }) {
   });
 
   const handleStats = (id) => {
-    console.log(id, user);
     const { enrolledStudents, wishlistedBy } = user.user.createdCourses.filter(
       (e) => e._id === id
     )[0];
@@ -29,8 +29,9 @@ export function TutorDashboard({ user }) {
   return (
     <div className="tutor">
       <div className="tutor__row1">
-        <button>Add a Course</button>
-        <button>Update a Course</button>
+        <Link className="tutor__row1-btn" to="/newcourse">
+          Create a new Course
+        </Link>
       </div>
       <div className="tutor__row2">
         <div className="tutor__row2__left">
@@ -48,25 +49,36 @@ export function TutorDashboard({ user }) {
           </div>
         </div>
         <div className="tutor__row2__right">
-          <div className="tutor__row2__right-stats">
-            <p style={{ fontSize: "2.5rem", fontWeight: "600" }}>
-              {stats.enrolled}
-            </p>
-            <p>Enrolled Students</p>
-          </div>
-          {/* <div style={{ width: "1rem" }}></div> */}
-          <div className="tutor__row2__right-stats">
-            <p style={{ fontSize: "2.5rem", fontWeight: "600" }}>
-              {stats.earning}
-            </p>
-            <p>Total Earnings</p>
-          </div>
-          <div className="tutor__row2__right-stats">
-            <p style={{ fontSize: "2.5rem", fontWeight: "600" }}>
-              {stats.wishlist}
-            </p>
-            <p>Wishlisted students</p>
-          </div>
+          {stats.enrolled === "" ? (
+            <div className="tutor__row2__right-empty">Your Stats</div>
+          ) : (
+            <>
+              <Link className="tutor__row2__right-stats remove-style">
+                Update Course
+              </Link>
+              <Link className="tutor__row2__right-stats remove-style">
+                Update Thumbnail
+              </Link>
+              <div className="tutor__row2__right-stats">
+                <p style={{ fontSize: "2.5rem", fontWeight: "600" }}>
+                  {stats.enrolled}
+                </p>
+                <p>Enrolled Students</p>
+              </div>
+              <div className="tutor__row2__right-stats">
+                <p style={{ fontSize: "2.5rem", fontWeight: "600" }}>
+                  {stats.earning}
+                </p>
+                <p>Total Earnings</p>
+              </div>
+              <div className="tutor__row2__right-stats">
+                <p style={{ fontSize: "2.5rem", fontWeight: "600" }}>
+                  {stats.wishlist}
+                </p>
+                <p>Wishlisted students</p>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>

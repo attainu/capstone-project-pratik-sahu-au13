@@ -6,15 +6,26 @@
   //   overflow: hidden;
   // background-color: var(--white);
 
-  &__row1 > button {
-    font-size: 1.5rem;
-    margin: 0 1rem;
-    padding: 1rem;
-    border-style: none;
-    outline-style: none;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    background-color: var(--grey-light);
+  &__row1 {
+    margin-top: 1rem;
+
+    &-btn {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin: 1rem;
+      padding: 1rem;
+      border-style: none;
+      outline-style: none;
+      border-radius: 0.5rem;
+      text-decoration: none;
+      color: inherit;
+      cursor: pointer;
+      background-color: var(--grey-light);
+
+      // &:last-child {
+      //   margin-left: 0;
+      // }
+    }
   }
 
   &__row2 {
@@ -27,7 +38,7 @@
       //   background-color: cornflowerblue;
 
       &-header {
-        margin: 1rem 0 0 0;
+        margin: 2rem 0 0 0;
       }
 
       &-courseList {
@@ -42,7 +53,7 @@
     &__right {
       width: 40%;
       height: 100%;
-      margin-top: 4.3rem;
+      margin-top: 5.2rem;
       margin-right: 1rem;
       padding: 1rem;
       border-radius: 1rem;
@@ -73,4 +84,9 @@
       }
     }
   }
+}
+
+.remove-style {
+  text-decoration: none;
+  color: inherit;
 }
