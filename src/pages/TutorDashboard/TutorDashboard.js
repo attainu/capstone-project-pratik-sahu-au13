@@ -1,12 +1,16 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 import { TutorCard } from "../../components/TutorCard/TutorCard";
+import { deleteCourseFromDB } from "../../stateHandling/utils/serverRequests";
 import "./TutorDashboard.scss";
 
 export function TutorDashboard({ user }) {
   const {
-    user: { createdCourses },
+    user: { createdCourses, token },
   } = user;
+  const [id, setId] = useState(null);
+  const history = useHistory();
 
   const [stats, setStats] = useState({
     enrolled: "",
@@ -24,6 +28,15 @@ export function TutorDashboard({ user }) {
       earning: 0,
       wishlist: wishlistedBy.length,
     });
+    setId(id);
+  };
+
+  const deleteCourse = (courseId) => {
+    console.log(courseId);
+    if (window.confirm("Are you sure to delete your course?")) {
+      deleteCourseFromDB(courseId, token);
+      history.push("/");
+    }
   };
 
   return (
@@ -53,10 +66,20 @@ export function TutorDashboard({ user }) {
             <div className="tutor__row2__right-empty">Your Stats</div>
           ) : (
             <>
-              <Link className="tutor__row2__right-stats remove-style">
+              <Link
+                to={`/updatecourse/${id}`}
+                className="tutor__row2__right-stats remove-style"
+              >
                 Update Course
               </Link>
-              <Link className="tutor__row2__right-stats remove-style">
+              <Link
+                to="#"
+                className="tutor__row2__right-stats remove-style"
+                onClick={() => deleteCourse(id)}
+              >
+                Delete Course
+              </Link>
+              <Link to="/" className="tutor__row2__right-stats remove-style">
                 Update Thumbnail
               </Link>
               <div className="tutor__row2__right-stats">
