@@ -80,6 +80,14 @@
             color: rgb(73, 73, 73);
             font-size: 90%;
           }
+          .rating-grp {
+            display: flex;
+            span {
+              font-weight: bolder;
+              margin-left: 1rem;
+              color: #4b5563;
+            }
+          }
         }
       }
     }

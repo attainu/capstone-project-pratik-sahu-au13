@@ -126,7 +126,10 @@ export function CourseDetails({ match }) {
               courseDetails?.reviews && courseDetails.reviews.map((review) => {
                 return <>
                 <div className="review" key={review._id}>
-                  <h4>{review.reviewerName}</h4>
+                  <div className="rating-grp">
+                    <h4>{review.reviewerName}</h4>
+                      <span>{review.rating} Star</span>
+                  </div>
                     <p>{review.reviewBody}</p>
                 </div>
                 </>
