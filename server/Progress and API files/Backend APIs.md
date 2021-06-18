@@ -14,7 +14,6 @@
 **Add to cart** ==> POST: "/addtocart/:courseId"
 **Remove from cart** ==> PATCH: "/removefromcart/:courseId"
 **Latest viewed course** ==> POST: "/latestcourse/:courseId"
-**To apply discount** ==> PATCH: "/applydiscount/:courseId"
 
 ## Tutor
 
@@ -33,6 +32,7 @@
 **To update thumbnail** ==> PATCH: "/updatethumbnail/:courseId"
 **To delete a video** ==> DELETE: "/deletevideo/:videoId"
 **to apply discount** ==> PATCH: "/applydiscount/:courseId"
+**to Delete a course** ==> DELETE: "/deletecourse/:courseId"
 
 ## Reviews
 
