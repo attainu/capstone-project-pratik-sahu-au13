@@ -2,7 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../stateHandling/contexts/AuthContext";
 import {
   getCourseById,
-  deleteVideo
+  deleteVideo,
+  postReview
 } from "../../stateHandling/utils/serverRequests";
 import "./CourseDetails.scss";
 import VideoUploadModal from "../../components/VideoUploadModal";
@@ -11,7 +12,8 @@ export function CourseDetails({ match }) {
   const [courseDetails, setCourseDetails] = useState(null);
   const [publicId, setPublicId] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  const [videoTitle, setVideoTitle] = useState("")
+  const [videoTitle, setVideoTitle] = useState("");
+  const [review, setReview] = useState({reviewBody: "", rating: ""});
   const id = match.params.id;
   const { user } = useContext(AuthContext);
 
@@ -23,7 +25,6 @@ export function CourseDetails({ match }) {
         setVideoTitle(data.videos[0].title);
       }
       
-      
     });
     
   }, [id]);
@@ -33,18 +34,51 @@ export function CourseDetails({ match }) {
   };
 
   const deleteSelectecVideo = async(videoId) => {
-    // call the function for deleteing video
     const res = await deleteVideo(videoId, user?.user.token);
-    // do something after successful response
     if (!res){
-      return alert("Couldn't delete the video")
+      return alert("Couldn't delete the video");
+    };
+    return alert("Video deleted sucessfully");
+  };
+
+  const fillStar = (e) => {
+    setReview({ ...review, rating: e.target.id });
+    if (e.target.className === "bx bxs-star gold"){
+      e.target.className = "bx bx-star";
+    } else {
+      e.target.className = "bx bxs-star gold";
+    };
+    let count = e.target.id
+    for (let i = 1 ; i < count; i++) {
+      
+      if (e.target.id > 0) {
+        console.log(e.target.id);
+        
+        e.target.previousElementSibling.className = "bx bxs-star gold"
+        e.target = e.target.previousElementSibling;
+      }
     }
-    return alert("Video deleted sucessfully")
+
+  };
+
+  const postreview = async (e) => {
+  e.preventDefault();
+   try {
+     const res = await postReview(courseDetails._id, review, user?.user.token);
+     console.log("Review Data before sending: ", review)
+      if (res){
+        console.log(res);
+        alert("Review posted successfully");  
+      }
+
+   } catch (error) {
+     console.log("Error occured: ", error);
+   }
   }
 
 
   return (
-    <div className={showModal ? "blur-bg" : "details" }>
+    <div className={"details" }>
       <div className="details__title">
         <div>
           <h2>{courseDetails?.courseName}</h2>
@@ -120,7 +154,7 @@ export function CourseDetails({ match }) {
                   className="video"
                   onClick={() => { setVideoTitle(video.title); setPublicId(video.publicId)}}
                 >
-                  <small>{video.title.substring(0, 30 )}</small>
+                  <small>{video.title.substring(0, 35 )}</small>
                   <div className="details__content-right--videos-r">
                     <small>{video.videoLength ? (video.videoLength.toFixed(2)).toString(): null}</small>
                     {
@@ -131,11 +165,22 @@ export function CourseDetails({ match }) {
               ))}
           </div>
           <div className="details__content-right--post-review">
-            <form method="POST">
-              <h3>Post a Review</h3>
-              <textarea name="reviewBody" cols="30" rows="10" placeholder="Write review here..."></textarea>
-              <button>Submit</button>
-            </form>
+            <div className="details__content-right--post-review">
+              <form onSubmit={postreview} method="POST">
+                <h3>Post a Review</h3>
+                <div className="rating-grp">
+                  <h4>Rating: </h4>  
+                  {
+                    [1,2,3,4,5].map((i) => {
+                      return <i className='bx bx-star' key={i} id={i}onClick={fillStar}></i>
+                    })
+                  }
+                  
+                </div>
+                <textarea name="reviewBody" cols="30" rows="10" value={review.reviewBody} placeholder="Write review here..." onChange={(e) => setReview({...review, reviewBody: e.target.value})}></textarea>
+                <button type="submit" >Submit</button>
+              </form>
+            </div>
           </div>
         </div>
       </div>
