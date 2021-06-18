@@ -130,6 +130,13 @@ export function CourseDetails({ match }) {
                 </div>
               ))}
           </div>
+          <div className="details__content-right--post-review">
+            <form method="POST">
+              <h3>Post a Review</h3>
+              <textarea name="reviewBody" cols="30" rows="10" placeholder="Write review here..."></textarea>
+              <button>Submit</button>
+            </form>
+          </div>
         </div>
       </div>
     </div>
