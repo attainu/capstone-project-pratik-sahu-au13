@@ -1,14 +1,15 @@
 .cart {
-  padding: 5rem;
+  padding: 3rem;
 
   &__section {
-    padding: 3vw;
+    padding: 0vw 3vw;
     margin: 0 auto;
     width: 70vw;
     text-align: center;
 
     h2 {
       color: rgb(38, 63, 97);
+      margin-bottom: 4rem;
     }
 
     &_item {
