@@ -305,16 +305,15 @@ export const uploadVideo = async (id, token, data) => {
       const datas = await axios({
         method: "POST",
         url: `${base_url}/uploadvideo/${id}`,
-        data: { ...data, file: reader.result },
+        data: { ...data, videoLink: reader.result },
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
       console.log(datas);
     };
-  } catch (err) {}
+  } catch (err) { }
 };
-
 export const deleteVideo = async (videoId, token) => {
   try {
     const data = await axios({
