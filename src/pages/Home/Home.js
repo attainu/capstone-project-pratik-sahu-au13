@@ -23,8 +23,10 @@ export function Home() {
 
   useEffect(() => {
     if (user) {
-      fetchWishListFromDB(user, dispatch);
-      fetchCartFromDB(user, dispatch);
+      if (user.user.role === "student") {
+        fetchWishListFromDB(user, dispatch);
+        fetchCartFromDB(user, dispatch);
+      }
     }
   }, [user, dispatch]);
 

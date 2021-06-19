@@ -112,6 +112,25 @@ export const fetchCartFromDB = async (user, dispatch) => {
   } catch (err) {}
 };
 
+export const fetchCreatedCoursesFromDB = async (user, dispatch) => {
+  try {
+    const {
+      user: { _id },
+    } = user;
+    const {
+      data: { data },
+    } = await axios({
+      method: "GET",
+      url: `${base_url}/tut/alltutors`,
+    });
+    const fetchUserData = data.filter((e) => e._id === _id)[0];
+    dispatch({
+      type: "FETCH_CREATED_COURSES",
+      payload: fetchUserData.createdCourses,
+    });
+  } catch (err) {}
+};
+
 export const addToCart = async (id, user, dispatch) => {
   try {
     const { data } = await axios({
@@ -196,7 +215,7 @@ export const userSignup = async (formData, selectedUserType, dispatch) => {
   } catch (err) {}
 };
 
-export const addCourse = async (formData, file, token) => {
+export const addCourse = async (formData, file, user, dispatch) => {
   try {
     formData.thumbnail = file;
     formData.price = parseInt(formData.price);
@@ -214,10 +233,12 @@ export const addCourse = async (formData, file, token) => {
         url: `https://cloudversity-api-server.herokuapp.com/addcourse`,
         data: { ...formData, thumbnail: reader.result },
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${user.user.token}`,
         },
       });
       console.log(data);
+      await fetchCreatedCoursesFromDB(user, dispatch);
+      return true;
     };
     reader.onerror = () => {
       console.error("Couldn't process the image");
@@ -225,7 +246,7 @@ export const addCourse = async (formData, file, token) => {
   } catch (err) {}
 };
 
-export const updateCourse = async (formData, file, token, id) => {
+export const updateCourse = async (formData, file, user, dispatch, id) => {
   try {
     formData.thumbnail = file;
     formData.price = parseInt(formData.price);
@@ -242,10 +263,11 @@ export const updateCourse = async (formData, file, token, id) => {
         url: `https://cloudversity-api-server.herokuapp.com/updatecourse/${id}`,
         data: { ...formData, thumbnail: reader.result },
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${user.user.token}`,
         },
       });
       console.log(data);
+      await fetchCreatedCoursesFromDB(user, dispatch);
     };
     reader.onerror = () => {
       console.error("Couldn't process the image");
@@ -253,16 +275,17 @@ export const updateCourse = async (formData, file, token, id) => {
   } catch (err) {}
 };
 
-export const deleteCourseFromDB = async (id, token) => {
+export const deleteCourseFromDB = async (id, user, dispatch) => {
   try {
     const data = await axios({
       method: "DELETE",
       url: `https://cloudversity-api-server.herokuapp.com/deletecourse/${id}`,
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${user.user.token}`,
       },
     });
     console.log(data);
+    await fetchCreatedCoursesFromDB(user, dispatch);
     // if (data) {
     //   if (selectedUserType === "tut") {
     //     dispatch({ type: tutorActionType.verifyTutor, payload: data });
