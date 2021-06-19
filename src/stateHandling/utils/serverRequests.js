@@ -64,7 +64,7 @@ export const addToWishList = async (id, user, dispatch) => {
       },
     });
     console.log(data);
-    if (data.wishListed) {
+    if (data) {
       fetchWishListFromDB(user, dispatch);
     }
   } catch (err) {
@@ -83,7 +83,7 @@ export const removeFromWishList = async (id, user, dispatch) => {
       },
     });
     console.log(data);
-    if (data.wishListed) {
+    if (data) {
       fetchWishListFromDB(user, dispatch);
     }
   } catch (err) {
