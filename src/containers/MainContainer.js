@@ -11,6 +11,7 @@ import {
 import { Welcome } from "../components";
 import { AuthContext } from "../stateHandling/contexts/AuthContext";
 import { NewCourse } from "../pages/NewCourse/NewCourse";
+import Cart from "../pages/Cart";
 
 export function MainContainer() {
   const [selectedUserType, setSelectedUserType] = useState("tut");
@@ -42,6 +43,7 @@ export function MainContainer() {
         <Route path="/dashboard" component={Dashboard} />
         <Route path="/newcourse" component={NewCourse} />
         <Route path="/updatecourse/:id" component={UpdateCourse} />
+        <Route exact path ="/cart/:id" component={Cart} />
       </Switch>
     </div>
   );

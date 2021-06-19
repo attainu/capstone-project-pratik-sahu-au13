@@ -91,6 +91,7 @@ export const removeFromWishList = async (id, user, dispatch) => {
   }
 };
 
+// ----------------- Modified ------------- //
 export const fetchCartFromDB = async (user, dispatch) => {
   try {
     const {
@@ -98,18 +99,21 @@ export const fetchCartFromDB = async (user, dispatch) => {
     } = user;
     // console.log(user, _id);
     const {
-      data: { data },
+      data: { studentInfo },
     } = await axios({
       method: "GET",
-      url: `${base_url}/stu/allstudents`,
+      url: `${base_url}/stu/${_id}`,
     });
-    const fetchUserData = data.filter((e) => e._id === _id);
-    console.log(fetchUserData[0]);
+    // const fetchUserData = data.filter((e) => e._id === _id);
+    console.log(studentInfo);
     dispatch({
       type: courseActionType.getCart,
-      payload: fetchUserData[0].cart,
+      payload: studentInfo.cart,
     });
-  } catch (err) {}
+  } catch (err) {
+    console.log("Error occured while fetching: ", err);
+    return null;
+  }
 };
 
 export const fetchCreatedCoursesFromDB = async (user, dispatch) => {

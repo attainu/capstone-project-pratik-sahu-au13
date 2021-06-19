@@ -1,6 +1,9 @@
 import React from 'react';
 
-function Cartitem() {
+function Cartitem(item) {
+
+    console.log({item});
+
     return (
         <div className="cart__item_container">
             <div className="course_details">

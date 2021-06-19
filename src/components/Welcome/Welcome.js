@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { useHistory } from "react-router";
+import { useHistory, Link } from "react-router-dom";
 import images from "../../assets/images";
 import { StateContext } from "../../stateHandling/contexts/StateContext";
 import "./Welcome.scss";
@@ -7,7 +7,7 @@ import "./Welcome.scss";
 const { back, forward, cart, heart } = images;
 
 export function Welcome({ user: { user } }) {
-  const { firstName, lastName, profileImg } = user;
+  const { _id, firstName, lastName, profileImg } = user;
   const history = useHistory();
 
   const {
@@ -39,14 +39,16 @@ export function Welcome({ user: { user } }) {
               />
               <p className="welcome__icons-count">{wishListItems.length}</p>
             </div>
-            <div className="position">
-              <img
-                className="welcome__icons-cart"
-                src={cart.src}
-                alt={cart.alt}
-              />
-              <p className="welcome__icons-count">{cartItems.length}</p>
-            </div>
+            <Link to={`/cart/${_id}`}>
+              <div className="position">
+                <img
+                  className="welcome__icons-cart"
+                  src={cart.src}
+                  alt={cart.alt}
+                />
+                <p className="welcome__icons-count">{cartItems.length}</p>
+              </div>
+            </Link>
           </>
         )}
         <div onClick={history.goBack}>
