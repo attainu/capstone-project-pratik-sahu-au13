@@ -1,50 +1,36 @@
 import React, { useContext, useState } from "react";
-import { Redirect, useHistory } from "react-router";
-import { addCourse } from "../../stateHandling/utils/serverRequests";
+import { Redirect } from "react-router";
+import { updateCourse } from "../../stateHandling/utils/serverRequests";
 import { AuthContext } from "../../stateHandling/contexts/AuthContext";
-import "./NewCourse.scss";
 import { StateContext } from "../../stateHandling/contexts/StateContext";
+import "./UpdateCourse.scss";
+import { useHistory } from "react-router-dom";
 
-export function NewCourse() {
+export function UpdateCourse({ match }) {
   const { user } = useContext(AuthContext);
-  const { dispatch } = useContext(StateContext);
+  const {
+    state: { courses },
+    dispatch,
+  } = useContext(StateContext);
   const history = useHistory();
+
+  const paramsId = match.params.id;
 
   const [file, setFile] = useState(null);
   const [formData, setFormData] = useState({
-    courseName: "",
-    price: 0,
-    description: "",
-    category: "",
-    discount: 0,
-    course_duration: 0,
-    level: "",
+    ...courses.filter((course) => course._id === paramsId)[0],
   });
 
   const imageType = ["image/png", "image/jpeg"];
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    // console.log(formData);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // console.log(user);
-    // const token = user.user.token;
-    // console.log(token);
-    // addCourse(formData, file, token);
-<<<<<<< HEAD
-    
-    const token = user.user.token;
-    console.log(formData);
-    addCourse(formData, file, token);
-=======
-    console.log(formData);
-    if (addCourse(formData, file, user, dispatch)) {
-      history.push("/dashboard");
-    }
->>>>>>> front-end-dev
+    updateCourse(formData, file, user, dispatch, paramsId);
+    history.push("/dashboard");
   };
 
   const handleFileChange = (e) => {
@@ -58,7 +44,7 @@ export function NewCourse() {
   return user?.user.role === "tutor" ? (
     <div className="newCourse">
       <div className="newCourse__header">
-        <h3>Add New Course</h3>
+        <h3>Update Course</h3>
       </div>
       <form onSubmit={handleSubmit}>
         <div className="newCourse__form_group">
@@ -86,15 +72,6 @@ export function NewCourse() {
           />
         </div>
         <div className="newCourse__form_group">
-<<<<<<< HEAD
-          <div className="newCourse__label ">Thumbnail 
-            <div className="newCourse__file_upload">
-              <input name="thumbnail" onChange={handleFileChange} type="file" required/>
-              <i className='bx bxs-cloud-upload '></i>
-            </div>
-          </div>
-          
-=======
           <div className="newCourse__label ">
             Thumbnail
             <div className="newCourse__file_upload">
@@ -107,7 +84,6 @@ export function NewCourse() {
               <i className="bx bxs-cloud-upload "></i>
             </div>
           </div>
->>>>>>> front-end-dev
         </div>
         <div className="newCourse__form_group">
           <div className="newCourse__label"> Description</div>
@@ -119,11 +95,7 @@ export function NewCourse() {
             onChange={handleChange}
             placeholder="Tell us about the course..."
             required
-<<<<<<< HEAD
-          > </textarea>
-=======
           ></textarea>
->>>>>>> front-end-dev
         </div>
         <div className="newCourse__form_group">
           <div className="newCourse__label">Category</div>
@@ -135,11 +107,7 @@ export function NewCourse() {
             onChange={handleChange}
             placeholder="eg. Web development, Animations, Android development, etc..."
             required
-<<<<<<< HEAD
-          /> 
-=======
           />
->>>>>>> front-end-dev
         </div>
         <div className="newCourse__form_group">
           <div className="newCourse__label">Level</div>
@@ -151,24 +119,15 @@ export function NewCourse() {
             placeholder="Give level..."
             required
           >
-<<<<<<< HEAD
-            <option value="" selected disabled>Difficulty?</option>
-            <option value="Beginner" >Beginner</option>
-=======
-            <option value="" defaultValue disabled>
+            <option value="" selected disabled>
               Difficulty?
             </option>
             <option value="Beginner">Beginner</option>
->>>>>>> front-end-dev
             <option value="Intermediate">Intermediate</option>
             <option value="Advanced">Advanced</option>
           </select>
         </div>
-<<<<<<< HEAD
-        <button type="submit"> Add Course </button> 
-=======
-        <button type="submit"> Add Course </button>
->>>>>>> front-end-dev
+        <button type="submit">Update Course</button>
       </form>
     </div>
   ) : (

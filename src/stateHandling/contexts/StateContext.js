@@ -8,9 +8,11 @@ function StateContextProvider({ children }) {
     courses: [],
     wishListItems: [],
     cartItems: [],
+    createdCourses: [],
   };
 
   const [state, dispatch] = useReducer(stateReducer, initialState);
+  console.log("StateContext", state);
 
   return (
     <StateContext.Provider value={{ state, dispatch }}>

@@ -1,13 +1,34 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Search, CourseCard } from "../../components";
-import { Link } from "react-router-dom";
+import { AuthContext } from "../../stateHandling/contexts/AuthContext";
 import { StateContext } from "../../stateHandling/contexts/StateContext";
+import {
+  fetchCartFromDB,
+  fetchCoursesFromDB,
+  fetchWishListFromDB,
+} from "../../stateHandling/utils/serverRequests";
 import "./Home.scss";
 
 export function Home() {
   const {
-    state: { courses },
+    state: { courses, wishListItems, cartItems },
   } = useContext(StateContext);
+
+  const { dispatch } = useContext(StateContext);
+  const { user } = useContext(AuthContext);
+
+  useEffect(() => {
+    fetchCoursesFromDB(dispatch);
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (user) {
+      if (user.user.role === "student") {
+        fetchWishListFromDB(user, dispatch);
+        fetchCartFromDB(user, dispatch);
+      }
+    }
+  }, [user, dispatch]);
 
   return (
     <div className="home">
@@ -28,14 +49,20 @@ export function Home() {
         {courses.length ? (
           courses.map((course) => {
             const id = course._id;
+            const isItWishlistItem = !!wishListItems?.filter(
+              (item) => item === id
+            ).length;
+            const isItCartItem = !!cartItems?.filter((item) => item === id)
+              .length;
             return (
-              <Link
-                style={{ color: "inherit", textDecoration: "none" }}
+              <CourseCard
                 key={id}
-                to={`/details/${id}`}
-              >
-                <CourseCard key={id} course={course} />
-              </Link>
+                course={course}
+                user={user}
+                dispatch={dispatch}
+                isItCartItem={isItCartItem}
+                isItWishlistItem={isItWishlistItem}
+              />
             );
           })
         ) : (
