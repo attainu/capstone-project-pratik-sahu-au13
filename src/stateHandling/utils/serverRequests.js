@@ -291,3 +291,46 @@ export const uploadVideo = async (id, token, data) => {
     };
   } catch (err) {}
 };
+
+export const deleteVideo = async (videoId, token) => {
+  try {
+    const data = await axios({
+      method: "DELETE",
+      url: `${base_url}/deletevideo/${videoId}`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    console.log(data);
+    return data;
+  } catch (err) {
+    console.log("Error Occured: ", err);
+    return null;
+  }
+};
+
+export const postReview = async (courseId, reviewData, token) => {
+  try {
+    console.log("reviewData inside postReview: ", courseId, token, reviewData);
+    const res = await axios({
+      method: "POST",
+      url: `${base_url}/addreview/${courseId}`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      data: reviewData,
+    });
+
+    if (res.status === 200) {
+      console.log("review posted successfully");
+      return res;
+    } else {
+      console.log("Error while posting the review");
+      return res;
+    }
+  } catch (error) {
+    console.log("Error while posting review", error);
+    return null;
+  }
+};
