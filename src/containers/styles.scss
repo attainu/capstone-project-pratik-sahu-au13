@@ -77,6 +77,13 @@
     }
   }
 
+  &__discussion {
+    width: 100%;
+    height: 30rem;
+    border-radius: 0.5rem;
+    background-color: var(--grey-light);
+  }
+
   // &__btn {
   //   margin: 1rem;
   //   padding: 0.5rem 1rem;
