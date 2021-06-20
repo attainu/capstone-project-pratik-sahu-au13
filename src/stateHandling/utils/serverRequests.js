@@ -38,16 +38,16 @@ export const fetchWishListFromDB = async (user, dispatch) => {
     } = user;
     // console.log(user, _id);
     const {
-      data: { data },
+      data: { studentInfo },
     } = await axios({
       method: "GET",
-      url: `${base_url}/stu/allstudents`,
+      url: `${base_url}/stu/${_id}`,
     });
-    const fetchUserData = data.filter((e) => e._id === _id);
-    console.log(fetchUserData[0]);
+    const fetchUserData = studentInfo;
+    console.log(fetchUserData);
     dispatch({
       type: courseActionType.getWishlist,
-      payload: fetchUserData[0].wishlist,
+      payload: fetchUserData.wishlist,
     });
   } catch (err) {}
 };

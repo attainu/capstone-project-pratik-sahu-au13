@@ -31,6 +31,7 @@ export function Welcome({ user: { user } }) {
       <div className="welcome__icons">
         {user.role === "student" && (
           <>
+            <Link to={`/wishlist/${_id}`}>
             <div className="position">
               <img
                 className="welcome__icons-heart"
@@ -39,6 +40,7 @@ export function Welcome({ user: { user } }) {
               />
               <p className="welcome__icons-count">{wishListItems.length}</p>
             </div>
+            </Link>
             <Link to={`/cart/${_id}`}>
               <div className="position">
                 <img
