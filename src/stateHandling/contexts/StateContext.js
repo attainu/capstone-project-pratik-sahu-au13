@@ -9,6 +9,7 @@ function StateContextProvider({ children }) {
     wishListItems: [],
     cartItems: [],
     enrolledCourses: [],
+    lastViewedCourse: [],
     createdCourses: [],
   };
 

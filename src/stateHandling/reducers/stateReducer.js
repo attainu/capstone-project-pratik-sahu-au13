@@ -18,6 +18,9 @@ export const stateReducer = (state, action) => {
     case "FETCH_ENROLLED_COURSES":
       return { ...state, enrolledCourses: action.payload };
 
+    case "FETCH_LAST_VIEWED_COURSE":
+      return { ...state, lastViewedCourse: action.payload };
+
     case "FETCH_CREATED_COURSES":
       return { ...state, createdCourses: action.payload };
 

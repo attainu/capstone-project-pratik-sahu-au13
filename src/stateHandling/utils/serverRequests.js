@@ -182,6 +182,32 @@ export const fetchCreatedCoursesFromDB = async (user, dispatch) => {
   } catch (err) {}
 };
 
+export const fetchLastViewedCourse = async (
+  user,
+  dispatch,
+  setLastViewedCourse
+) => {
+  try {
+    const {
+      data: { studentInfo },
+    } = await axios({
+      method: "GET",
+      url: `${base_url}/stu/${user.user._id}`,
+    });
+    const {
+      data: { data },
+    } = await axios({
+      method: "GET",
+      url: `${base_url}/allcourses`,
+    });
+    const fetchedCourse = data.filter(
+      (e) => e._id === studentInfo.lastViewedCourse[0]
+    )[0];
+    setLastViewedCourse(fetchedCourse);
+    // dispatch({type: 'FETCH_LAST_VIEWED_COURSE', payload:})
+  } catch (err) {}
+};
+
 export const getCourseById = async (id) => {
   try {
     const {

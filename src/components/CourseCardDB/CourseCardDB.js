@@ -5,7 +5,6 @@ import "./CourseCardDB.scss";
 
 export function CourseCardDB({ course }) {
   const { web_dev, clock, detail } = images;
-  console.log(course);
 
   const { courseName, thumbnail, course_duration } = course;
 
