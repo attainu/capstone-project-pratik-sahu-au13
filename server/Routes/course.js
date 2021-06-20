@@ -1,4 +1,5 @@
 const express = require("express");
+require("dotenv").config();
 const Router = express.Router();
 const auth = require("../Auth/auth");
 const Course = require("../Model/course");
@@ -7,6 +8,7 @@ const Tutor = require("../Model/tutor");
 const Student = require("../Model/student");
 const bufferConversion = require("../Utils/bufferConversion");
 const { imageUpload, videoUpload } = require("../Utils/multer");
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const { cloudinary } = require("../Utils/clodinary");
 const { findOneAndDelete } = require("../Model/tutor");
 
@@ -130,7 +132,7 @@ Router.post("/enroll/:courseId", auth, async (req, res) => {
             await student.save();
             await tutor.save();      
 
-            res.status(200).send({ message: "New course enrolled successfully", enrolledCourses: student.enrolledCourses });
+            return res.status(200).send({ message: "New course enrolled successfully", enrolledCourses: student.enrolledCourses, student });
         }
         res.status(200).send({message: "Student already enrolled to this course"});
 
@@ -141,6 +143,49 @@ Router.post("/enroll/:courseId", auth, async (req, res) => {
 
 });
 
+// ------------------- POST: Payment route ---------------//
+
+Router.post("/payment", async(req, res) => {
+    try {
+        
+        console.log(process.env.STRIPE_SECRET_KEY);   // remove it later
+        const { token, ...item } = req.body;
+        console.log("PRODUCT: ", item);
+        console.log("PRICE: ", item.price);
+        console.log("TOKEN: ", token);
+        
+
+        return stripe.customers.create({
+            email: token.email,
+            source: token.id,
+        }).then(customer => {
+            stripe.charges.create({
+
+                amount: item.price * 100,
+                currency: "inr",
+                customer: customer.id,
+                receipt_email: token.email,
+                description: `purchase of ${item.courseName}`,
+                shipping: {
+                    name: token.card.name,
+                    address: {
+                        line1: token.card.address_line1,
+                        country: token.card.address_country
+                    }
+                }
+            });
+        }).then(result => res.status(200).send({message: "Payment was successful", result}))
+            .catch(err => console.log(err));
+
+
+
+    } catch (error) {
+        console.log("Error occurred during transaction...", error);
+        res.status(500).send({ message: "Paymeent failed, please try again", error: error.message });
+    }
+});
+
+
 // ------------------- PATCH: Course details Update ---------------//
 Router.patch("/updatecourse/:courseId", auth, async (req, res) => {
 
@@ -148,11 +193,17 @@ Router.patch("/updatecourse/:courseId", auth, async (req, res) => {
 
         const updatedDetails = {
             ...req.body
-        }
+        };
+
+        const uploadedImage = await cloudinary.uploader.upload(req.body.thumbnail, { upload_preset: "cloudversity-dev", });
+        updatedDetails.thumbnail = uploadedImage.secure_url;
+
+        // console.log("Cloudversity response: ", uploadedImage);
+
         const updatedCourse = await Course.findOneAndUpdate({ _id: req.params.courseId }, {
             $set: updatedDetails
         });
-
+        console.log(updatedCourse);
         res.status(200).send({ message: "Course details updated successfully!", updatedDetails });
 
 
