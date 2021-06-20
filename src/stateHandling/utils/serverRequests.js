@@ -361,3 +361,23 @@ export const postReview = async (courseId, reviewData, token) => {
     return null;
   }
 };
+
+// ---------------NEW Function added 20th June ---------------//
+export const coursePayment = async(id, data) => {
+  try {
+    const res = await axios(`${base_url}/payment`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      data
+    });
+
+    return res;
+
+  } catch (error) {
+    console.log("Error while posting review", error);
+    return null;
+  }
+
+}

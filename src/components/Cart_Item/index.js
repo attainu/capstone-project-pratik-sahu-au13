@@ -1,26 +1,59 @@
+
 import React from 'react';
+import StripeCheckout from "react-stripe-checkout";
+import { coursePayment } from '../../stateHandling/utils/serverRequests';
+function Cartitem({item}) {
+ 
+    const { _id, courseName, thumbnail, price, authorName: { firstName, lastName }} = item;
+    console.log(process.env.REACT_APP_KEY);
+    const paymentToken = async(token) => {
+        try {
+            const body = {
+                token, ...item
+            };
+            const paymentStatus = coursePayment(_id, body)
 
-function Cartitem(item) {
+            if (paymentStatus.status === 200) {
+                console.log("Payment Status: ", paymentStatus);
+            } else {
+                console.log("Error occured during payment");
+            };
+        } catch (error) {
+            console.log("Error occured during payment");
+        };
+    };
 
-    console.log({item});
+    const removeFromCart = () => {
+        
+    }
 
     return (
         <div className="cart__item_container">
             <div className="course_details">
                 <div className="thumbnail">
-                    <img src="https://images.pexels.com/photos/1181298/pexels-photo-1181298.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="course_thumbail" height="60"/>
+                    <img src={thumbnail} alt={courseName}/>
                 </div>
                 <div className="course_title">
-                    <h4>This is the title</h4>
-                    <p>Author name</p>
+                    <h4>{courseName}</h4>
+                    <p>{`${firstName} ${lastName}`}</p>
                 </div>
             </div>
-            <div className="price"><p>$25</p></div>
+            <div className="price"><i class='bx bx-dollar'></i><p>{price}</p></div>
             <div className="action_buttons">
                 <div className="buy_btn">
-                    <button >Proceed to Buy</button>
+                    <StripeCheckout
+                        stripeKey={process.env.REACT_APP_KEY}
+                        token={paymentToken}
+                        name="Cloudversity Payments"
+                        amount={item.price * 100}
+                        shippingAddress
+                        billingAddress
+                    >
+                        <button type="button">Buy @  $ {price}</button>
+                    </StripeCheckout>
+                    
                 </div>
-                <div className="remove_from_cart">
+                <div className="remove_from_cart" onClick={removeFromCart}>
                     <i class='bx bx-trash' ></i>
                 </div>
             </div>
