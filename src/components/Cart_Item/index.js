@@ -1,20 +1,28 @@
 
-import React from 'react';
+import React, {useRef} from 'react';
+import {useHistory} from 'react-router-dom';
 import StripeCheckout from "react-stripe-checkout";
 import { coursePayment } from '../../stateHandling/utils/serverRequests';
-function Cartitem({item}) {
- 
+function Cartitem({ item, deleteFromCart, enroll}) {
+
+    const btn = useRef();
     const { _id, courseName, thumbnail, price, authorName: { firstName, lastName }} = item;
-    console.log(process.env.REACT_APP_KEY);
     const paymentToken = async(token) => {
         try {
             const body = {
                 token, ...item
             };
-            const paymentStatus = coursePayment(_id, body)
-
+            const paymentStatus = await coursePayment(_id, body)
+            
             if (paymentStatus.status === 200) {
                 console.log("Payment Status: ", paymentStatus);
+                btn.current.innerText = "Payment Success";
+                
+                setTimeout(()=> {
+                    deleteFromCart(_id);
+                    enroll(_id);
+                }, 1500);
+
             } else {
                 console.log("Error occured during payment");
             };
@@ -22,10 +30,6 @@ function Cartitem({item}) {
             console.log("Error occured during payment");
         };
     };
-
-    const removeFromCart = () => {
-        
-    }
 
     return (
         <div className="cart__item_container">
@@ -49,11 +53,11 @@ function Cartitem({item}) {
                         shippingAddress
                         billingAddress
                     >
-                        <button type="button">Buy @  $ {price}</button>
+                        <button ref={btn} type="button">Buy @  $ {price}</button>
                     </StripeCheckout>
                     
                 </div>
-                <div className="remove_from_cart" onClick={removeFromCart}>
+                <div className="remove_from_cart" onClick={() => deleteFromCart(_id)}>
                     <i class='bx bx-trash' ></i>
                 </div>
             </div>

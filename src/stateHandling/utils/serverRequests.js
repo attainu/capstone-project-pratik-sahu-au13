@@ -91,7 +91,7 @@ export const removeFromWishList = async (id, user, dispatch) => {
   }
 };
 
-// ----------------- Modified ------------- //
+// -------------------- MODIFIED ---------------- //
 export const fetchCartFromDB = async (user, dispatch) => {
   try {
     const {
@@ -379,5 +379,24 @@ export const coursePayment = async(id, data) => {
     console.log("Error while posting review", error);
     return null;
   }
+}
 
+// -------- Funtion to enroll to a course  ----------//
+export const enrollCourse = async(id, token) => {
+  try {
+    
+    const res = await axios({
+      method: "POST",
+      url: `${base_url}/enroll/${id}`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+  });
+
+  return res;
+
+  } catch (error) {
+    console.log("Error while posting review", error);
+    return null;
+  }
 }
