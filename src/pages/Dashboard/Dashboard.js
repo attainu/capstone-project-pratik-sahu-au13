@@ -14,7 +14,6 @@ import { StateContext } from "../../stateHandling/contexts/StateContext";
 
 export function Dashboard() {
   const { user } = useContext(AuthContext);
-  console.log(user);
   const {
     state: { enrolledCourses, wishListItems, cartItems },
     dispatch,
