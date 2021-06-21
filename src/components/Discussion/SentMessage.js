@@ -1,5 +1,5 @@
 import React from "react";
 
-export function SentMessage() {
-  return <div className="messageBox__sender"></div>;
+export function SentMessage({ messageData }) {
+  return <div className="messageBox__sender">{messageData.message}</div>;
 }

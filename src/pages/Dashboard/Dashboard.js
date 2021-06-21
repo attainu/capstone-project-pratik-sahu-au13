@@ -9,6 +9,7 @@ import {
   fetchCartFromDB,
   fetchEnrolledCoursesFromDB,
   fetchWishListFromDB,
+  updateLastestViewedCourse,
 } from "../../stateHandling/utils/serverRequests";
 import { StateContext } from "../../stateHandling/contexts/StateContext";
 
@@ -80,7 +81,11 @@ export function Dashboard() {
           <div className="dashboard__courses-enrolled--content">
             {enrolledCourses.length > 0 ? (
               enrolledCourses.map((course) => (
-                <CourseCardDB key={course._id} course={course} />
+                <CourseCardDB
+                  key={course._id}
+                  course={course}
+                  updateLastestViewedCourse={updateLastestViewedCourse}
+                />
               ))
             ) : (
               <div>No courses to show</div>

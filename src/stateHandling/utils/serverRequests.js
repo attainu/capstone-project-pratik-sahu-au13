@@ -401,3 +401,16 @@ export const postReview = async (courseId, reviewData, token) => {
     return null;
   }
 };
+
+export const updateLastestViewedCourse = async (id, user) => {
+  try {
+    const data = await axios({
+      method: "POST",
+      url: `${base_url}/stu/latestcourse/${id}`,
+      headers: {
+        Authorization: `Bearer ${user.user.token}`,
+      },
+    });
+    console.log(data);
+  } catch (err) {}
+};
