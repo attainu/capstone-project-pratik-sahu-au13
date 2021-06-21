@@ -55,7 +55,7 @@ export const fetchWishListFromDB = async (user, dispatch) => {
 };
 
 export const addToWishList = async (id, user, dispatch) => {
-  // const check =
+
   console.log(user, id);
   try {
     const { data } = await axios({

@@ -224,22 +224,24 @@
 
 .messageBox {
   &__sender {
-    max-width: 92%;
+    min-width: 51%;
+    max-width: 91%;
     text-align: end;
     padding: 1rem;
     float: right;
     margin-bottom: 0.5rem;
-    border-radius: 0.5rem;
+    border-radius: 0 2rem 2rem 2rem;
     color: var(--white);
     background-color: #7c3aed;
   }
 
   &__receiver {
-    max-width: 92%;
+    min-width: 51%;
+    max-width: 91%;
     padding: 1rem;
     float: left;
     margin-bottom: 0.5rem;
-    border-radius: 0.5rem;
+    border-radius: 2rem 0 2rem 2rem;
     color: var(--white);
     background-color: #4f46e5;
   }
