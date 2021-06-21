@@ -1,8 +1,8 @@
-import { useState, useEffect, useContext } from 'react';
+import { useContext } from 'react';
 import "./wishlist.scss";
 import Wishlistitem from "../../components/Wishlist_Item";
 import { StateContext } from '../../stateHandling/contexts/StateContext';
-import { enrollCourse, removeFromWishList } from '../../stateHandling/utils/serverRequests';
+import { addToCart, removeFromWishList } from '../../stateHandling/utils/serverRequests';
 import { AuthContext } from '../../stateHandling/contexts/AuthContext';
 function Wishlist() {
     const {
@@ -16,8 +16,9 @@ function Wishlist() {
         removeFromWishList(id, user, dispatch);
     };
 
-    const enroll = (id) => {
-        enrollCourse(id, user.user.token);
+    const moveToCart = async(id) => {
+        await addToCart(id, user.user.token);
+        removeFromWishList(id, user, dispatch);
     }
 
     return (
@@ -27,7 +28,13 @@ function Wishlist() {
                 < div className="wishlist__section_item" >
                     {
                         wishListItems.map((item) => {
-                            return <Wishlistitem item={item} key={item._id} deleteFromWishlist={deleteFromWishlist} enroll={enroll} />
+                            return (
+                            <Wishlistitem 
+                            item={item} 
+                            key={item._id} 
+                            deleteFromWishlist={deleteFromWishlist} 
+                            moveToCart={moveToCart} />
+                            )
                         })
                     }
                 </div>

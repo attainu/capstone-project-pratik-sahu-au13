@@ -42,7 +42,7 @@ function Cartitem({ item, deleteFromCart, enroll}) {
                     <p>{`${firstName} ${lastName}`}</p>
                 </div>
             </div>
-            <div className="price"><i class='bx bx-dollar'></i><p>{price}</p></div>
+            <div className="price"><i className='bx bx-dollar'></i><p>{price}</p></div>
             <div className="action_buttons">
                 <div className="buy_btn">
                     <StripeCheckout
@@ -58,7 +58,7 @@ function Cartitem({ item, deleteFromCart, enroll}) {
                     
                 </div>
                 <div className="remove_from_cart" onClick={() => deleteFromCart(_id)}>
-                    <i class='bx bx-trash' ></i>
+                    <i className='bx bx-trash' ></i>
                 </div>
             </div>
         </div>

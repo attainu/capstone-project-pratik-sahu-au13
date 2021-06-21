@@ -49,6 +49,8 @@ export const fetchWishListFromDB = async (user, dispatch) => {
       type: courseActionType.getWishlist,
       payload: fetchUserData.wishlist,
     });
+
+
   } catch (err) {}
 };
 

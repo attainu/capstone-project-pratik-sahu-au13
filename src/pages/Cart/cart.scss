@@ -26,22 +26,25 @@
 }
 
 .cart__item_container {
-  margin-top: 2rem;
+  margin: 1rem 2rem 0 2rem;
   padding: 1rem 2rem;
-  background-color: rgba(255, 241, 250, 0.945);
   display: flex;
   justify-content: space-between;
   align-items: center;
   border-radius: 5px;
-  box-shadow: 3px 3px 3px rgba(130, 81, 141, 0.445);
+  background-image: linear-gradient(
+    to bottom,
+    rgba(233, 233, 190, 0.301),
+    rgba(238, 93, 182, 0.336)
+  );
   transition: 0.2s;
 
   &:hover {
     transform: scale(1.01);
-    box-shadow: 5px 5px 5px rgba(130, 81, 141, 0.322);
   }
 
   .course_details {
+    margin-top: 1rem;
     display: flex;
     align-items: center;
     flex-basis: 60%;
@@ -60,7 +63,7 @@
       p {
         text-align: left;
         font-size: 80%;
-        color: lightslategray;
+        color: rgb(98, 107, 116);
       }
     }
   }
