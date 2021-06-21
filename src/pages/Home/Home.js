@@ -9,6 +9,7 @@ export function Home() {
   const {
     state: { courses, wishListItems, cartItems },
   } = useContext(StateContext);
+  console.log("Course list from Home: ", courses, wishListItems, cartItems)
 
   const { dispatch } = useContext(StateContext);
   const { user } = useContext(AuthContext);
@@ -37,9 +38,9 @@ export function Home() {
           courses.map((course) => {
             const id = course._id;
             const isItWishlistItem = !!wishListItems?.filter(
-              (item) => item === id
+              (item) => item._id === id
             ).length;
-            const isItCartItem = !!cartItems?.filter((item) => item === id)
+            const isItCartItem = !!cartItems?.filter((item) => item._id === id)
               .length;
             return (
               <CourseCard
