@@ -38,22 +38,24 @@ export const fetchWishListFromDB = async (user, dispatch) => {
     } = user;
     // console.log(user, _id);
     const {
-      data: { data },
+      data: { studentInfo },
     } = await axios({
       method: "GET",
-      url: `${base_url}/stu/allstudents`,
+      url: `${base_url}/stu/${_id}`,
     });
-    const fetchUserData = data.filter((e) => e._id === _id);
-    console.log(fetchUserData[0]);
+    const fetchUserData = studentInfo;
+    console.log(fetchUserData);
     dispatch({
       type: courseActionType.getWishlist,
-      payload: fetchUserData[0].wishlist,
+      payload: fetchUserData.wishlist,
     });
+
+
   } catch (err) {}
 };
 
 export const addToWishList = async (id, user, dispatch) => {
-  // const check =
+
   console.log(user, id);
   try {
     const { data } = await axios({
@@ -91,6 +93,7 @@ export const removeFromWishList = async (id, user, dispatch) => {
   }
 };
 
+// -------------------- MODIFIED ---------------- //
 export const fetchCartFromDB = async (user, dispatch) => {
   try {
     const {
@@ -98,23 +101,26 @@ export const fetchCartFromDB = async (user, dispatch) => {
     } = user;
     // console.log(user, _id);
     const {
-      data: { data },
+      data: { studentInfo },
     } = await axios({
       method: "GET",
-      url: `${base_url}/stu/allstudents`,
+      url: `${base_url}/stu/${_id}`,
     });
-    const fetchUserData = data.filter((e) => e._id === _id);
-    console.log(fetchUserData[0]);
+    // const fetchUserData = data.filter((e) => e._id === _id);
+    console.log(studentInfo);
     dispatch({
       type: courseActionType.getCart,
-      payload: fetchUserData[0].cart,
+      payload: studentInfo.cart,
     });
-  } catch (err) {}
+  } catch (err) {
+    console.log("Error occured while fetching: ", err);
+    return null;
+  }
 };
 
 export const addToCart = async (id, user, dispatch) => {
   try {
-    const { data } = await axios({
+    const data = await axios({
       method: "POST",
       url: `${base_url}/stu/addtocart/${id}`,
       headers: {
@@ -125,6 +131,7 @@ export const addToCart = async (id, user, dispatch) => {
     if (data) {
       fetchCartFromDB(user, dispatch);
     }
+    return data
   } catch (err) {}
 };
 
@@ -272,6 +279,7 @@ export const addCourse = async (formData, file, user, dispatch) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = async () => {
+
       const data = await axios({
         method: "POST",
         crossorigin: false,
@@ -402,6 +410,46 @@ export const postReview = async (courseId, reviewData, token) => {
   }
 };
 
+
+// ---------------NEW Function added 20th June ---------------//
+export const coursePayment = async(id, data) => {
+  try {
+    const res = await axios(`${base_url}/payment`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      data
+    });
+
+    return res;
+
+  } catch (error) {
+    console.log("Error while posting review", error);
+    return null;
+  }
+}
+
+// -------- Funtion to enroll to a course  ----------//
+export const enrollCourse = async(id, token) => {
+  try {
+    
+    const res = await axios({
+      method: "POST",
+      url: `${base_url}/enroll/${id}`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+  });
+
+  return res;
+
+  } catch (error) {
+    console.log("Error while posting review", error);
+    return null;
+  }
+}
+
 export const updateLastestViewedCourse = async (id, user) => {
   try {
     const data = await axios({
@@ -414,3 +462,4 @@ export const updateLastestViewedCourse = async (id, user) => {
     console.log(data);
   } catch (err) {}
 };
+
