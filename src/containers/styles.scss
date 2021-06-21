@@ -92,9 +92,75 @@
     width: 100%;
     // height: 40rem;
     height: 90vh;
+    padding: 0.5rem;
     margin-bottom: 0.5rem;
     border-radius: 0.5rem;
+    overflow: hidden;
     background-color: var(--grey-light);
+
+    &-header {
+      width: 100%;
+      height: 8%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 0.5rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      background-color: var(--white);
+
+      &--img {
+        width: 2.5rem;
+        height: 2.5rem;
+        margin-right: 1rem;
+      }
+    }
+
+    &-messageBox {
+      width: 100%;
+      height: 82%;
+      padding: 0.5rem 0.5rem 0 0.5rem;
+      margin-bottom: 0.5rem;
+      border-radius: 0.5rem;
+      // display: flex;
+      // flex-wrap: wrap;
+      // flex-direction: column;
+      overflow: hidden;
+      overflow-y: scroll;
+      background-color: var(--white);
+
+      &--chats {
+        width: 100%;
+        height: 5rem;
+        margin-bottom: 0.5rem;
+        border-radius: 0.5rem;
+        background-color: royalblue;
+      }
+    }
+
+    &-footer {
+      width: 100%;
+      height: 8%;
+      border-radius: 0.5rem;
+      background-color: var(--white);
+
+      &--form {
+        width: 100%;
+        height: 100%;
+        border-radius: 0.5rem;
+        outline-style: none;
+        border-style: none;
+      }
+
+      &--input {
+        width: 100%;
+        height: 100%;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        outline-style: none;
+        border-style: none;
+      }
+    }
   }
 
   &__lastViewed {
@@ -140,4 +206,24 @@
   //   text-decoration: none;
   //   color: var(--white);
   // }
+}
+
+.messageBox {
+  &__sender {
+    width: 92%;
+    height: 5rem;
+    float: right;
+    margin-bottom: 0.5rem;
+    border-radius: 0.5rem;
+    background-color: royalblue;
+  }
+
+  &__receiver {
+    width: 92%;
+    height: 5rem;
+    float: left;
+    margin-bottom: 0.5rem;
+    border-radius: 0.5rem;
+    background-color: crimson;
+  }
 }
