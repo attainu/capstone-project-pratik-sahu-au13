@@ -1,6 +1,4 @@
-
 import React, {useRef} from 'react';
-import {useHistory} from 'react-router-dom';
 import StripeCheckout from "react-stripe-checkout";
 import { coursePayment } from '../../stateHandling/utils/serverRequests';
 function Cartitem({ item, deleteFromCart, enroll}) {
