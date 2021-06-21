@@ -139,7 +139,7 @@ export const fetchCreatedCoursesFromDB = async (user, dispatch) => {
 
 export const addToCart = async (id, user, dispatch) => {
   try {
-    const { data } = await axios({
+    const data = await axios({
       method: "POST",
       url: `${base_url}/stu/addtocart/${id}`,
       headers: {
@@ -150,6 +150,7 @@ export const addToCart = async (id, user, dispatch) => {
     if (data) {
       fetchCartFromDB(user, dispatch);
     }
+    return data
   } catch (err) {}
 };
 

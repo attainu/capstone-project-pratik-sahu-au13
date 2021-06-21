@@ -9,7 +9,7 @@ export function Home() {
   const {
     state: { courses, wishListItems, cartItems },
   } = useContext(StateContext);
-  console.log("Course list from Home: ", courses, wishListItems, cartItems)
+  // console.log("Course list from Home: ", courses, wishListItems, cartItems)
 
   const { dispatch } = useContext(StateContext);
   const { user } = useContext(AuthContext);
@@ -17,7 +17,7 @@ export function Home() {
   useEffect(() => {
     fetchCoursesFromDB(dispatch);
   }, [dispatch]);
-
+  
   return (
     <div className="home">
       <div className="home__brand">

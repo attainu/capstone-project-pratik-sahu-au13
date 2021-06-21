@@ -17,7 +17,8 @@ function Wishlist() {
     };
 
     const moveToCart = async(id) => {
-        await addToCart(id, user.user.token);
+        const data = await addToCart(id, user, dispatch);
+        console.log("Data from addtoCart in Wishlist: ",data)
         removeFromWishList(id, user, dispatch);
     }
 
