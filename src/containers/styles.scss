@@ -45,6 +45,7 @@
   flex-direction: column;
   border: 1px solid var(--grey-medium);
   background-color: var(--white);
+  transition: all 0.3s ease-in-out;
 
   &__container {
     width: 100%;
@@ -223,6 +224,8 @@
 }
 
 .messageBox {
+  transition: all 0.3s ease-in-out;
+
   &__sender {
     min-width: 51%;
     max-width: 91%;
@@ -233,6 +236,12 @@
     border-radius: 0 2rem 2rem 2rem;
     color: var(--white);
     background-color: #7c3aed;
+
+    &-time {
+      text-align: end;
+      font-size: 1.1rem;
+      margin-top: 0.3rem;
+    }
   }
 
   &__receiver {
@@ -244,5 +253,21 @@
     border-radius: 2rem 0 2rem 2rem;
     color: var(--white);
     background-color: #4f46e5;
+
+    &-author {
+      font-size: 1.1rem;
+      display: inline-block;
+      padding: 0.3rem 0.5rem;
+      border-radius: 0.5rem;
+      margin-bottom: 0.3rem;
+      color: var(--grey-darkest);
+      background-color: var(--white);
+    }
+
+    &-time {
+      text-align: end;
+      font-size: 1.1rem;
+      margin-top: 0.3rem;
+    }
   }
 }

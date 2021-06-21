@@ -19,8 +19,7 @@ export function RightContainer() {
   const [message, setMessage] = useState("");
   const [activeRoomsBox, setActiveRoomsBox] = useState(true);
   const [activeMessageBox, setActiveMessageBox] = useState(false);
-
-  console.log(chatRoomId);
+  const [chatRoomName, setChatRoomName] = useState(null);
 
   const { dispatch } = useContext(StateContext);
   const { back, add } = images;
@@ -29,7 +28,7 @@ export function RightContainer() {
     if (user.user.role === "student") {
       fetchLastViewedCourse(user, dispatch, setLastViewedCourse);
     }
-  }, []);
+  }, [user, dispatch]);
 
   useEffect(() => {
     if (chatRoomId) {
@@ -169,7 +168,7 @@ export function RightContainer() {
             onClick={goBack}
           />
           <div style={{ display: `${activeMessageBox ? "block" : "none"}` }}>
-            Chat Room Name
+            {chatRoomName ? chatRoomName : "Room Name"}
           </div>
         </div>
 
@@ -192,6 +191,7 @@ export function RightContainer() {
         >
           <ChatRoom
             setChatRoomId={setChatRoomId}
+            setChatRoomName={setChatRoomName}
             setActiveRoomsBox={setActiveRoomsBox}
             setActiveMessageBox={setActiveMessageBox}
           />
