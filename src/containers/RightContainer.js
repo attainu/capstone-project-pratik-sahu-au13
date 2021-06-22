@@ -108,17 +108,17 @@ export function RightContainer() {
         className="rightContainer__profile"
       >
         <div>
-          <img src={user.user.profileImg} alt={user.user.firstName} height="100" style={{ borderRadius: "50%" }}/>
+          <img src={user.user.profileImg} alt={user.user.firstName} height="100"/>
         </div>
         <div >
           <p style={{ fontWeight: "600", }}>Myself </p>
           {user.user.profileInfo.aboutMe}
         </div>
-        <div className="flex">
+        <div>
           <i class='bx bxs-phone-call'></i>
           <p>{user.user.profileInfo.contactNo}</p>
         </div>
-        <div className="flex">
+        <div>
           <i class='bx bxs-briefcase' ></i>
           <p>{user.user.profileInfo.occupation}</p>
         </div>

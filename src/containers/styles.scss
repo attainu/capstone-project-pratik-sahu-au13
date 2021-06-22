@@ -91,6 +91,12 @@
 
     div {
       padding-top: 1rem;
+
+      img {
+        border-radius: 50%;
+        box-shadow: 2px 2px 3px rgba(128, 128, 128, 0.781),
+          -2px -2px 3px rgba(128, 128, 128, 0.788);
+      }
       i {
         font-size: 120%;
         border: 1px solid grey;
@@ -98,11 +104,6 @@
         margin-bottom: 0.3rem;
         border-radius: 50%;
       }
-    }
-    .D-flex {
-      display: flex;
-      align-items: center;
-      background-color: red;
     }
   }
 
