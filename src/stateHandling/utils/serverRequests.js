@@ -221,6 +221,7 @@ export const getCourseById = async (id) => {
   } catch (err) {}
 };
 
+//-------- Modified -------- //
 export const userLogin = async (formData, selectedUserType, dispatch) => {
   try {
     const url =
@@ -228,10 +229,11 @@ export const userLogin = async (formData, selectedUserType, dispatch) => {
         ? userApis.POST.tutorLogin
         : userApis.POST.studentLogin;
     const {
-      data: { data, token },
+      data: { data, token, message, error },
     } = await API.post(url, formData);
-    data.token = token;
-    console.log(data.token);
+    // data.token = token;
+    console.log(message);
+    console.log(error);
 
     if (data) {
       if (selectedUserType === "tut") {
@@ -239,14 +241,23 @@ export const userLogin = async (formData, selectedUserType, dispatch) => {
       } else {
         dispatch({ type: studentActionType.verifyStudent, payload: data });
       }
+    } else {
+      if (error) {
+        return error
+      }
+
     }
-  } catch (err) {}
+    return message;
+  } catch (err) {
+    console.log("Error occured while Login: ", err);
+    return err.message;
+  }
 };
 
 export const userSignup = async (formData, selectedUserType, dispatch) => {
   try {
     const {
-      data: { data, message },
+      data: { data, message, error },
     } = await axios({
       method: "POST",
       // url: userApis.POST.studentSignup,
@@ -260,8 +271,18 @@ export const userSignup = async (formData, selectedUserType, dispatch) => {
       } else {
         dispatch({ type: studentActionType.verifyStudent, payload: data });
       }
+    } else {
+      if (error){
+        console.log(error)
+        return error
+      }
     }
-  } catch (err) {}
+    return message;
+
+  } catch (err) {
+    console.log("Error occured during Signup:", err );
+    return err.message;
+  }
 };
 
 export const addCourse = async (formData, file, user, dispatch) => {

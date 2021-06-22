@@ -1,5 +1,6 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import decode from "jwt-decode";
 import { AuthContext } from "../stateHandling/contexts/AuthContext";
 import images from "../assets/images";
 import "./styles.scss";
@@ -21,6 +22,15 @@ export function LeftContainer({ darkTheme, setDarkTheme }) {
   const changeTheme = () => {
     setDarkTheme(!darkTheme);
   };
+
+  useEffect(() => {
+    const token = user?.user.token;
+    console.log(token);
+    if (token) {
+      const decodedToken = decode(token);
+      if (decodedToken.exp * 1000 < new Date().getTime()) handleLogout();
+    }
+  });
 
   return (
     <div className="leftContainer">

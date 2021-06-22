@@ -3,6 +3,7 @@ import { Search, CourseCard } from "../../components";
 import { AuthContext } from "../../stateHandling/contexts/AuthContext";
 import { StateContext } from "../../stateHandling/contexts/StateContext";
 import { fetchCoursesFromDB } from "../../stateHandling/utils/serverRequests";
+import { popularCourses } from "./filterFunctions";
 import "./Home.scss";
 
 export function Home() {
@@ -17,6 +18,11 @@ export function Home() {
   useEffect(() => {
     fetchCoursesFromDB(dispatch);
   }, [dispatch]);
+
+  useEffect(() => {
+    const popular = popularCourses(courses);
+    console.log(popular);
+  }, [courses]);
 
   const scrollHandler = (val) => {
     scrollOnClick.current.scrollLeft += val;

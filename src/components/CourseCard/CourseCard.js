@@ -22,7 +22,7 @@ export function CourseCard({
     courseName,
     thumbnail,
     authorName: { firstName, lastName },
-    course_duration,
+    courseDuration,
     description,
     enrolledStudents,
     price,
@@ -82,7 +82,7 @@ export function CourseCard({
       <div className="course__contents">
         <div className="course__contents-details">
           <p>{enrolledStudents.length} students</p>
-          <p>{course_duration ? course_duration : "00"} min.</p>
+          <p>{courseDuration ? courseDuration.toFixed(2) : "00"} min.</p>
         </div>
         <div className="course__contents-name">
           {courseName.length > 15
