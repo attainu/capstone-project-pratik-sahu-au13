@@ -71,39 +71,10 @@ export function LoginSignup({ selectedUserType }) {
     }
     const res = await userSignup(formdata, selectedUserType, dispatch);
     setSignupMessage(res);
-
-    // fetch(`http://localhost:5233/${selectedUserType}/signup`, {
-    //   method: "POST",
-    //   mode: "cors",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify(formdata),
-    // })
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     if (data.error) {
-    //       console.log("Signup failed...", data);
-    //       setSignupMessage(data.error);
-    //       return;
-    //     }
-    //     console.log("Data pushed successfully, user signed up", data);
-    //     dispatch({
-    //       type: "VERIFY_USER",
-    //       payload: {
-    //         name: `${data.data.firstName} ${data.data.lastName}`,
-    //         imageUrl: `https://ui-avatars.com/api/?name=${data.data.firstName}`,
-    //       },
-    //     });
-    //     setSignupMessage("Successfully Signed up! CLick on Login button");
-    //     history.push("/dashboard");
-    //   })
-    //   .catch((err) => {
-    //     console.log("Error in login", err);
-    //     setSignupMessage("Unknown error occurred...");
-    //   });
   }
 
   function showHidePassword(e) {
-    // console.log("show hide icon's parent's parent: ",e.target.parentElement.parentElement)
+
     if (e.target.className === "bx bx-hide") {
       e.target.className = "bx bx-show";
       e.target.parentElement.parentElement
@@ -118,15 +89,11 @@ export function LoginSignup({ selectedUserType }) {
   }
 
   function changeFormMode(e) {
-    // console.log(e.target.id);
     const wrapper__Area = document.querySelector("#wrapper_Area");
-    // console.log("Wrapper area: ", wrapper__Area);
     if (e.target.id === "aside_signUp_Btn") {
-      //   console.log("aside_signup_btn clicked");
       wrapper__Area.classList.add("sign-up__Mode-active");
     }
     if (e.target.id === "aside_signIn_Btn") {
-      //   console.log("Sign in btn clicked");
       wrapper__Area.classList.remove("sign-up__Mode-active");
     }
   }
@@ -156,7 +123,7 @@ export function LoginSignup({ selectedUserType }) {
               onSubmit={handleLoginSubmit}
             >
               <h1 className="form__title">Sign In!</h1>
-              {LoginMessage && <span>{LoginMessage}</span>}
+              {LoginMessage && <p className="form__title_login-message">{LoginMessage}</p>}
               <div className="input__group">
                 <label className="field">
                   <input
