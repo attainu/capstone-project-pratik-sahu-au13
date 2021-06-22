@@ -56,7 +56,7 @@ export const fetchWishListFromDB = async (user, dispatch) => {
 
 export const addToWishList = async (id, user, dispatch) => {
 
-  console.log(user, id);
+  console.log(user.user.token, id);
   try {
     const { data } = await axios({
       method: "POST",
@@ -234,7 +234,7 @@ export const userLogin = async (formData, selectedUserType, dispatch) => {
     const {
       data: { data, token, message, error },
     } = await API.post(url, formData);
-    // data.token = token;
+    data.token = token;
     console.log(message);
     console.log(error);
 
