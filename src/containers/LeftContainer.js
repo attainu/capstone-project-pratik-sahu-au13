@@ -4,9 +4,9 @@ import { AuthContext } from "../stateHandling/contexts/AuthContext";
 import images from "../assets/images";
 import "./styles.scss";
 
-export function LeftContainer() {
+export function LeftContainer({ darkTheme, setDarkTheme }) {
   const { user } = useContext(AuthContext);
-  const { home, menu, profile, logout } = images;
+  const { home, menu, profile, logout, moon, sun } = images;
 
   const [hoverHome, setHoverHome] = useState(false);
   const [hoverDash, setHoverDash] = useState(false);
@@ -16,6 +16,10 @@ export function LeftContainer() {
   const handleLogout = async () => {
     await localStorage.removeItem("userInfo");
     window.location.reload();
+  };
+
+  const changeTheme = () => {
+    setDarkTheme(!darkTheme);
   };
 
   return (
@@ -61,7 +65,23 @@ export function LeftContainer() {
             ) : null}
           </>
         )}
+        {darkTheme ? (
+          <img
+            onClick={changeTheme}
+            className="leftContainer__icon"
+            src={moon.src}
+            alt={moon.alt}
+          />
+        ) : (
+          <img
+            onClick={changeTheme}
+            className="leftContainer__icon"
+            src={sun.src}
+            alt={sun.alt}
+          />
+        )}
       </div>
+
       {user && (
         <>
           <Link to="#" onClick={handleLogout}>

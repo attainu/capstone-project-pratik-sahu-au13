@@ -10,6 +10,7 @@
   align-items: center;
   justify-content: space-between;
   background-color: var(--grey-dark);
+  transition: all 0.3s ease-in-out;
 
   &__iconsAssemble {
     display: flex;
@@ -65,6 +66,7 @@
   overflow: hidden;
   overflow-y: scroll;
   background-color: var(--white);
+  transition: all 0.3s ease-in-out;
 }
 
 .rightContainer {
