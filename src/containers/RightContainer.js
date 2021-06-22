@@ -25,7 +25,7 @@ export function RightContainer() {
   const { back, add } = images;
 
   useEffect(() => {
-    if (user.user.role === "student") {
+    if (user?.user.role === "student") {
       fetchLastViewedCourse(user, dispatch, setLastViewedCourse);
     }
   }, [user, dispatch]);
@@ -109,15 +109,15 @@ export function RightContainer() {
       >
         <div>
           <span style={{ fontWeight: "600" }}>About Me: </span>
-          {user.user.profileInfo.aboutMe}
+          {user?.user.profileInfo.aboutMe}
         </div>
         <div>
           <span style={{ fontWeight: "600" }}>Contact No.: </span>
-          {user.user.profileInfo.contactNo}
+          {user?.user.profileInfo.contactNo}
         </div>
         <div>
           <span style={{ fontWeight: "600" }}>Occupation: </span>
-          {user.user.profileInfo.occupation}
+          {user?.user.profileInfo.occupation}
         </div>
       </div>
 

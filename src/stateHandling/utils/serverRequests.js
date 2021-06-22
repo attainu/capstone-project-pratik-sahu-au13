@@ -49,13 +49,10 @@ export const fetchWishListFromDB = async (user, dispatch) => {
       type: courseActionType.getWishlist,
       payload: fetchUserData.wishlist,
     });
-
-
   } catch (err) {}
 };
 
 export const addToWishList = async (id, user, dispatch) => {
-
   console.log(user, id);
   try {
     const { data } = await axios({
@@ -131,7 +128,7 @@ export const addToCart = async (id, user, dispatch) => {
     if (data) {
       fetchCartFromDB(user, dispatch);
     }
-    return data
+    return data;
   } catch (err) {}
 };
 
@@ -279,7 +276,6 @@ export const addCourse = async (formData, file, user, dispatch) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = async () => {
-
       const data = await axios({
         method: "POST",
         crossorigin: false,
@@ -367,6 +363,7 @@ export const uploadVideo = async (id, token, data) => {
     };
   } catch (err) {}
 };
+
 export const deleteVideo = async (videoId, token) => {
   try {
     const data = await axios({
@@ -410,45 +407,41 @@ export const postReview = async (courseId, reviewData, token) => {
   }
 };
 
-
 // ---------------NEW Function added 20th June ---------------//
-export const coursePayment = async(id, data) => {
+export const coursePayment = async (id, data) => {
   try {
     const res = await axios(`${base_url}/payment`, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      data
+      data,
     });
 
     return res;
-
   } catch (error) {
     console.log("Error while posting review", error);
     return null;
   }
-}
+};
 
 // -------- Funtion to enroll to a course  ----------//
-export const enrollCourse = async(id, token) => {
+export const enrollCourse = async (id, token) => {
   try {
-    
     const res = await axios({
       method: "POST",
       url: `${base_url}/enroll/${id}`,
       headers: {
         Authorization: `Bearer ${token}`,
-      }
-  });
+      },
+    });
 
-  return res;
-
+    return res;
   } catch (error) {
     console.log("Error while posting review", error);
     return null;
   }
-}
+};
 
 export const updateLastestViewedCourse = async (id, user) => {
   try {
@@ -462,4 +455,3 @@ export const updateLastestViewedCourse = async (id, user) => {
     console.log(data);
   } catch (err) {}
 };
-

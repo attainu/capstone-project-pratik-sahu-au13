@@ -1,10 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../stateHandling/contexts/AuthContext";
 import images from "../assets/images";
 import "./styles.scss";
 
 export function LeftContainer() {
+  const { user } = useContext(AuthContext);
   const { home, menu, profile, logout } = images;
+
+  const handleLogout = async () => {
+    await localStorage.removeItem("userInfo");
+    window.location.reload();
+  };
 
   return (
     <div className="leftContainer">
@@ -23,13 +30,15 @@ export function LeftContainer() {
           />
         </Link>
       </div>
-      <Link to="/">
-        <img
-          className="leftContainer__icon"
-          src={logout.src}
-          alt={logout.alt}
-        />
-      </Link>
+      {user && (
+        <Link to="#" onClick={handleLogout}>
+          <img
+            className="leftContainer__icon"
+            src={logout.src}
+            alt={logout.alt}
+          />
+        </Link>
+      )}
     </div>
   );
 }
