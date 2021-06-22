@@ -127,12 +127,13 @@ export function LoginSignup({ selectedUserType }) {
               <div className="input__group">
                 <label className="field">
                   <input
-                    type="text"
+                    type="email"
                     name="email"
                     placeholder="Enter your email"
                     id="loginEmail"
                     value={formData.email}
                     onChange={handleInputChange}
+                    required
                   />
                 </label>
                 <span className="input__icon">
@@ -150,6 +151,7 @@ export function LoginSignup({ selectedUserType }) {
                     id="loginPassword"
                     value={formData.password}
                     onChange={handleInputChange}
+                    required
                   />
                 </label>
                 <span className="input__icon">
@@ -167,7 +169,7 @@ export function LoginSignup({ selectedUserType }) {
                   <span className="checkmark"></span>
                   <span> Remember Me</span>
                 </label>
-                <div className="forgot_password">Forgot Password?</div>
+               
               </div>
 
               <button
@@ -179,13 +181,9 @@ export function LoginSignup({ selectedUserType }) {
               </button>
 
               <div className="alternate-login">
-                {/* <div className="link">
-                                <i className='bx bxl-google'></i>
-                                <span>Google</span>
-                            </div> */}
+
                 <GoogleLogin
                   clientId={`${process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID}`}
-                  // buttonText="Login"
                   render={(renderProps) => (
                     <div
                       onClick={renderProps.onClick}
@@ -219,6 +217,7 @@ export function LoginSignup({ selectedUserType }) {
                     id="signUpfirstName"
                     value={formData.firstName}
                     onChange={handleInputChange}
+                    required
                   />
                 </label>
                 <span className="input__icon">
@@ -245,12 +244,13 @@ export function LoginSignup({ selectedUserType }) {
               <div className="input__group">
                 <label className="field">
                   <input
-                    type="text"
+                    type="email"
                     name="email"
                     placeholder="Email@example.com"
                     id="signUpEmail"
                     value={formData.email}
                     onChange={handleInputChange}
+                    required
                   />
                 </label>
                 <span className="input__icon">
@@ -267,6 +267,7 @@ export function LoginSignup({ selectedUserType }) {
                     id="signUpPassword"
                     value={formData.password}
                     onChange={handleInputChange}
+                    required
                   />
                 </label>
                 <span className="input__icon">
@@ -286,6 +287,7 @@ export function LoginSignup({ selectedUserType }) {
                     id="signUpConfirmPassword"
                     value={formData.confirm_password}
                     onChange={handleInputChange}
+                    required
                   />
                 </label>
                 <span className="input__icon">

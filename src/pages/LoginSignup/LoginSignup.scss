@@ -120,6 +120,7 @@ form .input__group .field:focus-within::after {
 }
 /* Text And Password Inputs */
 form .input__group input[type="text"],
+form .input__group input[type="email"],
 form .input__group input[type="password"] {
   position: relative;
   outline: none;
@@ -154,6 +155,7 @@ form .input__group > span {
   transition: 0.3s ease-in-out;
 }
 form .input__group input[type="text"]:focus ~ span,
+form .input__group input[type="email"]:focus ~ span,
 form .input__group input[type="password"]:focus ~ span {
   color: var(--primary-color);
 }
