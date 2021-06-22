@@ -20,7 +20,40 @@
     margin: 2rem 0;
     width: 2.5rem;
     cursor: pointer;
+    position: relative;
+
+    &-info1 {
+      position: absolute;
+      top: 50px;
+      left: 60px;
+    }
+
+    &-info2 {
+      position: absolute;
+      top: 118px;
+      left: 60px;
+    }
+
+    &-info3 {
+      position: absolute;
+      top: 188px;
+      left: 60px;
+    }
+
+    &-info4 {
+      position: absolute;
+      top: 577px;
+      left: 60px;
+    }
   }
+}
+
+.info {
+  z-index: 10;
+  padding: 0.2rem 0.5rem;
+  border: 1px solid var(--grey-dark);
+  border-radius: 0.5rem;
+  background-color: var(--white);
 }
 
 .mainContainer {
