@@ -108,16 +108,19 @@ export function RightContainer() {
         className="rightContainer__profile"
       >
         <div>
-          <span style={{ fontWeight: "600" }}>About Me: </span>
+          <img src={user.user.profileImg} alt={user.user.firstName} height="100" style={{ borderRadius: "50%" }}/>
+        </div>
+        <div >
+          <p style={{ fontWeight: "600", }}>Myself </p>
           {user.user.profileInfo.aboutMe}
         </div>
-        <div>
-          <span style={{ fontWeight: "600" }}>Contact No.: </span>
-          {user.user.profileInfo.contactNo}
+        <div className="flex">
+          <i class='bx bxs-phone-call'></i>
+          <p>{user.user.profileInfo.contactNo}</p>
         </div>
-        <div>
-          <span style={{ fontWeight: "600" }}>Occupation: </span>
-          {user.user.profileInfo.occupation}
+        <div className="flex">
+          <i class='bx bxs-briefcase' ></i>
+          <p>{user.user.profileInfo.occupation}</p>
         </div>
       </div>
 
