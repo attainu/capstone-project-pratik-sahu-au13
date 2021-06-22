@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
+import {  useContext } from 'react';
 import "./cart.scss";
 import Cartitem from "../../components/Cart_Item";
 import { StateContext } from '../../stateHandling/contexts/StateContext';

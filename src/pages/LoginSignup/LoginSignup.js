@@ -53,52 +53,24 @@ export function LoginSignup({ selectedUserType }) {
   }
 
   // ----------- Function for Sign In ------- /
-  function handleLoginSubmit(e) {
+  const handleLoginSubmit = async(e) => {
     e.preventDefault();
-    setLoginMessage("");
     const formdata = formData;
-    userLogin(formdata, selectedUserType, dispatch);
-    // console.log("Form data: ", formdata);
-    // fetch(`http://localhost:5233/${selectedUserType}/login`, {
-    //   method: "POST",
-    //   mode: "cors",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify(formdata),
-    // })
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     if (data.error) {
-    //       console.log("Login failed...", data);
-    //       setLoginMessage(data.error);
-    //       return;
-    //     }
-    //     // console.log("Data pushed successfully, user logged in", data);
-    //     dispatch({
-    //       type: "VERIFY_USER",
-    //       payload: {
-    //         name: `${data.tutorInfo.firstName} ${data.tutorInfo.lastName}`,
-    //         imageUrl: `https://ui-avatars.com/api/?name=${data.tutorInfo.firstName}`,
-    //       },
-    //     });
-    //     history.push("/dashboard");
-    //   })
-    //   .catch((err) => {
-    //     console.log("Error in login", err);
-    //   });
+    const res = await userLogin(formdata, selectedUserType, dispatch);
+    setLoginMessage(res);
   }
 
   // ----------- Function for Sign Up ------- /
 
-  function handleSignup(e) {
+  const handleSignup = async(e) => {
     e.preventDefault();
     const formdata = formData;
-
     if (formData.password !== formData.confirm_password) {
       setSignupMessage("Password Mismatch, please try again");
       return;
     }
-
-    userSignup(formdata, selectedUserType, dispatch);
+    const res = await userSignup(formdata, selectedUserType, dispatch);
+    setSignupMessage(res);
 
     // fetch(`http://localhost:5233/${selectedUserType}/signup`, {
     //   method: "POST",

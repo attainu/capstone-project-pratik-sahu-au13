@@ -1,10 +1,12 @@
 import React, {useRef} from 'react';
 import StripeCheckout from "react-stripe-checkout";
 import { coursePayment } from '../../stateHandling/utils/serverRequests';
+// const strpKey = "pk_test_51J4ALCSGc5AGfM0B5dMP1YSZkRKPSsZNS19xVVHPmQRdjBUwGjzkhL6wKsaXYXUA5K0uAmUiI0TVZM3CRAFmKgJr00OVZp5Y5k"  // temporarily using this method as .env isn't working
 function Cartitem({ item, deleteFromCart, enroll}) {
 
     const btn = useRef();
     const { _id, courseName, thumbnail, price, authorName: { firstName, lastName }} = item;
+    console.log("Process.env: ", process.env);
     const paymentToken = async(token) => {
         try {
             const body = {
@@ -45,6 +47,7 @@ function Cartitem({ item, deleteFromCart, enroll}) {
                 <div className="buy_btn">
                     <StripeCheckout
                         stripeKey={process.env.REACT_APP_KEY}
+                        // stripeKey={strpKey}
                         token={paymentToken}
                         name="Cloudversity Payments"
                         amount={item.price * 100}
