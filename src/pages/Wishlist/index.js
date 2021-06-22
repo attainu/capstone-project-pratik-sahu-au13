@@ -28,7 +28,7 @@ function Wishlist() {
                 <h2>Wishlisted Courses</h2>
                 < div className="wishlist__section_item" >
                     {
-                        wishListItems.map((item) => {
+                        wishListItems.length ? wishListItems.map((item) => {
                             return (
                             <Wishlistitem 
                             item={item} 
@@ -36,7 +36,7 @@ function Wishlist() {
                             deleteFromWishlist={deleteFromWishlist} 
                             moveToCart={moveToCart} />
                             )
-                        })
+                        }) : "No Items in your Wishlist"
                     }
                 </div>
             </div>

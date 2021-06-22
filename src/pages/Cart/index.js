@@ -28,9 +28,9 @@ function Cart() {
                 <h2>Please Review Your Cart and Proceed to Buy</h2>
                 < div className="cart__section_item" >
                     {
-                        cartItems.map((item) => {
+                        cartItems.length ? cartItems.map((item) => {
                             return <Cartitem item={item} key={item._id} deleteFromCart={deleteFromCart} enroll={enroll}/>
-                        })
+                        }) : "No Items in your cart"
                     }
                 </div>
             </div>
