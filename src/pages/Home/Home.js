@@ -7,7 +7,7 @@ import "./Home.scss";
 
 export function Home() {
   const {
-    state: { courses, wishListItems, cartItems },
+    state: { courses, wishListItems, cartItems, enrolledCourses },
   } = useContext(StateContext);
   // console.log("Course list from Home: ", courses, wishListItems, cartItems)
 
@@ -42,6 +42,8 @@ export function Home() {
             ).length;
             const isItCartItem = !!cartItems?.filter((item) => item._id === id)
               .length;
+            const isItEnrolledItem = !!enrolledCourses?.filter((item) => item._id === id)
+              .length;
             return (
               <CourseCard
                 key={id}
@@ -50,6 +52,7 @@ export function Home() {
                 dispatch={dispatch}
                 isItCartItem={isItCartItem}
                 isItWishlistItem={isItWishlistItem}
+                isItEnrolledItem={isItEnrolledItem}
               />
             );
           })

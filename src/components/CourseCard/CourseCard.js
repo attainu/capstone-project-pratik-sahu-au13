@@ -16,6 +16,7 @@ export function CourseCard({
   dispatch,
   isItCartItem,
   isItWishlistItem,
+  isItEnrolledItem
 }) {
   const {
     _id,
@@ -104,10 +105,12 @@ export function CourseCard({
         </Link>
         {user?.user.role === "student" ? (
           <div className="course__hover-btns">
-            <button onClick={handleCart}>
+            {!isItEnrolledItem? <button onClick={handleCart}>
               {cart ? "Remove from Cart" : "Add to Cart"}
-            </button>
-            {fav ? (
+            </button> : <button style={{color:"white", fontWeight:"600", backgroundColor:"limegreen"}}>
+              Enrolled
+            </button>}
+            {!isItEnrolledItem && (fav  ? (
               <HeartFill
                 onClick={handleFavorites}
                 className="course__hover-btns--icon"
@@ -117,7 +120,7 @@ export function CourseCard({
                 onClick={handleFavorites}
                 className="course__hover-btns--icon"
               />
-            )}
+            ))}
           </div>
         ) : null}
       </div>
