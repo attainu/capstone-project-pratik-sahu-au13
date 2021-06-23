@@ -53,12 +53,6 @@ export const fetchWishListFromDB = async (user, dispatch) => {
 };
 
 export const addToWishList = async (id, user, dispatch) => {
-<<<<<<< HEAD
-
-  console.log(user.user.token, id);
-=======
-  console.log(user, id);
->>>>>>> front-end-dev
   try {
     const { data } = await axios({
       method: "POST",

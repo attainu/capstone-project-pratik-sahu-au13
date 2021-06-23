@@ -101,26 +101,8 @@ export function Home({ filteredCourses, setFilteredCourses }) {
           <img src={free.src} alt={free.alt} />
           <p>Free</p>
         </div>
-        <div
-          className="home__filterIcons-content"
-          onClick={() =>
-            setFilteredCourses(
-              [...filteredCourses].sort((a, b) => b.price - a.price)
-            )
-          }
-        >
-          HiToLo
-        </div>
-        <div
-          className="home__filterIcons-content"
-          onClick={() =>
-            setFilteredCourses(
-              [...filteredCourses].sort((a, b) => a.price - b.price)
-            )
-          }
-        >
-          LoToHi
-        </div>
+       
+      
         <Search setFilteredCourses={setFilteredCourses} />
       </div>
 

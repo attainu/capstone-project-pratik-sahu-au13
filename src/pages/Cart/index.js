@@ -21,11 +21,6 @@ function Cart() {
     removeFromCart(id, user, dispatch);
   };
 
-  const enroll = (id) => {
-    enrollCourse(id, user.user.token);
-  };
-
-<<<<<<< HEAD
     const enroll = (id) => {
         enrollCourse(id, user.user.token);
     }
@@ -42,26 +37,8 @@ function Cart() {
                     }
                 </div>
             </div>
-=======
-  return (
-    <div className="cart">
-      <div className="cart__section">
-        <h2>Please Review Your Cart and Proceed to Buy</h2>
-        <div className="cart__section_item">
-          {cartItems.map((item) => {
-            return (
-              <Cartitem
-                item={item}
-                key={item._id}
-                deleteFromCart={deleteFromCart}
-                enroll={enroll}
-              />
-            );
-          })}
->>>>>>> front-end-dev
         </div>
-      </div>
-    </div>
+
   );
 }
 
