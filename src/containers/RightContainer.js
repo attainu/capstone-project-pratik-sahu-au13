@@ -7,10 +7,9 @@ import { fetchLastViewedCourse } from "../stateHandling/utils/serverRequests";
 import { ChatRoom, ReceivedMessage, SentMessage } from "../components";
 import { callFirestore, timestamp } from "../firebase";
 
-export function RightContainer(props) {
+export function RightContainer() {
   const { user } = useContext(AuthContext);
   console.log(user);
-  console.log(props);
 
   const [lastViewedCourse, setLastViewedCourse] = useState(null);
   const [activeProfile, setActiveProfile] = useState(true);
@@ -99,10 +98,15 @@ export function RightContainer(props) {
         <>
           <div className="rightContainer__container">
             <div className="rightContainer__container-btns">
+              <button>Menu</button>
               <button onClick={handleProfile}>Profile</button>
-              <button onClick={handleDiscussion}>Discussion</button>
+              <button onClick={handleDiscussion}>Chats</button>
             </div>
           </div>
+
+          {/* ------------------ Menu & Search Section ------------------- */}
+
+          {/* <div className="rightContainer__menu"></div> */}
 
           {/* ----------------- Profile Section --------------------- */}
 
@@ -229,11 +233,12 @@ export function RightContainer(props) {
         </>
       ) : (
         <>
-          <div style={{ textAlign: "center" }}>Hi! Anonymous User 👋</div>
-          <small style={{ marginTop: "1rem" }}>
-            SignIn/SignUp to get access to our wonderful collection of courses
-            and other benefits with chat support
-          </small>
+          <div className="rightContainer__container">
+            <div className="rightContainer__container-btns">
+              <button>Menu</button>
+            </div>
+          </div>
+          <div className="rightContainer__menu"></div>
         </>
       )}
     </div>
