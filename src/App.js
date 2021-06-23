@@ -7,6 +7,7 @@ import "./App.scss";
 function App() {
   const { user } = useContext(AuthContext);
   const [darkTheme, setDarkTheme] = useState(false);
+  const [filteredCourses, setFilteredCourses] = useState([]);
 
   useEffect(() => {
     const root = document.documentElement;
@@ -17,9 +18,15 @@ function App() {
     <div className="app">
       <BrowserRouter>
         <LeftContainer darkTheme={darkTheme} setDarkTheme={setDarkTheme} />
-        <MainContainer />
+        <MainContainer
+          filteredCourses={filteredCourses}
+          setFilteredCourses={setFilteredCourses}
+        />
         {/* {user && <RightContainer />} */}
-        <RightContainer />
+        <RightContainer
+          filteredCourses={filteredCourses}
+          setFilteredCourses={setFilteredCourses}
+        />
       </BrowserRouter>
     </div>
   );

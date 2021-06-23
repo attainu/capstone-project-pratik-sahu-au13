@@ -8,7 +8,7 @@ export function CourseCardDB({ course, updateLastestViewedCourse }) {
   const { user } = useContext(AuthContext);
 
   const { web_dev, clock, detail } = images;
-  const { courseName, thumbnail, course_duration } = course;
+  const { courseName, thumbnail, courseDuration } = course;
 
   return (
     <div className="coursedb">
@@ -27,7 +27,7 @@ export function CourseCardDB({ course, updateLastestViewedCourse }) {
       </div> */}
       <div className="coursedb__time">
         <img className="coursedb__time-icon" src={clock.src} alt={clock.alt} />
-        <p>{course_duration ? course_duration : "00"} hrs.</p>
+        <p>{courseDuration ? courseDuration.toFixed(2) : "00"} min.</p>
       </div>
       {/* <div className="coursedb__rating">
         <img className="coursedb__rating-icon" src={star.src} alt={star.alt} />

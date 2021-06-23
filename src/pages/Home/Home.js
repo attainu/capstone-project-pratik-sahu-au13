@@ -3,10 +3,11 @@ import images from "../../assets/images";
 import { Search, CourseCard } from "../../components";
 import { AuthContext } from "../../stateHandling/contexts/AuthContext";
 import { StateContext } from "../../stateHandling/contexts/StateContext";
+import { CarouselFunc } from "../../components";
 import { fetchCoursesFromDB } from "../../stateHandling/utils/serverRequests";
 import "./Home.scss";
 
-export function Home() {
+export function Home({ filteredCourses, setFilteredCourses }) {
   const {
     state: { courses, wishListItems, cartItems },
   } = useContext(StateContext);
@@ -14,8 +15,6 @@ export function Home() {
   const { user } = useContext(AuthContext);
 
   const { popular, rated, free, paid, newC } = images;
-
-  const [filteredCourses, setFilteredCourses] = useState([]);
   console.log(filteredCourses);
 
   useEffect(() => {
@@ -26,10 +25,11 @@ export function Home() {
     if (courses.length) {
       setFilteredCourses(courses);
     }
-  }, [courses]);
+  }, [courses, setFilteredCourses]);
 
   return (
     <div className="home">
+      <CarouselFunc />
       {/* <div className="home__brand">
         <h2>CloudVersity</h2>
         <Search />
@@ -100,6 +100,26 @@ export function Home() {
         >
           <img src={free.src} alt={free.alt} />
           <p>Free</p>
+        </div>
+        <div
+          className="home__filterIcons-content"
+          onClick={() =>
+            setFilteredCourses(
+              [...filteredCourses].sort((a, b) => b.price - a.price)
+            )
+          }
+        >
+          HiToLo
+        </div>
+        <div
+          className="home__filterIcons-content"
+          onClick={() =>
+            setFilteredCourses(
+              [...filteredCourses].sort((a, b) => a.price - b.price)
+            )
+          }
+        >
+          LoToHi
         </div>
         <Search setFilteredCourses={setFilteredCourses} />
       </div>

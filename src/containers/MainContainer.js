@@ -14,7 +14,7 @@ import { NewCourse } from "../pages/NewCourse/NewCourse";
 import Cart from "../pages/Cart";
 import Wishlist from "../pages/Wishlist";
 
-export function MainContainer() {
+export function MainContainer({ filteredCourses, setFilteredCourses }) {
   const [selectedUserType, setSelectedUserType] = useState("tut");
   const { user } = useContext(AuthContext);
 
@@ -30,7 +30,12 @@ export function MainContainer() {
     <div className="mainContainer">
       {user && <Welcome user={user} />}
       <Switch>
-        <Route exact path="/" component={Home} />
+        <Route exact path="/">
+          <Home
+            filteredCourses={filteredCourses}
+            setFilteredCourses={setFilteredCourses}
+          />
+        </Route>
         <Route path="/details/:id" component={CourseDetails} />
         <Route path="/auth">
           <LoginSignup selectedUserType={selectedUserType} />
@@ -44,7 +49,7 @@ export function MainContainer() {
         <Route path="/dashboard" component={Dashboard} />
         <Route path="/newcourse" component={NewCourse} />
         <Route path="/updatecourse/:id" component={UpdateCourse} />
-        <Route exact path ="/cart/:id" component={Cart} />
+        <Route exact path="/cart/:id" component={Cart} />
         <Route exact path="/wishlist/:id" component={Wishlist} />
       </Switch>
     </div>

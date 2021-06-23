@@ -7,7 +7,7 @@ import { fetchLastViewedCourse } from "../stateHandling/utils/serverRequests";
 import { ChatRoom, ReceivedMessage, SentMessage } from "../components";
 import { callFirestore, timestamp } from "../firebase";
 
-export function RightContainer() {
+export function RightContainer({ filteredCourses, setFilteredCourses }) {
   const { user } = useContext(AuthContext);
   console.log(user);
 
@@ -238,7 +238,28 @@ export function RightContainer() {
               <button>Menu</button>
             </div>
           </div>
-          <div className="rightContainer__menu"></div>
+          <div className="rightContainer__menu">
+            <div
+              className="home__filterIcons-content"
+              onClick={() =>
+                setFilteredCourses(
+                  [...filteredCourses].sort((a, b) => b.price - a.price)
+                )
+              }
+            >
+              HiToLo
+            </div>
+            <div
+              className="home__filterIcons-content"
+              onClick={() =>
+                setFilteredCourses(
+                  [...filteredCourses].sort((a, b) => a.price - b.price)
+                )
+              }
+            >
+              LoToHi
+            </div>
+          </div>
         </>
       )}
     </div>
