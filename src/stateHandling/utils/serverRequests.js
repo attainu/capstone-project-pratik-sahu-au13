@@ -49,14 +49,16 @@ export const fetchWishListFromDB = async (user, dispatch) => {
       type: courseActionType.getWishlist,
       payload: fetchUserData.wishlist,
     });
-
-
   } catch (err) {}
 };
 
 export const addToWishList = async (id, user, dispatch) => {
+<<<<<<< HEAD
 
   console.log(user.user.token, id);
+=======
+  console.log(user, id);
+>>>>>>> front-end-dev
   try {
     const { data } = await axios({
       method: "POST",
@@ -131,7 +133,7 @@ export const addToCart = async (id, user, dispatch) => {
     if (data) {
       fetchCartFromDB(user, dispatch);
     }
-    return data
+    return data;
   } catch (err) {}
 };
 
@@ -242,6 +244,7 @@ export const userLogin = async (formData, selectedUserType, dispatch) => {
     console.log(message);
     console.log(error);
 
+
     if (data) {
       if (selectedUserType === "tut") {
         dispatch({ type: tutorActionType.verifyTutor, payload: data });
@@ -250,9 +253,8 @@ export const userLogin = async (formData, selectedUserType, dispatch) => {
       }
     } else {
       if (error) {
-        return error
+        return error;
       }
-
     }
     return message;
   } catch (err) {
@@ -263,15 +265,14 @@ export const userLogin = async (formData, selectedUserType, dispatch) => {
 
 export const userSignup = async (formData, selectedUserType, dispatch) => {
   try {
+    const url =
+      selectedUserType === "tut"
+        ? userApis.POST.tutorSignup
+        : userApis.POST.studentSignup;
     const {
       data: { data, message, error },
-    } = await axios({
-      method: "POST",
-      // url: userApis.POST.studentSignup,
-      url: `https://cloudversity-api-server.herokuapp.com/${selectedUserType}/signup`,
-      data: formData,
-    });
-    console.log(data, message);
+    } = await API.post(url, formData);
+    // console.log(data, message);
     if (data) {
       if (selectedUserType === "tut") {
         dispatch({ type: tutorActionType.verifyTutor, payload: data });
@@ -279,15 +280,14 @@ export const userSignup = async (formData, selectedUserType, dispatch) => {
         dispatch({ type: studentActionType.verifyStudent, payload: data });
       }
     } else {
-      if (error){
-        console.log(error)
-        return error
+      if (error) {
+        console.log(error);
+        return error;
       }
     }
     return message;
-
   } catch (err) {
-    console.log("Error occured during Signup:", err );
+    console.log("Error occured during Signup:", err);
     return err.message;
   }
 };
@@ -304,7 +304,6 @@ export const addCourse = async (formData, file, user, dispatch) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = async () => {
-
       const data = await axios({
         method: "POST",
         crossorigin: false,
@@ -392,6 +391,7 @@ export const uploadVideo = async (id, token, data) => {
     };
   } catch (err) {}
 };
+
 export const deleteVideo = async (videoId, token) => {
   try {
     const data = await axios({
@@ -435,45 +435,41 @@ export const postReview = async (courseId, reviewData, token) => {
   }
 };
 
-
 // ---------------NEW Function added 20th June ---------------//
-export const coursePayment = async(id, data) => {
+export const coursePayment = async (id, data) => {
   try {
     const res = await axios(`${base_url}/payment`, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      data
+      data,
     });
 
     return res;
-
   } catch (error) {
     console.log("Error while posting review", error);
     return null;
   }
-}
+};
 
 // -------- Funtion to enroll to a course  ----------//
-export const enrollCourse = async(id, token) => {
+export const enrollCourse = async (id, token) => {
   try {
-    
     const res = await axios({
       method: "POST",
       url: `${base_url}/enroll/${id}`,
       headers: {
         Authorization: `Bearer ${token}`,
-      }
-  });
+      },
+    });
 
-  return res;
-
+    return res;
   } catch (error) {
     console.log("Error while posting review", error);
     return null;
   }
-}
+};
 
 export const updateLastestViewedCourse = async (id, user) => {
   try {
@@ -487,4 +483,3 @@ export const updateLastestViewedCourse = async (id, user) => {
     console.log(data);
   } catch (err) {}
 };
-

@@ -16,7 +16,7 @@ import { StateContext } from "../../stateHandling/contexts/StateContext";
 export function Dashboard() {
   const { user } = useContext(AuthContext);
   const {
-    state: { enrolledCourses, wishListItems, cartItems },
+    state: { courses, enrolledCourses, wishListItems, cartItems },
     dispatch,
   } = useContext(StateContext);
 
@@ -97,14 +97,17 @@ export function Dashboard() {
             Recommended Courses For You
           </div>
           <div className="dashboard__courses-enrolled--content">
-            {/* <CourseCardDB />
-            <CourseCardDB />
-            <CourseCardDB />
-            <CourseCardDB />
-            <CourseCardDB />
-            <CourseCardDB />
-            <CourseCardDB />
-            <CourseCardDB /> */}
+            {courses.length > 0 ? (
+              courses.map((course) => (
+                <CourseCardDB
+                  key={course._id}
+                  course={course}
+                  updateLastestViewedCourse={updateLastestViewedCourse}
+                />
+              ))
+            ) : (
+              <div>No courses to show</div>
+            )}
           </div>
         </div>
       </div>

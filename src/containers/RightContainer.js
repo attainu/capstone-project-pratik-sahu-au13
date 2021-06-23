@@ -7,7 +7,7 @@ import { fetchLastViewedCourse } from "../stateHandling/utils/serverRequests";
 import { ChatRoom, ReceivedMessage, SentMessage } from "../components";
 import { callFirestore, timestamp } from "../firebase";
 
-export function RightContainer() {
+export function RightContainer({ filteredCourses, setFilteredCourses }) {
   const { user } = useContext(AuthContext);
   console.log(user);
 
@@ -25,7 +25,7 @@ export function RightContainer() {
   const { back, add } = images;
 
   useEffect(() => {
-    if (user.user.role === "student") {
+    if (user?.user.role === "student") {
       fetchLastViewedCourse(user, dispatch, setLastViewedCourse);
     }
   }, [user, dispatch]);
@@ -94,131 +94,176 @@ export function RightContainer() {
 
   return (
     <div className="rightContainer">
-      <div className="rightContainer__container">
-        <div className="rightContainer__container-btns">
-          <button onClick={handleProfile}>Profile</button>
-          <button onClick={handleDiscussion}>Discussion</button>
-        </div>
-      </div>
 
-      {/* ----------------- Profile Section --------------------- */}
+      {user ? (
+        <>
+          <div className="rightContainer__container">
+            <div className="rightContainer__container-btns">
+              <button>Menu</button>
+              <button onClick={handleProfile}>Profile</button>
+              <button onClick={handleDiscussion}>Chats</button>
 
-      <div
-        style={{ display: `${activeProfile ? "block" : "none"}` }}
-        className="rightContainer__profile"
-      >
-        <div>
-          <img src={user.user.profileImg ? user.user.profileImg : `https://ui-avatars.com/api/?name=${user.user.firstName}+${user.user.lastName}`} alt={user.user.firstName} height="100"/>
-        </div>
-        <div >
-          <p style={{ fontWeight: "600", }}>Myself </p>
-          {user.user.profileInfo.aboutMe}
-        </div>
-        <div>
-          <i class='bx bxs-phone-call'></i>
-          <p>{user.user.profileInfo.contactNo}</p>
-        </div>
-        <div>
-          <i class='bx bxs-briefcase' ></i>
-          <p>{user.user.profileInfo.occupation}</p>
-        </div>
-      </div>
-
-      {lastViewedCourse ? (
-        <div
-          style={{ display: `${activeProfile ? "block" : "none"}` }}
-          className="rightContainer__lastViewed"
-        >
-          <div className="rightContainer__lastViewed-heading">Last Viewed</div>
-          <Link
-            to={`/details/${lastViewedCourse?._id}`}
-            className="rightContainer__lastViewed-course"
-          >
-            <img
-              className="rightContainer__lastViewed-course--img"
-              src={`${lastViewedCourse?.thumbnail}`}
-              alt="course-pic"
-            />
-            <div className="rightContainer__lastViewed-course--name">
-              {lastViewedCourse?.courseName}
             </div>
-          </Link>
-        </div>
-      ) : null}
-
-      {/* --------------- Discussion Section ---------------- */}
-
-      <div
-        style={{ display: `${activeDiscussion ? "block" : "none"}` }}
-        className="rightContainer__discussion"
-      >
-        <div className="rightContainer__discussion-header">
-          <img
-            style={{ display: `${activeRoomsBox ? "block" : "none"}` }}
-            className="rightContainer__discussion-header--img"
-            src={add.src}
-            alt={add.alt}
-            onClick={createRoom}
-          />
-          <div style={{ display: `${activeRoomsBox ? "block" : "none"}` }}>
-            Create Room
           </div>
-          <img
-            style={{ display: `${activeMessageBox ? "block" : "none"}` }}
-            className="rightContainer__discussion-header--img"
-            src={back.src}
-            alt={back.alt}
-            onClick={goBack}
-          />
-          <div style={{ display: `${activeMessageBox ? "block" : "none"}` }}>
-            {chatRoomName ? chatRoomName : "Room Name"}
-          </div>
-        </div>
 
-        <div
-          style={{ display: `${activeMessageBox ? "block" : "none"}` }}
-          className="rightContainer__discussion-messageBox"
-        >
-          {messageArray.map((message) =>
-            message.data.authorEmail === user?.user.email ? (
-              <SentMessage key={message.id} messageData={message.data} />
-            ) : (
-              <ReceivedMessage key={message.id} messageData={message.data} />
-            )
-          )}
-        </div>
+          {/* ------------------ Menu & Search Section ------------------- */}
 
-        <div
-          style={{ display: `${activeRoomsBox ? "block" : "none"}` }}
-          className="rightContainer__discussion-chatsRoomBox"
-        >
-          <ChatRoom
-            setChatRoomId={setChatRoomId}
-            setChatRoomName={setChatRoomName}
-            setActiveRoomsBox={setActiveRoomsBox}
-            setActiveMessageBox={setActiveMessageBox}
-          />
-        </div>
+          {/* <div className="rightContainer__menu"></div> */}
 
-        <div
-          style={{ display: `${activeMessageBox ? "block" : "none"}` }}
-          className="rightContainer__discussion-footer"
-        >
-          <form
-            className="rightContainer__discussion-footer--form"
-            onSubmit={submitMessage}
+          {/* ----------------- Profile Section --------------------- */}
+
+          <div
+            style={{ display: `${activeProfile ? "block" : "none"}` }}
+            className="rightContainer__profile"
           >
-            <input
-              className="rightContainer__discussion-footer--input"
-              type="text"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              placeholder="Type Message..."
-            />
-            <input style={{ display: "none" }} type="submit" />
-          </form>
-        </div>
-      </div>
+            <div>
+              <span style={{ fontWeight: "600" }}>About Me: </span>
+              {user?.user.profileInfo.aboutMe}
+            </div>
+            <div>
+              <span style={{ fontWeight: "600" }}>Contact No.: </span>
+              {user?.user.profileInfo.contactNo}
+            </div>
+            <div>
+              <span style={{ fontWeight: "600" }}>Occupation: </span>
+              {user?.user.profileInfo.occupation}
+            </div>
+          </div>
+
+          {lastViewedCourse ? (
+            <div
+              style={{ display: `${activeProfile ? "block" : "none"}` }}
+              className="rightContainer__lastViewed"
+            >
+              <div className="rightContainer__lastViewed-heading">
+                Last Viewed
+              </div>
+              <Link
+                to={`/details/${lastViewedCourse?._id}`}
+                className="rightContainer__lastViewed-course"
+              >
+                <img
+                  className="rightContainer__lastViewed-course--img"
+                  src={`${lastViewedCourse?.thumbnail}`}
+                  alt="course-pic"
+                />
+                <div className="rightContainer__lastViewed-course--name">
+                  {lastViewedCourse?.courseName}
+                </div>
+              </Link>
+            </div>
+          ) : null}
+
+          {/* --------------- Discussion Section ---------------- */}
+
+          <div
+            style={{ display: `${activeDiscussion ? "block" : "none"}` }}
+            className="rightContainer__discussion"
+          >
+            <div className="rightContainer__discussion-header">
+              <img
+                style={{ display: `${activeRoomsBox ? "block" : "none"}` }}
+                className="rightContainer__discussion-header--img"
+                src={add.src}
+                alt={add.alt}
+                onClick={createRoom}
+              />
+              <div style={{ display: `${activeRoomsBox ? "block" : "none"}` }}>
+                Create Room
+              </div>
+              <img
+                style={{ display: `${activeMessageBox ? "block" : "none"}` }}
+                className="rightContainer__discussion-header--img"
+                src={back.src}
+                alt={back.alt}
+                onClick={goBack}
+              />
+              <div
+                style={{ display: `${activeMessageBox ? "block" : "none"}` }}
+              >
+                {chatRoomName ? chatRoomName : "Room Name"}
+              </div>
+            </div>
+
+            <div
+              style={{ display: `${activeMessageBox ? "block" : "none"}` }}
+              className="rightContainer__discussion-messageBox"
+            >
+              {messageArray.map((message) =>
+                message.data.authorEmail === user?.user.email ? (
+                  <SentMessage key={message.id} messageData={message.data} />
+                ) : (
+                  <ReceivedMessage
+                    key={message.id}
+                    messageData={message.data}
+                  />
+                )
+              )}
+            </div>
+
+            <div
+              style={{ display: `${activeRoomsBox ? "block" : "none"}` }}
+              className="rightContainer__discussion-chatsRoomBox"
+            >
+              <ChatRoom
+                setChatRoomId={setChatRoomId}
+                setChatRoomName={setChatRoomName}
+                setActiveRoomsBox={setActiveRoomsBox}
+                setActiveMessageBox={setActiveMessageBox}
+              />
+            </div>
+
+            <div
+              style={{ display: `${activeMessageBox ? "block" : "none"}` }}
+              className="rightContainer__discussion-footer"
+            >
+              <form
+                className="rightContainer__discussion-footer--form"
+                onSubmit={submitMessage}
+              >
+                <input
+                  className="rightContainer__discussion-footer--input"
+                  type="text"
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  placeholder="Type Message..."
+                />
+                <input style={{ display: "none" }} type="submit" />
+              </form>
+            </div>
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="rightContainer__container">
+            <div className="rightContainer__container-btns">
+              <button>Menu</button>
+            </div>
+          </div>
+          <div className="rightContainer__menu">
+            <div
+              className="home__filterIcons-content"
+              onClick={() =>
+                setFilteredCourses(
+                  [...filteredCourses].sort((a, b) => b.price - a.price)
+                )
+              }
+            >
+              HiToLo
+            </div>
+            <div
+              className="home__filterIcons-content"
+              onClick={() =>
+                setFilteredCourses(
+                  [...filteredCourses].sort((a, b) => a.price - b.price)
+                )
+              }
+            >
+              LoToHi
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 }

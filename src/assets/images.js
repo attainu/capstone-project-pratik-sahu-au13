@@ -22,6 +22,13 @@ const images = {
   heart: { id: 18, src: `${path}/heart.png`, alt: "heart-icon" },
   detail: { id: 19, src: `${path}/detail.png`, alt: "detail-icon" },
   add: { id: 20, src: `${path}/add.png`, alt: "add-icon" },
+  moon: { id: 21, src: `${path}/moon.png`, alt: "moon-icon" },
+  sun: { id: 22, src: `${path}/sun.png`, alt: "sun-icon" },
+  popular: { id: 23, src: `${path}/popular.png`, alt: "popular-icon" },
+  rated: { id: 24, src: `${path}/rated.png`, alt: "rated-icon" },
+  free: { id: 25, src: `${path}/free.png`, alt: "free-icon" },
+  paid: { id: 26, src: `${path}/paid.png`, alt: "paid-icon" },
+  newC: { id: 27, src: `${path}/newC.png`, alt: "newC-icon" },
 };
 
 export default images;

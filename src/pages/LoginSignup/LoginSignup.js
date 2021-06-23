@@ -7,6 +7,7 @@ import {
   userLogin,
   userSignup,
 } from "../../stateHandling/utils/serverRequests";
+import GooglePassword from "../../googleUserCrud";
 
 export function LoginSignup({ selectedUserType }) {
   const [formData, setFormData] = useState({
@@ -25,23 +26,38 @@ export function LoginSignup({ selectedUserType }) {
   const googleSuccess = async (res) => {
     console.log("Logged in with Google o Auth...");
     const result = res?.profileObj;
+
+    const formdata = {
+      firstName: result.givenName,
+      lastName: result.familyName,
+      email: result.email,
+      password: GooglePassword,
+    };
+
     const token = res?.tokenId;
 
-    try {
-      dispatch({
-        type: "VERIFY_USER",
-        payload: result,
-      });
-      console.log(
-        "Result from google : ",
-        result,
-        "TOKEN from google: ",
-        token
-      );
-      history.push("/dashboard");
-    } catch (error) {
-      console.log(error);
+    const resp = await userLogin(formdata, selectedUserType, dispatch);
+    if (resp === "Email not registered") {
+      await userSignup(formdata, selectedUserType, dispatch);
+    } else {
+      console.log("error occured");
     }
+
+    // try {
+    //   dispatch({
+    //     type: "VERIFY_USER",
+    //     payload: result,
+    //   });
+    //   console.log(
+    //     "Result from google : ",
+    //     result,
+    //     "TOKEN from google: ",
+    //     token
+    //   );
+    //   history.push("/dashboard");
+    // } catch (error) {
+    //   console.log(error);
+    // }
   };
 
   const googleError = () => {
@@ -53,16 +69,16 @@ export function LoginSignup({ selectedUserType }) {
   }
 
   // ----------- Function for Sign In ------- /
-  const handleLoginSubmit = async(e) => {
+  const handleLoginSubmit = async (e) => {
     e.preventDefault();
     const formdata = formData;
     const res = await userLogin(formdata, selectedUserType, dispatch);
     setLoginMessage(res);
-  }
+  };
 
   // ----------- Function for Sign Up ------- /
 
-  const handleSignup = async(e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
     const formdata = formData;
     if (formData.password !== formData.confirm_password) {
@@ -71,10 +87,9 @@ export function LoginSignup({ selectedUserType }) {
     }
     const res = await userSignup(formdata, selectedUserType, dispatch);
     setSignupMessage(res);
-  }
+  };
 
   function showHidePassword(e) {
-
     if (e.target.className === "bx bx-hide") {
       e.target.className = "bx bx-show";
       e.target.parentElement.parentElement
@@ -123,7 +138,9 @@ export function LoginSignup({ selectedUserType }) {
               onSubmit={handleLoginSubmit}
             >
               <h1 className="form__title">Sign In!</h1>
-              {LoginMessage && <p className="form__title_login-message">{LoginMessage}</p>}
+              {LoginMessage && (
+                <p className="form__title_login-message">{LoginMessage}</p>
+              )}
               <div className="input__group">
                 <label className="field">
                   <input
