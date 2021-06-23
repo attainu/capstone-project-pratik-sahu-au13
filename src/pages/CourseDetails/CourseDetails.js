@@ -159,12 +159,16 @@ export function CourseDetails({ match }) {
             <h4>Contents</h4>
             {courseDetails &&
               courseDetails.videos.map((video) => (
+                 
+                
                 <div
                   key={video._id}
                   className="video"
                   onClick={() => {
                     setVideoTitle(video.title);
-                    setPublicId(video.publicId);
+                    if (courseDetails.enrolledStudents.includes(user?.user._id)) {
+                      setPublicId(video.publicId);
+                    }
                   }}
                 >
                   <small>{video.title.substring(0, 35)}</small>

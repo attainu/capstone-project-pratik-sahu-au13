@@ -234,7 +234,11 @@ export const userLogin = async (formData, selectedUserType, dispatch) => {
     const {
       data: { data, token, message, error },
     } = await API.post(url, formData);
-    data.token = token;
+    
+    if (data){
+      console.log("Data:",data)
+      data.token = token;
+    }
     console.log(message);
     console.log(error);
 

@@ -108,7 +108,7 @@ export function RightContainer() {
         className="rightContainer__profile"
       >
         <div>
-          <img src={user.user.profileImg} alt={user.user.firstName} height="100"/>
+          <img src={user.user.profileImg ? user.user.profileImg : `https://ui-avatars.com/api/?name=${user.user.firstName}+${user.user.lastName}`} alt={user.user.firstName} height="100"/>
         </div>
         <div >
           <p style={{ fontWeight: "600", }}>Myself </p>
