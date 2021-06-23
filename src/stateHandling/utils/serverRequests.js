@@ -232,8 +232,8 @@ export const userLogin = async (formData, selectedUserType, dispatch) => {
       data: { data, token, message, error },
     } = await API.post(url, formData);
     // data.token = token;
-    console.log(message);
-    console.log(error);
+    // console.log(message);
+    // console.log(error);
 
     if (data) {
       if (selectedUserType === "tut") {
@@ -243,9 +243,8 @@ export const userLogin = async (formData, selectedUserType, dispatch) => {
       }
     } else {
       if (error) {
-        return error
+        return error;
       }
-
     }
     return message;
   } catch (err) {
@@ -256,15 +255,14 @@ export const userLogin = async (formData, selectedUserType, dispatch) => {
 
 export const userSignup = async (formData, selectedUserType, dispatch) => {
   try {
+    const url =
+      selectedUserType === "tut"
+        ? userApis.POST.tutorSignup
+        : userApis.POST.studentSignup;
     const {
       data: { data, message, error },
-    } = await axios({
-      method: "POST",
-      // url: userApis.POST.studentSignup,
-      url: `https://cloudversity-api-server.herokuapp.com/${selectedUserType}/signup`,
-      data: formData,
-    });
-    console.log(data, message);
+    } = await API.post(url, formData);
+    // console.log(data, message);
     if (data) {
       if (selectedUserType === "tut") {
         dispatch({ type: tutorActionType.verifyTutor, payload: data });
@@ -272,15 +270,14 @@ export const userSignup = async (formData, selectedUserType, dispatch) => {
         dispatch({ type: studentActionType.verifyStudent, payload: data });
       }
     } else {
-      if (error){
-        console.log(error)
-        return error
+      if (error) {
+        console.log(error);
+        return error;
       }
     }
     return message;
-
   } catch (err) {
-    console.log("Error occured during Signup:", err );
+    console.log("Error occured during Signup:", err);
     return err.message;
   }
 };
