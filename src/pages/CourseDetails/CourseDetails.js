@@ -8,6 +8,7 @@ import {
 import images from "../../assets/images";
 import "./CourseDetails.scss";
 import VideoUploadModal from "../../components/VideoUploadModal";
+import { StateContext } from "../../stateHandling/contexts/StateContext";
 
 export function CourseDetails({ match }) {
   const [courseDetails, setCourseDetails] = useState(null);
@@ -17,11 +18,13 @@ export function CourseDetails({ match }) {
   const [review, setReview] = useState({ reviewBody: "", rating: "" });
   const id = match.params.id;
   const { user } = useContext(AuthContext);
+  const { dispatch, state:{videoList} } = useContext(StateContext)
 
   const { star, lock } = images;
 
   useEffect(() => {
-    getCourseById(id).then((data) => {
+    getCourseById(id, dispatch)
+    .then((data) => {
       setCourseDetails(data);
       if (data.videos.length) {
         setPublicId(data.videos[0].publicId);
@@ -30,16 +33,15 @@ export function CourseDetails({ match }) {
     });
   }, [id]);
 
+
+
   const modalToggle = () => {
     setShowModal(!showModal);
   };
 
   const deleteSelectecVideo = async (videoId) => {
-    const res = await deleteVideo(videoId, user?.user.token);
-    if (!res) {
-      return alert("Couldn't delete the video");
-    }
-    return alert("Video deleted sucessfully");
+    await deleteVideo(videoId, user?.user.token, id, dispatch);
+    
   };
 
   const fillStar = (e) => {
@@ -158,7 +160,7 @@ export function CourseDetails({ match }) {
         <div className="details__content-right">
           {showModal && (
             <div className="details__content-right--uploadvideo">
-              <VideoUploadModal id={id} user={user} modalToggle={modalToggle} />
+              <VideoUploadModal id={id} user={user} modalToggle={modalToggle} dispatch={dispatch} />
             </div>
           )}
 
@@ -175,8 +177,8 @@ export function CourseDetails({ match }) {
 
           <h4>Contents</h4>
           <div className="details__content-right--videos">
-            {courseDetails &&
-              courseDetails.videos.map((video) => (
+            {videoList &&
+              videoList.map((video) => (
                 <div
                   key={video._id}
                   className="video"
@@ -199,10 +201,10 @@ export function CourseDetails({ match }) {
                     </small>
                     {!user ? (
                       <img src={lock.src} alt={lock.alt} />
-                    ) : courseDetails.enrolledStudents.includes(
+                    ) : courseDetails?.enrolledStudents.includes(
                         user?.user._id
                       ) ||
-                      courseDetails.authorName._id === user?.user._id ? null : (
+                      courseDetails?.authorName._id === user?.user._id ? null : (
                       <img src={lock.src} alt={lock.alt} />
                     )}
                     {user?.user.createdCourses?.filter(

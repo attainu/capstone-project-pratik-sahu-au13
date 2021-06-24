@@ -211,13 +211,17 @@ export const fetchLastViewedCourse = async (
   } catch (err) {}
 };
 
-export const getCourseById = async (id) => {
+export const getCourseById = async (id, dispatch) => {
   try {
     const {
       data: { requestedCourse },
     } = await API.get(`/course/${id}`);
+
+    dispatch({type:"FETCH_VIDEO_LIST", payload: requestedCourse.videos});
     return requestedCourse;
-  } catch (err) {}
+  } catch (err) {
+    console.log("Error while fetching course");
+  }
 };
 
 //-------- Modified -------- //
@@ -366,7 +370,7 @@ export const deleteCourseFromDB = async (id, user, dispatch) => {
   } catch (err) {}
 };
 
-export const uploadVideo = async (id, token, data) => {
+export const uploadVideo = async (id, token, data, dispatch) => {
   try {
     console.log(data);
     const reader = new FileReader();
@@ -380,6 +384,10 @@ export const uploadVideo = async (id, token, data) => {
           Authorization: `Bearer ${token}`,
         },
       });
+
+      if(datas) {
+        getCourseById(id, dispatch);
+      }
       console.log(datas);
     };
   } catch (err) {
@@ -387,7 +395,7 @@ export const uploadVideo = async (id, token, data) => {
   }
 };
 
-export const deleteVideo = async (videoId, token) => {
+export const deleteVideo = async (videoId, token, id, dispatch) => {
   try {
     const data = await axios({
       method: "DELETE",
@@ -396,9 +404,10 @@ export const deleteVideo = async (videoId, token) => {
         Authorization: `Bearer ${token}`,
       },
     });
-
-    console.log(data);
-    return data;
+    console.log("Data: ",data)
+      getCourseById(id, dispatch);
+    
+    
   } catch (err) {
     console.log("Error Occured: ", err);
     return null;
