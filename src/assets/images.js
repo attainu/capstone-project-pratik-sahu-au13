@@ -29,6 +29,7 @@ const images = {
   free: { id: 25, src: `${path}/free.png`, alt: "free-icon" },
   paid: { id: 26, src: `${path}/paid.png`, alt: "paid-icon" },
   newC: { id: 27, src: `${path}/newC.png`, alt: "newC-icon" },
+  lock: { id: 28, src: `${path}/lock.png`, alt: "lock-icon" },
 };
 
 export default images;

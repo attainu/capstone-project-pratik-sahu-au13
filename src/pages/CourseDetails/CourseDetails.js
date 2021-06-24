@@ -5,6 +5,7 @@ import {
   deleteVideo,
   postReview,
 } from "../../stateHandling/utils/serverRequests";
+import images from "../../assets/images";
 import "./CourseDetails.scss";
 import VideoUploadModal from "../../components/VideoUploadModal";
 
@@ -16,6 +17,8 @@ export function CourseDetails({ match }) {
   const [review, setReview] = useState({ reviewBody: "", rating: "" });
   const id = match.params.id;
   const { user } = useContext(AuthContext);
+
+  const { star, lock } = images;
 
   useEffect(() => {
     getCourseById(id).then((data) => {
@@ -91,7 +94,7 @@ export function CourseDetails({ match }) {
                 className="iframe"
                 style={{
                   width: "100%",
-                  height: "100%",
+                  height: "38rem",
                 }}
                 title="demo"
                 src={
@@ -110,7 +113,7 @@ export function CourseDetails({ match }) {
               style={{
                 margin: ".5rem",
                 paddingBottom: ".5rem",
-                borderBottom: "1px solid #000",
+                borderBottom: "1px solid #d3d3d3",
               }}
             >
               About
@@ -120,7 +123,14 @@ export function CourseDetails({ match }) {
             </p>
           </div>
           <div className="details__content-left--reviews">
-            <h2>Reviews</h2>
+            <h4
+              style={{
+                paddingBottom: ".5rem",
+                borderBottom: "1px solid #d3d3d3",
+              }}
+            >
+              Reviews
+            </h4>
             {courseDetails?.reviews &&
               courseDetails.reviews.map((review) => {
                 return (
@@ -128,7 +138,14 @@ export function CourseDetails({ match }) {
                     <div className="review" key={review._id}>
                       <div className="rating-grp">
                         <h4>{review.reviewerName}</h4>
-                        <span>{review.rating} Star</span>
+                        <span>
+                          {review.rating}{" "}
+                          <img
+                            className="review__img"
+                            src={star.src}
+                            alt={star.alt}
+                          />
+                        </span>
                       </div>
                       <p>{review.reviewBody}</p>
                     </div>
@@ -145,7 +162,8 @@ export function CourseDetails({ match }) {
             </div>
           )}
 
-          {user && (
+          {user?.user.createdCourses?.filter((course) => course._id === id)
+            .length == true && (
             <div
               className="details__content-right--uploadbtn"
               onClick={modalToggle}
@@ -155,18 +173,19 @@ export function CourseDetails({ match }) {
             </div>
           )}
 
+          <h4>Contents</h4>
           <div className="details__content-right--videos">
-            <h4>Contents</h4>
             {courseDetails &&
               courseDetails.videos.map((video) => (
-                 
-                
                 <div
                   key={video._id}
                   className="video"
                   onClick={() => {
                     setVideoTitle(video.title);
-                    if (courseDetails.enrolledStudents.includes(user?.user._id)) {
+                    if (
+                      courseDetails.enrolledStudents.includes(user?.user._id) ||
+                      courseDetails.authorName._id === user?.user._id
+                    ) {
                       setPublicId(video.publicId);
                     }
                   }}
@@ -178,10 +197,26 @@ export function CourseDetails({ match }) {
                         ? video.videoLength.toFixed(2).toString()
                         : null}
                     </small>
-                    {user && (
+                    {!user ? (
+                      <img src={lock.src} alt={lock.alt} />
+                    ) : courseDetails.enrolledStudents.includes(
+                        user?.user._id
+                      ) ||
+                      courseDetails.authorName._id === user?.user._id ? null : (
+                      <img src={lock.src} alt={lock.alt} />
+                    )}
+                    {user?.user.createdCourses?.filter(
+                      (course) => course._id === id
+                    ).length == true && (
                       <i
                         className="bx bx-trash"
-                        onClick={() => deleteSelectecVideo(video._id)}
+                        onClick={() => {
+                          if (
+                            window.confirm("Are you sure to delete this video?")
+                          ) {
+                            deleteSelectecVideo(video._id);
+                          }
+                        }}
                       ></i>
                     )}
                   </div>
@@ -190,33 +225,42 @@ export function CourseDetails({ match }) {
           </div>
           <div className="details__content-right--post-review">
             <div className="details__content-right--post-review">
-              <form onSubmit={postreview} method="POST">
-                <h3>Post a Review</h3>
-                <div className="rating-grp">
-                  <h4>Rating: </h4>
-                  {[1, 2, 3, 4, 5].map((i) => {
-                    return (
-                      <i
-                        className="bx bx-star"
-                        key={i}
-                        id={i}
-                        onClick={fillStar}
-                      ></i>
-                    );
-                  })}
-                </div>
-                <textarea
-                  name="reviewBody"
-                  cols="30"
-                  rows="10"
-                  value={review.reviewBody}
-                  placeholder="Write review here..."
-                  onChange={(e) =>
-                    setReview({ ...review, reviewBody: e.target.value })
-                  }
-                ></textarea>
-                <button type="submit">Submit</button>
-              </form>
+              {courseDetails?.enrolledStudents.includes(user?.user._id) && (
+                <form onSubmit={postreview} method="POST">
+                  <h4
+                    style={{
+                      paddingBottom: ".5rem",
+                      borderBottom: "1px solid #d3d3d3",
+                    }}
+                  >
+                    Post a Review
+                  </h4>
+                  <div className="rating-grp">
+                    <h4>Rating: </h4>
+                    {[1, 2, 3, 4, 5].map((i) => {
+                      return (
+                        <i
+                          className="bx bx-star"
+                          key={i}
+                          id={i}
+                          onClick={fillStar}
+                        ></i>
+                      );
+                    })}
+                  </div>
+                  <textarea
+                    name="reviewBody"
+                    cols="30"
+                    rows="10"
+                    value={review.reviewBody}
+                    placeholder="Write review here..."
+                    onChange={(e) =>
+                      setReview({ ...review, reviewBody: e.target.value })
+                    }
+                  ></textarea>
+                  <button type="submit">Submit</button>
+                </form>
+              )}
             </div>
           </div>
         </div>

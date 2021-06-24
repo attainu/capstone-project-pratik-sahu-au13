@@ -1,12 +1,13 @@
 import React, { useContext, useEffect } from "react";
 import { Redirect } from "react-router";
 // import images from "../../assets/images";
-import { CourseCardDB } from "../../components";
+import { CourseCardDB, Loader } from "../../components";
 import { TutorDashboard } from "../TutorDashboard/TutorDashboard";
 import { AuthContext } from "../../stateHandling/contexts/AuthContext";
 import "./Dashboard.scss";
 import {
   fetchCartFromDB,
+  fetchCoursesFromDB,
   fetchEnrolledCoursesFromDB,
   fetchWishListFromDB,
   updateLastestViewedCourse,
@@ -19,6 +20,10 @@ export function Dashboard() {
     state: { courses, enrolledCourses, wishListItems, cartItems },
     dispatch,
   } = useContext(StateContext);
+
+  useEffect(() => {
+    fetchCoursesFromDB(dispatch);
+  }, [dispatch]);
 
   // const { prev, next } = images;
 
@@ -79,16 +84,20 @@ export function Dashboard() {
             Courses You've Enrolled
           </div>
           <div className="dashboard__courses-enrolled--content">
-            {enrolledCourses.length > 0 ? (
-              enrolledCourses.map((course) => (
-                <CourseCardDB
-                  key={course._id}
-                  course={course}
-                  updateLastestViewedCourse={updateLastestViewedCourse}
-                />
-              ))
+            {user?.user.enrolledCourses.length > 0 ? (
+              enrolledCourses.length > 0 ? (
+                enrolledCourses.map((course) => (
+                  <CourseCardDB
+                    key={course._id}
+                    course={course}
+                    updateLastestViewedCourse={updateLastestViewedCourse}
+                  />
+                ))
+              ) : (
+                <Loader />
+              )
             ) : (
-              <div>No courses to show</div>
+              <div>No Enrolled Courses Found</div>
             )}
           </div>
         </div>
@@ -106,7 +115,7 @@ export function Dashboard() {
                 />
               ))
             ) : (
-              <div>No courses to show</div>
+              <Loader />
             )}
           </div>
         </div>
