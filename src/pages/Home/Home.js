@@ -114,9 +114,10 @@ export function Home({ filteredCourses, setFilteredCourses }) {
               const isItWishlistItem = !!wishListItems?.filter(
                 (item) => item._id === id
               ).length;
-              const isItCartItem = !!cartItems?.filter(
-                (item) => item._id === id
-              ).length;
+              const isItCartItem = !!cartItems?.filter((item) => item._id === id)
+                .length;
+              const isItEnrolledItem = !!enrolledCourses?.filter((item) => item._id === id)
+                .length;
               return (
                 <CourseCard
                   key={id}
@@ -125,6 +126,7 @@ export function Home({ filteredCourses, setFilteredCourses }) {
                   dispatch={dispatch}
                   isItCartItem={isItCartItem}
                   isItWishlistItem={isItWishlistItem}
+                  isItEnrolledItem={isItEnrolledItem}
                 />
               );
             })}
