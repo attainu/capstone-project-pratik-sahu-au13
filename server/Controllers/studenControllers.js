@@ -3,7 +3,7 @@ require('dotenv').config();
 const bcrypt = require('bcryptjs');
 const Student = require('../Model/student');
 const Course = require('../Model/course');
-
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 module.exports = {
 
@@ -38,8 +38,6 @@ module.exports = {
     login: async (req, res) => {
         try {
 
-            // const loginData = req.body;
-
             const student = await Student.findOne({ email: req.body.email })
                 .populate("wishlist")
                 .populate("enrolledCourses")
@@ -57,7 +55,7 @@ module.exports = {
             const isValidPassword = await bcrypt.compare(req.body.password, student.password);
 
             if (!isValidPassword) {
-                return res.status(400).send({ message: "Invalid Password", error: "Invalid Password" });
+                return res.send({ message: "Invalid Password", error: "Invalid Password" });
             };
 
             // --- Generating JWT --- /
@@ -96,7 +94,7 @@ module.exports = {
                 .populate([{ path: "cart", select: ["courseName", "thumbnail", "price", "rating"], populate: { path: "authorName", model: "tutor", select: ["firstName", "lastName"] } }])
                 .populate("enrolledCourses").exec();
 
-            console.log("Student Info: ", studentInfo)
+            // console.log("Student Info: ", studentInfo)
 
             res.status(200).send({ message: "Fetched Student details: ", studentInfo });
 

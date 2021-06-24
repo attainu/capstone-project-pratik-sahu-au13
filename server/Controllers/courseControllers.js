@@ -116,7 +116,7 @@ module.exports = {
                 await student.save();
                 await tutor.save();
 
-                res.status(200).send({ message: "New course enrolled successfully", enrolledCourses: student.enrolledCourses });
+                return res.status(200).send({ message: "New course enrolled successfully", enrolledCourses: student.enrolledCourses });
             }
             res.status(200).send({ message: "Student already enrolled to this course" });
 
@@ -250,5 +250,45 @@ module.exports = {
             res.status(500).send({ message: "Couldn't apply discount, try again", error: error.message });
         };
     },
+
+    coursePayment: async (req, res) => {
+        try {
+
+            console.log(process.env.STRIPE_SECRET_KEY);   // remove it later
+            const { product, token } = req.body;
+            console.log("PRODUCT: ", product);
+            console.log("PRICE: ", product.price);
+            console.log("TOKEN: ", token);
+            const idempontencyKey = uuidv4(); // to make sure we don't charge the user twice accidently or due to any error
+
+            return stripe.customers.create({
+                email: token.email,
+                source: token.id,
+            }).then(customer => {
+                stripe.charges.create({
+
+                    amount: product.price * 100,
+                    currency: "inr",
+                    customer: customer.id,
+                    receipt_email: token.email,
+                    description: `purchase of ${product.name}`,
+                    shipping: {
+                        name: token.card.name,
+                        address: {
+                            line1: token.card.address_line1,
+                            country: token.card.address_country
+                        }
+                    }
+                });
+            }).then(result => res.status(200).send(result))
+                .catch(err => console.log(err));
+
+
+
+        } catch (error) {
+            console.log("Error occurred during transaction...", error);
+            res.status(500).send({ message: "Paymeent failed, please try again", error: error.message });
+        }
+    }
 
 }
