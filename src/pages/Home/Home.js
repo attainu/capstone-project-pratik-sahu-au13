@@ -4,6 +4,7 @@ import { Search, CourseCard } from "../../components";
 import { AuthContext } from "../../stateHandling/contexts/AuthContext";
 import { StateContext } from "../../stateHandling/contexts/StateContext";
 import { CarouselFunc } from "../../components";
+import { Loader } from "../../components";
 import { fetchCoursesFromDB } from "../../stateHandling/utils/serverRequests";
 import "./Home.scss";
 
@@ -101,16 +102,14 @@ export function Home({ filteredCourses, setFilteredCourses }) {
           <img src={free.src} alt={free.alt} />
           <p>Free</p>
         </div>
-       
-      
+
         <Search setFilteredCourses={setFilteredCourses} />
       </div>
 
       <div className="home__scroll">
-
-        <div className="home__scroll-grid">
-          {filteredCourses.length ? (
-            filteredCourses.map((course) => {
+        {filteredCourses.length ? (
+          <div className="home__scroll-grid">
+            {filteredCourses.map((course) => {
               const id = course._id;
               const isItWishlistItem = !!wishListItems?.filter(
                 (item) => item._id === id
@@ -128,12 +127,11 @@ export function Home({ filteredCourses, setFilteredCourses }) {
                   isItWishlistItem={isItWishlistItem}
                 />
               );
-            })
-          ) : (
-            <div>No courses found</div>
-          )}
-        </div>
-
+            })}
+          </div>
+        ) : (
+          <Loader />
+        )}
       </div>
 
       {/* <div

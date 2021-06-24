@@ -7,6 +7,7 @@ import {
   deleteCourseFromDB,
   fetchCreatedCoursesFromDB,
 } from "../../stateHandling/utils/serverRequests";
+import { Loader } from "../../components";
 import "./TutorDashboard.scss";
 
 export function TutorDashboard({ user }) {
@@ -20,22 +21,25 @@ export function TutorDashboard({ user }) {
 
   const [stats, setStats] = useState({
     enrolled: "",
-    earning: "",
     wishlist: "",
   });
+  const [earning, setEarning] = useState(0);
 
   useEffect(() => {
     fetchCreatedCoursesFromDB(user, dispatch);
   }, [user, dispatch]);
 
+  useEffect(() => {
+    const { totalEarnings } = user?.user;
+    setEarning(totalEarnings);
+  }, [user]);
+
   const handleStats = (id) => {
     const { enrolledStudents, wishlistedBy } = createdCourses.filter(
       (e) => e._id === id
     )[0];
-
     setStats({
       enrolled: enrolledStudents.length,
-      earning: 0,
       wishlist: wishlistedBy.length,
     });
     setId(id);
@@ -51,24 +55,46 @@ export function TutorDashboard({ user }) {
 
   return (
     <div className="tutor">
-      <div className="tutor__row1">
-        <Link className="tutor__row1-btn" to="/newcourse">
-          Create a new Course
-        </Link>
+      <div className="applyFlex">
+        <div className="tutor__row1">
+          <Link className="tutor__row1-btn" to="/newcourse">
+            Create a new Course
+          </Link>
+        </div>
+        <div className="tutor__row1-1">
+          <p
+            style={{
+              fontSize: "2.5rem",
+              fontWeight: "600",
+              marginRight: ".5rem",
+            }}
+          >
+            ${earning}
+          </p>
+          <p>Total Earnings</p>
+        </div>
       </div>
       <div className="tutor__row2">
         <div className="tutor__row2__left">
           <h3 className="tutor__row2__left-header">Your courses</h3>
           <div className="tutor__row2__left-courseList">
-            {createdCourses.map((course) => (
-              <div
-                className="tutorCard"
-                key={course._id}
-                onClick={() => handleStats(course._id)}
-              >
-                <TutorCard course={course} />
-              </div>
-            ))}
+            {user?.user.createdCourses.length > 0 ? (
+              createdCourses.length > 0 ? (
+                createdCourses.map((course) => (
+                  <div
+                    className="tutorCard"
+                    key={course._id}
+                    onClick={() => handleStats(course._id)}
+                  >
+                    <TutorCard course={course} />
+                  </div>
+                ))
+              ) : (
+                <Loader />
+              )
+            ) : (
+              <div>You haven't created any courses</div>
+            )}
           </div>
         </div>
         <div className="tutor__row2__right">
@@ -103,12 +129,6 @@ export function TutorDashboard({ user }) {
                   {stats.enrolled}
                 </p>
                 <p>Enrolled Students</p>
-              </div>
-              <div className="tutor__row2__right-stats">
-                <p style={{ fontSize: "2.5rem", fontWeight: "600" }}>
-                  {stats.earning}
-                </p>
-                <p>Total Earnings</p>
               </div>
               <div className="tutor__row2__right-stats">
                 <p style={{ fontSize: "2.5rem", fontWeight: "600" }}>

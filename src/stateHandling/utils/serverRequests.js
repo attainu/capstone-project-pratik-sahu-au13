@@ -230,14 +230,13 @@ export const userLogin = async (formData, selectedUserType, dispatch) => {
     const {
       data: { data, token, message, error },
     } = await API.post(url, formData);
-    
-    if (data){
-      console.log("Data:",data)
+
+    if (data) {
+      console.log("Data:", data);
       data.token = token;
     }
     console.log(message);
     console.log(error);
-
 
     if (data) {
       if (selectedUserType === "tut") {
@@ -383,7 +382,9 @@ export const uploadVideo = async (id, token, data) => {
       });
       console.log(datas);
     };
-  } catch (err) {}
+  } catch (err) {
+    console.log(err.message);
+  }
 };
 
 export const deleteVideo = async (videoId, token) => {

@@ -21,7 +21,7 @@ export function TutorCard({ course }) {
       </div>
       <div className="tutorCard__secondDiv">
         <img className="leftContainer__icon" src={fire.src} alt={fire.alt} />
-        <span>{rating}</span>
+        <span>{rating ? rating : "0"}</span>
       </div>
     </>
   );

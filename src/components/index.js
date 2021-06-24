@@ -7,3 +7,4 @@ export * from "./Discussion/ChatRoom";
 export * from "./Discussion/ReceivedMessage";
 export * from "./Discussion/SentMessage";
 export * from "./Carousel/Carousel";
+export * from "./Loader/Loader";

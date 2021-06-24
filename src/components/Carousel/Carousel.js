@@ -24,17 +24,11 @@ export function CarouselFunc() {
         {/* <p className="legend">Legend 1</p> */}
       </div>
       <div className="image">
-        <img
-          src={img2}
-          alt="pics"
-        />
+        <img src={img2} alt="pics" />
         {/* <p className="legend">Legend 2</p> */}
       </div>
       <div className="image">
-        <img
-          src={img3}
-          alt="pics"
-        />
+        <img src={img3} alt="pics" />
         {/* <p className="legend">Legend 3</p> */}
       </div>
     </Carousel>

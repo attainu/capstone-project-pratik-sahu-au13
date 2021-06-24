@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-
 import { uploadVideo } from "../../stateHandling/utils/serverRequests";
 import "./modal.scss";
+
 function VideoUploadModal({ modalToggle, id, user }) {
   const [file, setFile] = useState(null);
   const [videoTitle, setVideoTitle] = useState("");
@@ -10,10 +10,12 @@ function VideoUploadModal({ modalToggle, id, user }) {
     e.preventDefault();
     const data = { title: videoTitle, file: file };
     uploadVideo(id, user?.user.token, data);
+    modalToggle();
   };
+
   return (
     <div className="modal">
-      <i class="bx bx-x" onClick={modalToggle}></i>
+      <i className="bx bx-x" onClick={modalToggle}></i>
       <form onSubmit={handleVideoSubmit}>
         <div className="modal__input-grp">
           <input
@@ -31,10 +33,10 @@ function VideoUploadModal({ modalToggle, id, user }) {
               onChange={(e) => setFile(e.target.files[0])}
               required
             />
-            <i class="bx bxs-video-recording"></i>
+            <i className="bx bxs-video-recording"></i>
           </div>
         </div>
-        <button type="submit">Add video </button>
+        <button type="submit">Add video</button>
       </form>
     </div>
   );
