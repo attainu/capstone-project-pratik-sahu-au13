@@ -12,6 +12,7 @@ function App() {
   useEffect(() => {
     const root = document.documentElement;
     root?.style.setProperty("--white", darkTheme ? "#9ca3af" : "#fff");
+    root?.style.setProperty("--grey-medium", darkTheme ? "#fff" : "#9ca3af");
   }, [darkTheme]);
 
   return (

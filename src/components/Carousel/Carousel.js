@@ -1,6 +1,9 @@
 import React from "react";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
+import img1 from "../../assets/images/Carousel1.jpg";
+import img2 from "../../assets/images/Carousel2.jpg";
+import img3 from "../../assets/images/Carousel4.jpg";
 import "./Carousel.scss";
 
 export function CarouselFunc() {
@@ -14,25 +17,13 @@ export function CarouselFunc() {
       stopOnHover={false}
     >
       <div className="image">
-        <img
-          src="https://images.unsplash.com/photo-1457305237443-44c3d5a30b89?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=753&q=80"
-          alt="pics"
-        />
-        {/* <p className="legend">Legend 1</p> */}
+        <img src={img1} alt="pics" />
       </div>
       <div className="image">
-        <img
-          src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=752&q=80"
-          alt="pics"
-        />
-        {/* <p className="legend">Legend 2</p> */}
+        <img src={img2} alt="pics" />
       </div>
       <div className="image">
-        <img
-          src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=752&q=80"
-          alt="pics"
-        />
-        {/* <p className="legend">Legend 3</p> */}
+        <img src={img3} alt="pics" />
       </div>
     </Carousel>
   );

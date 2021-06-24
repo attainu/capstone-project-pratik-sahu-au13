@@ -5,7 +5,12 @@ import { AuthContext } from "../../stateHandling/contexts/AuthContext";
 import { StateContext } from "../../stateHandling/contexts/StateContext";
 import { CarouselFunc } from "../../components";
 import { Loader } from "../../components";
-import { fetchCoursesFromDB } from "../../stateHandling/utils/serverRequests";
+import {
+  fetchCartFromDB,
+  fetchCoursesFromDB,
+  fetchEnrolledCoursesFromDB,
+  fetchWishListFromDB,
+} from "../../stateHandling/utils/serverRequests";
 import "./Home.scss";
 
 export function Home({ filteredCourses, setFilteredCourses }) {
@@ -21,6 +26,16 @@ export function Home({ filteredCourses, setFilteredCourses }) {
   useEffect(() => {
     fetchCoursesFromDB(dispatch);
   }, [dispatch]);
+
+  useEffect(() => {
+    if (user) {
+      if (user.user.role === "student") {
+        fetchWishListFromDB(user, dispatch);
+        fetchCartFromDB(user, dispatch);
+        fetchEnrolledCoursesFromDB(user, dispatch);
+      }
+    }
+  }, [user, dispatch]);
 
   useEffect(() => {
     if (courses.length) {
@@ -76,7 +91,10 @@ export function Home({ filteredCourses, setFilteredCourses }) {
           <img src={rated.src} alt={rated.alt} />
           <p>Highest Rated</p>
         </div>
-        <div className="home__filterIcons-content new">
+        <div
+          className="home__filterIcons-content new"
+          onClick={() => setFilteredCourses([...courses].reverse())}
+        >
           <img src={newC.src} alt={newC.alt} />
           <p>Recently Added</p>
         </div>

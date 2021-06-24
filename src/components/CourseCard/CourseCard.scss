@@ -79,8 +79,25 @@
       }
 
       &--content {
-        font-size: 1.4rem;
+        font-size: 1.3rem;
+        margin-top: 0.5rem;
+        padding-left: 0.5rem;
+        border-left: 2px solid var(--grey-medium);
         // background-color: brown;
+      }
+
+      &--rating {
+        font-size: 1.3rem;
+        margin-top: 0.5rem;
+        padding: 0.3rem 0.5rem;
+        display: inline-block;
+        color: #fff;
+        // background-color: green;
+
+        & > img {
+          margin-left: 0.3rem;
+          width: 1rem;
+        }
       }
     }
 

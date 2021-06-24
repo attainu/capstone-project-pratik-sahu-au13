@@ -94,21 +94,14 @@ export function RightContainer({ filteredCourses, setFilteredCourses }) {
 
   return (
     <div className="rightContainer">
-
       {user ? (
         <>
           <div className="rightContainer__container">
             <div className="rightContainer__container-btns">
-              <button>Menu</button>
               <button onClick={handleProfile}>Profile</button>
-              <button onClick={handleDiscussion}>Chats</button>
-
+              <button onClick={handleDiscussion}>Discussions</button>
             </div>
           </div>
-
-          {/* ------------------ Menu & Search Section ------------------- */}
-
-          {/* <div className="rightContainer__menu"></div> */}
 
           {/* ----------------- Profile Section --------------------- */}
 
@@ -161,16 +154,28 @@ export function RightContainer({ filteredCourses, setFilteredCourses }) {
             className="rightContainer__discussion"
           >
             <div className="rightContainer__discussion-header">
-              <img
-                style={{ display: `${activeRoomsBox ? "block" : "none"}` }}
-                className="rightContainer__discussion-header--img"
-                src={add.src}
-                alt={add.alt}
-                onClick={createRoom}
-              />
-              <div style={{ display: `${activeRoomsBox ? "block" : "none"}` }}>
-                Create Room
-              </div>
+              {user?.user.role === "tutor" ? (
+                <>
+                  <img
+                    style={{ display: `${activeRoomsBox ? "block" : "none"}` }}
+                    className="rightContainer__discussion-header--img"
+                    src={add.src}
+                    alt={add.alt}
+                    onClick={createRoom}
+                  />
+                  <div
+                    style={{ display: `${activeRoomsBox ? "block" : "none"}` }}
+                  >
+                    Create Room
+                  </div>
+                </>
+              ) : (
+                <div
+                  style={{ display: `${activeRoomsBox ? "block" : "none"}` }}
+                >
+                  Discuss Your Doubts
+                </div>
+              )}
               <img
                 style={{ display: `${activeMessageBox ? "block" : "none"}` }}
                 className="rightContainer__discussion-header--img"
@@ -236,12 +241,14 @@ export function RightContainer({ filteredCourses, setFilteredCourses }) {
       ) : (
         <>
           <div className="rightContainer__container">
-            <div className="rightContainer__container-btns">
-              <button>Menu</button>
-            </div>
+            <div>Hi! Anonymous User 👋</div>
           </div>
           <div className="rightContainer__menu">
-            <div
+            <small>
+              SignIn/ SignUp to access amazing courses from our Mentors and join
+              the vast community of Mentor and Students
+            </small>
+            {/* <div
               className="home__filterIcons-content"
               onClick={() =>
                 setFilteredCourses(
@@ -250,8 +257,8 @@ export function RightContainer({ filteredCourses, setFilteredCourses }) {
               }
             >
               HiToLo
-            </div>
-            <div
+            </div> */}
+            {/* <div
               className="home__filterIcons-content"
               onClick={() =>
                 setFilteredCourses(
@@ -260,7 +267,7 @@ export function RightContainer({ filteredCourses, setFilteredCourses }) {
               }
             >
               LoToHi
-            </div>
+            </div> */}
           </div>
         </>
       )}
