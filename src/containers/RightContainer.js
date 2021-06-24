@@ -117,19 +117,21 @@ export function RightContainer({ filteredCourses, setFilteredCourses }) {
             className="rightContainer__profile"
           >
             <div>
-              <span style={{ fontWeight: "600" }}>About Me: </span>
-              {user?.user.profileInfo.aboutMe}
+              <img src={user.user.profileImg ? user.user.profileImg : `https://ui-avatars.com/api/?name=${user.user.firstName}+${user.user.lastName}`} alt={user.user.firstName} height="100" />
             </div>
-            <div>
-              <span style={{ fontWeight: "600" }}>Contact No.: </span>
-              {user?.user.profileInfo.contactNo}
+            <div >
+              <p style={{ fontWeight: "600", }}>Myself </p>
+              {user.user.profileInfo.aboutMe}
             </div>
-            <div>
-              <span style={{ fontWeight: "600" }}>Occupation: </span>
-              {user?.user.profileInfo.occupation}
+            <div className="flex">
+              <i class='bx bxs-phone-call'></i>
+              <p>{user?.user.profileInfo.contactNo ? user.user.profileInfo.contactNo : "Contact not added" }</p>
+            </div>
+            <div className="flex">
+              <i class='bx bxs-briefcase' ></i>
+              <p>{user.user.profileInfo.occupation}</p>
             </div>
           </div>
-
           {lastViewedCourse ? (
             <div
               style={{ display: `${activeProfile ? "block" : "none"}` }}
