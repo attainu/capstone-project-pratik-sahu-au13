@@ -1,5 +1,5 @@
-export const base_url = "https://cloudversity-api-server.herokuapp.com";
-// export const base_url = "http://localhost:5233";
+// export const base_url = "https://cloudversity-api-server.herokuapp.com";
+export const base_url = "http://localhost:5233";
 
 
 export const courseApis = {

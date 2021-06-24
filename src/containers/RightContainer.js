@@ -92,6 +92,10 @@ export function RightContainer({ filteredCourses, setFilteredCourses }) {
     setChatRoomId(null);
   };
 
+  // const updProfile = () => {
+
+  // }
+
   return (
     <div className="rightContainer">
 
@@ -131,6 +135,7 @@ export function RightContainer({ filteredCourses, setFilteredCourses }) {
               <i class='bx bxs-briefcase' ></i>
               <p>{user.user.profileInfo.occupation}</p>
             </div>
+            {/* <button className="rightContainer__profile_update-btn" onClick={updProfile}>Update</button> */}
           </div>
           {lastViewedCourse ? (
             <div
