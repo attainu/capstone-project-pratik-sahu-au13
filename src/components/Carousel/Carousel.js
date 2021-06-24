@@ -4,6 +4,7 @@ import { Carousel } from "react-responsive-carousel";
 import img1 from "../../assets/images/Carousel1.jpg";
 import img2 from "../../assets/images/Carousel2.jpg";
 import img3 from "../../assets/images/Carousel4.jpg";
+
 import "./Carousel.scss";
 
 export function CarouselFunc() {

@@ -151,6 +151,26 @@
         border-radius: 50%;
       }
     }
+
+    &_update-btn {
+      font-size: 1.5rem;
+      margin: 3rem auto;
+      padding: 0.6rem 2rem;
+      cursor: pointer;
+      color: var(--white);
+      border: 1px solid var(--black);
+      border-radius: 0.5rem;
+      outline-style: none;
+      border-style: none;
+      background-color: var(--black);
+      transition: 0.2s;
+
+      &:hover {
+        background-color: var(--white);
+        border: 1px solid var(--black);
+        color: var(--black);
+      }
+    }
   }
 
   &__discussion {
