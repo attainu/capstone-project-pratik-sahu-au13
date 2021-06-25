@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src="./src/assets/images/logo.jpg" width="150px"/><br/>
+  <img src="./client/src/assets/images/logo.jpg" width="150px"/><br/>
   <strong><a href="https://cloudversity.netlify.app/">Cloudversity | The Cloud University</a></strong>
 </h1>
 <p align="center">Cloudversity is an e-learning platform. The sole purpose of making this web-app is to minimize the gap between a student and a tutor by providing them a mediator learning platform. This is a full-stack web-app where a user can register him/ herself via Email / Google Login as a Tutor or a Student. A user can search courses, apply filters i.e. free, paid, popular and more. It has lots of features inspired by Udemy platform.
