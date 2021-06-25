@@ -5,22 +5,23 @@
 <p align="center">Cloudversity is an e-learning platform. The sole purpose of making this web-app is to minimize the gap between a student and a tutor by providing them a mediator learning platform. This is a full-stack web-app where a user can register him/ herself via Email / Google Login as a Tutor or a Student. A user can search courses, apply filters i.e. free, paid, popular and more. It has lots of features inspired by Udemy platform.
 </p>
 
-<!-- <p align="center"><a href="https://github.com/create-go-app/cli/releases" target="_blank"><img src="https://img.shields.io/badge/version-v2.2.2-blue?style=for-the-badge&logo=none" alt="cli version" /></a>&nbsp;<a href="https://pkg.go.dev/github.com/create-go-app/cli/v2?tab=doc" target="_blank"><img src="https://img.shields.io/badge/Go-1.16+-00ADD8?style=for-the-badge&logo=go" alt="go version" /></a>&nbsp;<a href="https://gocover.io/github.com/create-go-app/cli/pkg/cgapp" target="_blank"><img src="https://img.shields.io/badge/Go_Cover-89%25-success?style=for-the-badge&logo=none" alt="go cover" /></a>&nbsp;<a href="https://goreportcard.com/report/github.com/create-go-app/cli" target="_blank"><img src="https://img.shields.io/badge/Go_report-A+-success?style=for-the-badge&logo=none" alt="go report" /></a>&nbsp;<img src="https://img.shields.io/badge/license-apache_2.0-red?style=for-the-badge&logo=none" alt="license" /></p> -->
-
 ---
 
 ## 📋 **Table of Contents**
 
-- [Project Title and Description](#)
-- [Table of Contents](#📋-table-of-contents)
-- [Quick Installation](#⚡-quick-installation)
-- Demo-preview
-- [Front-End](#⚛️-front-end)
+- Project Title and Description
+- Table of Contents
+- Quick Installation
+- Front-End
   - Stacks Used
   - Features
-- [Back-End](#🚀-back-end)
+- Back-End
   - Stacks Used
   - API Endpoints
+- Hosted Links
+- Authors
+- License
+<!-- - Demo-preview -->
 
 ---
 
@@ -109,6 +110,7 @@ npm run dev
 - `Express` - For creating routes / api endpoints
 - `MongoDB` - For storing data
 - `Cloudinary` - For storing videos and online streaming
+- `Heroku` - For hosting cloudversity backend
 - Packages used:
   - `bcryptJS` - For encryting passwords
   - `cookie-parser`
@@ -176,7 +178,30 @@ npm run dev
     - `/deletereview/:reviewId` (Delete a review)
 
 - **Other apis**
+
   - POST
+
     - `/payment` (For making a payment)
+
+  - PATCH
     - `/updateprofile/:userId` (For updating user's profile)
     - `/updatedp/:userId` (For updating user's photo)
+
+---
+
+## **Hosted Links**
+
+- Cloudversity Website: https://cloudversity.netlify.app/
+- Cloudversity Server: https://cloudversity-api-server.herokuapp.com/
+
+---
+
+## 👨🏻‍💻 **Authors**
+
+👾 [Pratik Sahu](https://github.com/pratik-sahu-au13) and 👾 [Akshay Sahu](https://github.com/akshay-sahu-au13)
+
+---
+
+## 📝 **License**
+
+Copyright © 2021 Cloudversity
