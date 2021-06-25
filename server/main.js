@@ -15,22 +15,6 @@ const app = express();
 //-------- Connecting to DB --------- //
 MongoInit();
 
-//-------- Cookie and Session setup --------- //
-app.use(cookieParser());
-app.use(session({
-
-    // It holds the secret key for session
-    secret: "My_Secret_Key",  // need to replace it with process.env
-
-    // Forces the session to be saved
-    // back to the session store
-    resave: true,
-
-    // Forces a session that is "uninitialized"
-    // to be saved to the store
-    saveUninitialized: true
-}));
-
 //-------- Setting Up static folder --------- //
 app.use(express.static("public"))
 //-------- Setting up Body Parser --------- //
