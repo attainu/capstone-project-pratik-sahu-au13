@@ -8,6 +8,7 @@ import {
   removeFromCart,
   removeFromWishList,
 } from "../../stateHandling/utils/serverRequests";
+import images from "../../assets/images";
 import "./CourseCard.scss";
 
 export function CourseCard({
@@ -16,7 +17,7 @@ export function CourseCard({
   dispatch,
   isItCartItem,
   isItWishlistItem,
-  isItEnrolledItem
+  isItEnrolledItem,
 }) {
   const {
     _id,
@@ -27,11 +28,22 @@ export function CourseCard({
     description,
     enrolledStudents,
     price,
+    rating,
+    level,
   } = course;
+
+  const { star } = images;
 
   const [fav, setFav] = useState(isItWishlistItem);
   const [cart, setCart] = useState(isItCartItem);
   const history = useHistory();
+
+  let ratingColor = "#000";
+  if (rating >= 3) {
+    ratingColor = "#10B981";
+  } else {
+    ratingColor = "#F59E0B";
+  }
 
   useEffect(() => {
     if (isItWishlistItem) {
@@ -100,30 +112,53 @@ export function CourseCard({
       <div className="course__hover">
         <Link className="removeStyle" to={`/details/${_id}`}>
           <div className="course__hover-description">
-            <div className="course__hover-description--header">Description</div>
+            <div className="course__hover-description--header">
+              {courseName}
+            </div>
             <div className="course__hover-description--content">
               {description}
+            </div>
+            <div className="course__hover-description--content">
+              <strong>{level}</strong>
+            </div>
+            <div
+              style={{ backgroundColor: `${ratingColor}` }}
+              className="course__hover-description--rating"
+            >
+              {rating ? rating : 0}
+              <img src={star.src} alt={star.alt} />
             </div>
           </div>
         </Link>
         {user?.user.role === "student" ? (
           <div className="course__hover-btns">
-            {!isItEnrolledItem? <button onClick={handleCart}>
-              {cart ? "Remove from Cart" : "Add to Cart"}
-            </button> : <button style={{color:"white", fontWeight:"600", backgroundColor:"limegreen"}}>
-              Enrolled
-            </button>}
-            {!isItEnrolledItem && (fav  ? (
-              <HeartFill
-                onClick={handleFavorites}
-                className="course__hover-btns--icon"
-              />
+            {!isItEnrolledItem ? (
+              <button onClick={handleCart}>
+                {cart ? "Remove from Cart" : "Add to Cart"}
+              </button>
             ) : (
-              <Heart
-                onClick={handleFavorites}
-                className="course__hover-btns--icon"
-              />
-            ))}
+              <button
+                style={{
+                  color: "white",
+                  fontWeight: "600",
+                  backgroundColor: "limegreen",
+                }}
+              >
+                Enrolled
+              </button>
+            )}
+            {!isItEnrolledItem &&
+              (fav ? (
+                <HeartFill
+                  onClick={handleFavorites}
+                  className="course__hover-btns--icon"
+                />
+              ) : (
+                <Heart
+                  onClick={handleFavorites}
+                  className="course__hover-btns--icon"
+                />
+              ))}
           </div>
         ) : null}
       </div>

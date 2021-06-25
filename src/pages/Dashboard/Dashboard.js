@@ -66,16 +66,16 @@ export function Dashboard() {
         </div>
         <div className="dashboard__header-stats">
           <span className="dashboard__header-stats--count">
-            {user.user.yourReviews.length}
+            {user?.user.yourReviews.length}
           </span>
           <span className="dashboard__header-stats--name">Reviews Given</span>
         </div>
-        <div className="dashboard__header-stats">
+        {/* <div className="dashboard__header-stats">
           <span className="dashboard__header-stats--count">10</span>
           <span className="dashboard__header-stats--name">
             Enrolled Courses
           </span>
-        </div>
+        </div> */}
       </div>
 
       <div className="dashboard__courses">

@@ -267,8 +267,14 @@ export const userSignup = async (formData, selectedUserType, dispatch) => {
         ? userApis.POST.tutorSignup
         : userApis.POST.studentSignup;
     const {
-      data: { data, message, error },
+      data: { data, token, message, error },
     } = await API.post(url, formData);
+
+    if (data) {
+      console.log("Data:", data);
+      data.token = token;
+    }
+    
     // console.log(data, message);
     if (data) {
       if (selectedUserType === "tut") {
