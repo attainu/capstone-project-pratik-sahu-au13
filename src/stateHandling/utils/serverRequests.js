@@ -216,7 +216,7 @@ export const getCourseById = async (id, dispatch) => {
     const {
       data: { requestedCourse },
     } = await API.get(`/course/${id}`);
-
+    console.log("Requested course: ", requestedCourse)
     dispatch({type:"FETCH_VIDEO_LIST", payload: requestedCourse.videos});
     return requestedCourse;
   } catch (err) {

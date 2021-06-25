@@ -26,7 +26,7 @@ export function CourseDetails({ match }) {
     getCourseById(id, dispatch)
     .then((data) => {
       setCourseDetails(data);
-      if (data.videos.length) {
+      if (data?.videos.length) {
         setPublicId(data.videos[0].publicId);
         setVideoTitle(data.videos[0].title);
       }
