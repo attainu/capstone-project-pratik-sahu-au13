@@ -6,7 +6,7 @@ const { cloudinary } = require("../Utils/clodinary");
 
 
 module.exports = {
-    addCourse: async(req, res) => {
+    addCourse: async (req, res) => {
 
         try {
 
@@ -58,7 +58,7 @@ module.exports = {
             res.status(400).send({ message: "Error while fetching", error: error.message });
         };
     },
-    
+
     getSingleCourse: async (req, res) => {
         try {
 
@@ -77,7 +77,7 @@ module.exports = {
         };
     },
 
-    deleteCourse: async(req, res) => {
+    deleteCourse: async (req, res) => {
         try {
             const course = await Course.findById({ _id: req.params.courseId }).populate("videos", ["publicId"]);
 
@@ -109,8 +109,8 @@ module.exports = {
 
                 course.enrolledStudents.push(req.user.id);                 // updating the enrolled list of course
                 student.enrolledCourses.push(req.params.courseId);         // updating the enrolled list of student
-                dicountedPrice = (course.price * course.discount) / 100;   // applying discount on the course
-                tutor.totalEarnings += dicountedPrice.toFixed(2);          // updating total earnings of the tutor
+                dicountedPrice = course.price - (course.price * course.discount) / 100;   // applying discount on the course
+                tutor.totalEarnings = parseInt(tutor.totalEarnings) + parseInt(dicountedPrice).toFixed(2);          // updating total earnings of the tutor
 
                 await course.save();
                 await student.save();
