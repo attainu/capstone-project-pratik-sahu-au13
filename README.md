@@ -108,7 +108,7 @@ npm run dev
 
 - `NodeJS` - For writing all backend logic
 - `Express` - For creating routes / api endpoints
-- `MongoDB` - For storing data
+- `MongoDB Atlas` - For storing data
 - `Cloudinary` - For storing videos and online streaming
 - `Heroku` - For hosting cloudversity backend
 - Packages used:
@@ -117,10 +117,10 @@ npm run dev
   - `cors`
   - `datauri`
   - `dotenv`
-  - `express-session`
   - `jsonwebtoken`
   - `mongoose`
   - `multer`
+  - `stripe`
 
 ### 🖥️ API Endpoints
 
