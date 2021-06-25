@@ -189,7 +189,7 @@ npm run dev
 
 ---
 
-## **Hosted Links**
+## 🔗 **Hosted Links**
 
 - Cloudversity Website: https://cloudversity.netlify.app/
 - Cloudversity Server: https://cloudversity-api-server.herokuapp.com/
