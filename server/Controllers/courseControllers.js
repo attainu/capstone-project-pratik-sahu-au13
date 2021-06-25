@@ -266,7 +266,7 @@ module.exports = {
                 stripe.charges.create({
 
                     amount: product.price * 100,
-                    currency: "inr",
+                    currency: "usd",
                     customer: customer.id,
                     receipt_email: token.email,
                     description: `purchase of ${product.name}`,
