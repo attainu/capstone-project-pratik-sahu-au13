@@ -252,11 +252,11 @@ module.exports = {
     coursePayment: async (req, res) => {
         try {
 
-            console.log(process.env.STRIPE_SECRET_KEY);   // remove it later
+            // console.log(process.env.STRIPE_SECRET_KEY);   // remove it later
             const { product, token } = req.body;
-            console.log("PRODUCT: ", product);
-            console.log("PRICE: ", product.price);
-            console.log("TOKEN: ", token);
+            // console.log("PRODUCT: ", product);
+            // console.log("PRICE: ", product.price);
+            // console.log("TOKEN: ", token);
             const idempontencyKey = uuidv4(); // to make sure we don't charge the user twice accidently or due to any error
 
             return stripe.customers.create({
