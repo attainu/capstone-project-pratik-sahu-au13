@@ -24,6 +24,9 @@ export const stateReducer = (state, action) => {
     case "FETCH_CREATED_COURSES":
       return { ...state, createdCourses: action.payload };
 
+    case "FETCH_VIDEO_LIST":
+      return { ...state, videoList: action.payload}
+
     default:
       break;
   }

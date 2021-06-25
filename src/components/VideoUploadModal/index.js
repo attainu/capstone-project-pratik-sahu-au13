@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import { uploadVideo } from "../../stateHandling/utils/serverRequests";
 import "./modal.scss";
 
-function VideoUploadModal({ modalToggle, id, user }) {
+function VideoUploadModal({ modalToggle, id, user, dispatch }) {
   const [file, setFile] = useState(null);
   const [videoTitle, setVideoTitle] = useState("");
 
   const handleVideoSubmit = (e) => {
     e.preventDefault();
     const data = { title: videoTitle, file: file };
-    uploadVideo(id, user?.user.token, data);
+    uploadVideo(id, user?.user.token, data, dispatch, );
     modalToggle();
   };
 

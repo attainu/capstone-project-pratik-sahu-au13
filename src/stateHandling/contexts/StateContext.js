@@ -11,6 +11,7 @@ function StateContextProvider({ children }) {
     enrolledCourses: [],
     lastViewedCourse: [],
     createdCourses: [],
+    videoList:[]
   };
 
   const [state, dispatch] = useReducer(stateReducer, initialState);
